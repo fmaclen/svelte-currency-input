@@ -1,6 +1,6 @@
 {
 	"name": "@canutin/svelte-currency-input",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"exports": {
 		".": "./CurrencyInput.svelte"
 	},
@@ -45,12 +45,12 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Canutin/svelte-currency-input.git"
+		"url": "git+https://github.com/canutin/svelte-currency-input.git"
 	},
 	"author": "Fernando Maclen <hello@fernando.is>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/Canutin/svelte-currency-input/issues"
+		"url": "https://github.com/canutin/svelte-currency-input/issues"
 	},
-	"homepage": "https://github.com/Canutin/svelte-currency-input#readme"
+	"homepage": "https://github.com/canutin/svelte-currency-input#readme"
 }

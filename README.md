@@ -17,7 +17,7 @@ A form input that converts numbers to currencies as you type in localized format
 - Formats **positive** and **negative** values
 - Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations and masking the input
 - Simple [API](#api)
-- Minimal default styling, [easy to customize](#styling)
+- Minimal [default styling](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118), easy to [customize](#styling)
 
 ## Usage
 
@@ -65,7 +65,7 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 
 ## Styling
 
-The default styles use [BEM naming conventions](https://getbem.com/naming/). To override the default styles apply your styles as shown below:
+The [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118) use [BEM naming conventions](https://getbem.com/naming/). To override the default styles apply your styles as shown below:
 
 ```html
 <div class="my-currency-input">
@@ -104,9 +104,9 @@ The default styles use [BEM naming conventions](https://getbem.com/naming/). To 
 
 Here's ways in which you can contribute:
 
-- Found a bug? Open a [new issue](https://github.com/Canutin/svelte-currency-input/issues/new)
-- Browse our [existing issues](https://github.com/Canutin/svelte-currency-input/issues)
-- Submit a [pull request](https://github.com/Canutin/svelte-currency-input/pulls)
+- Found a bug? Open a [new issue](https://github.com/canutin/svelte-currency-input/issues/new)
+- Browse our [existing issues](https://github.com/canutin/svelte-currency-input/issues)
+- Submit a [pull request](https://github.com/canutin/svelte-currency-input/pulls)
 
 ## Developing
 
