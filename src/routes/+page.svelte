@@ -4,28 +4,152 @@
 
 	const locale = 'nl-NL';
 	const currency = 'EUR';
+
+	let output: string;
+	const handleSubmit = (event: Event) => {
+		event.preventDefault();
+		// Get the form data
+		const data = new FormData(event.target as HTMLFormElement);
+		// Pretty-print the data as JSON
+		output = JSON.stringify(Object.fromEntries(data.entries()), null, 2);
+	};
 </script>
 
-<div class="container">
-	<CurrencyInput name="cashflow" value={-42069.69} />
-	<CurrencyInput name="rent" value={0} />
-	<CurrencyInput name="total" value={5678.9} />
-	<CurrencyInput name="balance" value={1234.56} isNegativeAllowed={false} />
+<form class="demoForm" on:submit={handleSubmit}>
+	<div class="demoForm__container">
+		<CurrencyInput name="cashflow" value={-42069.69} />
+		<CurrencyInput name="rent" />
+		<CurrencyInput name="total" value={5678.9} />
+		<CurrencyInput name="balance" value={1234.56} isNegativeAllowed={false} />
 
-	<CurrencyInput name="amount" value={5678.9} {locale} {currency} />
-	<CurrencyInput name="deficit" value={1234.56} isNegativeAllowed={false} {locale} {currency} />
-	<CurrencyInput name="cost" value={-42069.69} {locale} {currency} />
-	<CurrencyInput name="exchange" value={0} {locale} {currency} />
-</div>
+		<CurrencyInput name="amount" value={5678.9} {locale} {currency} />
+		<CurrencyInput name="deficit" value={1234.56} isNegativeAllowed={false} {locale} {currency} />
+		<CurrencyInput name="exchange" value={97532.95} disabled={true} {locale} {currency} />
+		<CurrencyInput name="cost" value={-42069.69} {locale} {currency} />
+	</div>
 
-<style lang="scss">
-	.container {
+	<nav class="demoForm__output">
+		<button type="submit" class="demoForm__submit">Submit form</button>
+
+		<pre class="demoForm__pre {!output && 'demoForm__pre--placeholder'}">{output
+				? output
+				: 'Submit form to see a JSON output of the values'}</pre>
+	</nav>
+
+	<nav class="demoForm__nav">
+		<a class="demoForm__a" href="http://gituhb.com/canutin/svelte-currency-input" target="_blank"
+			>GitHub repository</a
+		>
+		<a
+			class="demoForm__a"
+			href="http://gituhb.com/canutin/svelte-currency-input/issues"
+			target="_blank">Known issues</a
+		>
+		<a
+			class="demoForm__a"
+			href="http://gituhb.com/canutin/svelte-currency-input/README.md#contributing"
+			target="_blank">Contribute</a
+		>
+		<a
+			class="demoForm__a"
+			href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
+			target="_blank">NPM</a
+		>
+	</nav>
+</form>
+
+<style>
+	/* Overriding the styles of the <CurrencyInput /> component */
+	form.demoForm :global(input.currencyInput__formatted) {
+		font-family: monospace;
+		font-size: 13px;
+	}
+
+	/* Styles for demo presentation (you can ignore these) */
+	:global(body) {
+		font-family: sans-serif;
+		box-sizing: border-box;
+		height: 100vh;
+		margin: 0;
+		background-color: #eaeaea;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		place-items: center;
+	}
+
+	form.demoForm {
+		--gap: 64px;
+
+		display: flex;
+		flex-direction: column;
+		row-gap: var(--gap);
+	}
+
+	div.demoForm__container {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		align-items: center;
 		justify-content: center;
+		gap: calc(var(--gap) / 2);
 		height: max-content;
-		column-gap: 32px;
-		row-gap: 64px;
+	}
+
+	nav.demoForm__nav {
+		font-size: 13px;
+		display: flex;
+		column-gap: 16px;
+		justify-content: center;
+	}
+
+	a.demoForm__a {
+		color: #333;
+		text-decoration: none;
+		border-bottom-width: 1px;
+		border-bottom-color: #ccc;
+		border-bottom-style: solid;
+	}
+
+	a.demoForm__a:visited {
+		color: #666;
+	}
+
+	a.demoForm__a:hover {
+		color: #000;
+		border-bottom-color: transparent;
+	}
+
+	nav.demoForm__output {
+		display: grid;
+		grid-template-columns: max-content auto;
+		column-gap: calc(var(--gap) / 2);
+	}
+
+	pre.demoForm__pre {
+		background-color: #f4f4f4;
+		padding: 10px;
+		margin: 0;
+		color: #666;
+		min-height: 100%;
+		box-sizing: border-box;
+	}
+
+	pre.demoForm__pre--placeholder {
+		font-family: sans-serif;
+		font-size: 13px;
+	}
+
+	button.demoForm__submit {
+		border: none;
+		background-color: #333;
+		color: #fff;
+		padding: 10px;
+		font-size: 13px;
+		cursor: pointer;
+		height: max-content;
+	}
+
+	button.demoForm__submit:hover {
+		background-color: #000;
 	}
 </style>
