@@ -7,8 +7,8 @@ A field input that formats numbers as currencies as you type
 
 ## Features
 
-- Format **positive** and** negative** value
-- Supports **localized formats + currencies**
+- Format **positive** and **negative** value
+- Supports **localized formats/currencies**
 - Easy to customize/theme
 
 ## Developing
