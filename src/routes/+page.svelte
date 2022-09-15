@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CurrencyInput from '$lib/CurrencyInput.svelte';
-	import '../app.scss';
 
 	const locale = 'nl-NL';
 	const currency = 'EUR';
@@ -61,12 +60,15 @@
 <style>
 	/* Overriding the styles of the <CurrencyInput /> component */
 	form.demoForm :global(input.currencyInput__formatted) {
+		width: 100%;
 		font-family: monospace;
 		font-size: 13px;
 	}
 
 	/* Styles for demo presentation (you can ignore these) */
 	:global(body) {
+		--gap: 64px;
+
 		font-family: sans-serif;
 		box-sizing: border-box;
 		height: 100vh;
@@ -76,11 +78,10 @@
 		align-items: center;
 		justify-content: center;
 		place-items: center;
+		padding: var(--gap);
 	}
 
 	form.demoForm {
-		--gap: 64px;
-
 		display: flex;
 		flex-direction: column;
 		row-gap: var(--gap);

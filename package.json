@@ -1,6 +1,9 @@
 {
 	"name": "@canutin/svelte-currency-input",
-	"version": "0.0.3",
+	"version": "0.1.0",
+	"exports": {
+		".": "./CurrencyInput.svelte"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
@@ -30,7 +33,7 @@
 		"vite": "^3.1.0"
 	},
 	"type": "module",
-	"description": "An input field that formats numbers to currency as you type",
+	"description": "A form input that converts numbers to currencies as you type in localized formats",
 	"dependencies": {
 		"abbrev": "^1.1.1",
 		"acorn": "^8.8.0",
@@ -247,8 +250,17 @@
 		"type": "git",
 		"url": "git+https://github.com/Canutin/svelte-currency-input.git"
 	},
-	"author": "",
-	"license": "ISC",
+	"author": "Fernando Maclen <hello@fernando.is>",
+	"license": "MIT",
+	"keywords": [
+		"svelte",
+		"currency",
+		"money",
+		"input",
+		"i18n",
+		"positive",
+		"negative"
+	],
 	"bugs": {
 		"url": "https://github.com/Canutin/svelte-currency-input/issues"
 	},
