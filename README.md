@@ -8,7 +8,7 @@ A field input that formats numbers as currencies as you type
 ## Features
 
 - Format **positive** and **negative** value
-- Supports **localized formats/currencies**
+- Supports **localization** via `Intl.NumberFormat` for string formatting and currency denominations.
 - Easy to customize/theme
 
 ## Developing
