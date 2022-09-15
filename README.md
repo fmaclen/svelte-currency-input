@@ -83,6 +83,11 @@ The [default styles](https://github.com/canutin/svelte-currency-input/blob/main/
 		/* ... */
 	}
 
+	/* Formatted input when the it's disabled */
+	div.my-currency-input :global(input.currencyInput__formatted:disabled) {
+		/* ... */
+	}
+
 	/* Formatted input when the value is zero */
 	div.my-currency-input :global(input.currencyInput__formatted--zero) {
 		/* ... */
