@@ -16,7 +16,7 @@ A form input that converts numbers to currencies as you type in localized format
 
 - Formats **positive** and **negative** values
 - Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations and masking the input
-- Comprehensive [API](#api)
+- Simple [API](#api)
 - Minimal default styling, [easy to customize](#styling)
 
 ## Usage
@@ -61,7 +61,7 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 | name              | `string`  | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formattedTotal]` in camelCase) values |
 | required          | `boolean` | `false`     | Marks the inputs as required                                                                                                                                    |
 | disabled          | `boolean` | `false`     | Marks the inputs as disabled                                                                                                                                    |
-| isNegativeAllowed | `boolean` | `true`      | If `true`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                                |
+| isNegativeAllowed | `boolean` | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                               |
 
 ## Styling
 
