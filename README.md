@@ -1,22 +1,19 @@
-# create-svelte
+# svelte-currency-input
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A field input that formats numbers as currencies as you type
 
-## Creating a project
+<img width="1059" alt="image" src="https://user-images.githubusercontent.com/1434675/190315136-c1d310ab-0ef1-441d-a80c-2b3727d74f59.png">
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Features
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- Format **positive and negative** value
+- Supports **localized formats and currencies**
+- Easy to customize/theme
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies with `npm install`, start a development server:
 
 ```bash
 npm run dev
@@ -34,5 +31,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
