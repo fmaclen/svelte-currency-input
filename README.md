@@ -11,6 +11,14 @@ A field input that formats numbers as currencies as you type
 - Leverages `Intl.NumberFormat` for **localizing** string formatting and currency denominations.
 - Easy to customize/theme
 
+
+## Contributing
+
+Here's ways in which you can contribute:
+- Found a bug? Open a [new issue](https://github.com/Canutin/svelte-currency-input/issues/new)
+- Help us complete our [existing issues](https://github.com/Canutin/svelte-currency-input/issues)
+- Submit a [pull request](https://github.com/Canutin/svelte-currency-input/pulls)
+
 ## Developing
 
 Install dependencies with `npm install`, start a development server:
@@ -21,13 +29,3 @@ npm run dev
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
