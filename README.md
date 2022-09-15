@@ -33,7 +33,7 @@ npm install svelte-currency-input --save
 	const currency = 'EUR';
 </script>
 
-<CurrencyInput name="exchange-rate" value="{-420.69}" {locale} {currency} />
+<CurrencyInput name="total" value={-420.69} {locale} {currency} />
 ```
 
 ## How it works
