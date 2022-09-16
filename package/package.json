@@ -1,9 +1,9 @@
 {
   "name": "@canutin/svelte-currency-input",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "exports": {
     "./package.json": "./package.json",
-    ".": "./CurrencyInput.svelte",
+    ".": "./index.js",
     "./CurrencyInput.svelte": "./CurrencyInput.svelte"
   },
   "devDependencies": {
@@ -46,5 +46,5 @@
     "url": "https://github.com/canutin/svelte-currency-input/issues"
   },
   "homepage": "https://github.com/canutin/svelte-currency-input#readme",
-  "svelte": "./CurrencyInput.svelte"
+  "svelte": "./index.js"
 }
