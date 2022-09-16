@@ -36,17 +36,17 @@
 	</nav>
 
 	<nav class="demoForm__nav">
-		<a class="demoForm__a" href="http://gituhb.com/canutin/svelte-currency-input" target="_blank"
+		<a class="demoForm__a" href="https://github.com/canutin/svelte-currency-input" target="_blank"
 			>GitHub repository</a
 		>
 		<a
 			class="demoForm__a"
-			href="http://gituhb.com/canutin/svelte-currency-input/issues"
+			href="https://github.com/canutin/svelte-currency-input/issues"
 			target="_blank">Known issues</a
 		>
 		<a
 			class="demoForm__a"
-			href="http://gituhb.com/canutin/svelte-currency-input/README.md#contributing"
+			href="https://github.com/canutin/svelte-currency-input#contributing"
 			target="_blank">Contribute</a
 		>
 		<a
@@ -60,8 +60,9 @@
 <style>
 	/* Overriding the styles of the <CurrencyInput /> component */
 	form.demoForm :global(input.currencyInput__formatted) {
-		font-size: 13px;
+		width: 100%;
 		font-family: monospace;
+		font-size: 13px;
 	}
 
 	/* Styles for demo presentation (you can ignore these) */
