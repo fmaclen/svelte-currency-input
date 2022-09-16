@@ -94,6 +94,10 @@ test.describe('CurrencyInput', () => {
 		const rentUnformattedInput = page.locator('.currencyInput__unformatted[name=rent]');
 		const rentFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rent"]');
 
+		// Check the there is no value in the input
+		await expect(rentUnformattedInput).toHaveValue('0');
+		await expect(rentFormattedInput).toHaveValue('');
+
 		await rentFormattedInput.focus();
 		await page.keyboard.type('420.69');
 		await expect(rentFormattedInput).toHaveValue('$420.69');
