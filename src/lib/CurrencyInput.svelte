@@ -29,7 +29,6 @@
 	const placeholder = formatCurrency(0, 2, 2); // e.g. '$0.00'
 	const currencySymbol = formatCurrency(0, 0).replace('0', ''); // e.g. '$'
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
-	const currenctInputName = `formatted${name.replace(/^./g, ($1) => $1.toUpperCase())}`; // e.g. `formattedTotal`
 
 	// Updates `value` by stripping away the currency formatting
 	const setValue = (event?: KeyboardEvent) => {
@@ -76,7 +75,7 @@
 		"
 		type="text"
 		inputmode="numeric"
-		name={currenctInputName}
+		name={`formatted-${name}`}
 		required={required && !isZero}
 		{placeholder}
 		{disabled}
