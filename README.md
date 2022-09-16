@@ -5,9 +5,9 @@ A form input that converts numbers to currencies as you type in localized format
 [<img width="1059" alt="image" src="https://user-images.githubusercontent.com/1434675/190315136-c1d310ab-0ef1-441d-a80c-2b3727d74f59.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
 
 <p align="center">
-	<a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">
-		<strong>REPL Demo</strong>
-	</a>
+  <a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">
+    Play with REPL
+  </a>
 </p>
 
 ---
@@ -27,10 +27,10 @@ npm install svelte-currency-input --save
 
 ```html
 <script lang="ts">
-	import CurrencyInput from '@canutin/svelte-currency-input';
+  import CurrencyInput from '@canutin/svelte-currency-input';
 
-	const locale = 'nl-NL';
-	const currency = 'EUR';
+  const locale = 'nl-NL';
+  const currency = 'EUR';
 </script>
 
 <CurrencyInput name="total" value={-420.69} {locale} {currency} />
@@ -43,25 +43,35 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 
 ```html
 <div class="currencyInput">
-	<!-- Unformatted value -->
-	<input class="currencyInput__unformatted" type="hidden" name="total" />
+  <!-- Unformatted value -->
+  <input
+    class="currencyInput__unformatted"
+    type="hidden"
+    name="total"
+    value="-420.69"
+  />
 
-	<!-- Formatted value -->
-	<input class="currencyInput__formatted" type="text" name="formattedTotal" />
+  <!-- Formatted value -->
+  <input
+    class="currencyInput__formatted"
+    type="text"
+    name="formatted-total"
+    value="€ -420,69"
+  />
 </div>
 ```
 
 ## API
 
-| Option            | Type      | Default     | Description                                                                                                                                                     |
-| ----------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value             | `number`  | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder                                                                         |
-| locale            | `string`  | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896)                                                                                  |
-| currency          | `string`  | `USD`       | Overrides default currency. [Examples](https://github.com/datasets/currency-codes/blob/master/data/codes-all.csv)                                               |
-| name              | `string`  | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formattedTotal]` in camelCase) values |
-| required          | `boolean` | `false`     | Marks the inputs as required                                                                                                                                    |
-| disabled          | `boolean` | `false`     | Marks the inputs as disabled                                                                                                                                    |
-| isNegativeAllowed | `boolean` | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                               |
+| Option            | Type      | Default     | Description                                                                                                                                         |
+| ----------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value             | `number`  | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder                                                             |
+| locale            | `string`  | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896)                                                                      |
+| currency          | `string`  | `USD`       | Overrides default currency. [Examples](https://github.com/datasets/currency-codes/blob/master/data/codes-all.csv)                                   |
+| name              | `string`  | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
+| required          | `boolean` | `false`     | Marks the inputs as required                                                                                                                        |
+| disabled          | `boolean` | `false`     | Marks the inputs as disabled                                                                                                                        |
+| isNegativeAllowed | `boolean` | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
 
 ## Styling
 
@@ -69,39 +79,27 @@ The [default styles](https://github.com/canutin/svelte-currency-input/blob/main/
 
 ```html
 <div class="my-currency-input">
-	<CurrencyInput name="total" value="{420.69}" />
+  <CurrencyInput name="total" value="{420.69}" />
 </div>
 
 <style>
-	/* Container */
-	div.my-currency-input :global(div.currencyInput) {
-		/* ... */
-	}
+  /* Container */
+  div.my-currency-input :global(div.currencyInput) { /* ... */ }
 
-	/* Formatted input */
-	div.my-currency-input :global(input.currencyInput__formatted) {
-		/* ... */
-	}
+  /* Formatted input */
+  div.my-currency-input :global(input.currencyInput__formatted) { /* ... */ }
 
-	/* Formatted input when the it's disabled */
-	div.my-currency-input :global(input.currencyInput__formatted:disabled) {
-		/* ... */
-	}
+  /* Formatted input when the it's disabled */
+  div.my-currency-input :global(input.currencyInput__formatted:disabled) { /* ... */ }
 
-	/* Formatted input when the value is zero */
-	div.my-currency-input :global(input.currencyInput__formatted--zero) {
-		/* ... */
-	}
+  /* Formatted input when the value is zero */
+  div.my-currency-input :global(input.currencyInput__formatted--zero) { /* ... */ }
 
-	/* Formatted input when the value is positive */
-	div.my-currency-input :global(input.currencyInput__formatted--positive) {
-		/* ... */
-	}
+  /* Formatted input when the value is positive */
+  div.my-currency-input :global(input.currencyInput__formatted--positive) { /* ... */ }
 
-	/* Formatted input when the value is negative */
-	div.my-currency-input :global(input.currencyInput__formatted--negative) {
-		/* ... */
-	}
+  /* Formatted input when the value is negative */
+  div.my-currency-input :global(input.currencyInput__formatted--negative) { /* ... */ }
 </style>
 ```
 
@@ -115,8 +113,7 @@ Here's ways in which you can contribute:
 
 ## Developing
 
-This package was generated with [SvelteKit](https://kit.svelte.dev/).
-Install dependencies with `npm install`, then start a development server:
+This package was generated with [SvelteKit](https://kit.svelte.dev/). Install dependencies with `npm install`, then start a development server:
 
 ```bash
 npm run dev
