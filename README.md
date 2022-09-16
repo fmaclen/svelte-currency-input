@@ -28,12 +28,9 @@ npm install svelte-currency-input --save
 ```html
 <script lang="ts">
   import CurrencyInput from '@canutin/svelte-currency-input';
-
-  const locale = 'nl-NL';
-  const currency = 'EUR';
 </script>
 
-<CurrencyInput name="total" value={-420.69} {locale} {currency} />
+<CurrencyInput name="total" value={-420.69} locale="nl-NL" currency="EUR" />
 ```
 
 ## How it works
