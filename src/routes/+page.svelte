@@ -60,9 +60,8 @@
 <style>
 	/* Overriding the styles of the <CurrencyInput /> component */
 	form.demoForm :global(input.currencyInput__formatted) {
-		width: 100%;
-		font-family: monospace;
 		font-size: 13px;
+		font-family: monospace;
 	}
 
 	/* Styles for demo presentation (you can ignore these) */
@@ -131,7 +130,6 @@
 		padding: 10px;
 		margin: 0;
 		color: #666;
-		min-height: 100%;
 		box-sizing: border-box;
 	}
 
