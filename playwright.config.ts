@@ -1,6 +1,8 @@
 import { type PlaywrightTestConfig, devices } from '@playwright/test';
 
-const multipleBrowsers = [
+const isEnvCI = process.env.NODE_ENV !== 'CI';
+
+const enableMultipleBrowsers = [
 	{
 		name: 'chromium',
 		use: { ...devices['Desktop Chrome'] }
@@ -20,7 +22,12 @@ const config: PlaywrightTestConfig = {
 		command: 'npm run dev',
 		port: 5173
 	},
-	projects: process.env.NODE_ENV === 'CI' ? multipleBrowsers : undefined
+	retries: isEnvCI ? 3 : 0,
+	use: {
+		trace: isEnvCI ? undefined : 'retain-on-failure',
+		screenshot: isEnvCI ? undefined : 'only-on-failure'
+	},
+	projects: isEnvCI ? enableMultipleBrowsers : undefined
 };
 
 export default config;
