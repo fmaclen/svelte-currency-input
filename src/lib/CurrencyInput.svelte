@@ -27,7 +27,9 @@
 	};
 
 	const placeholder = formatCurrency(0, 2, 2); // e.g. '$0.00'
-	const currencySymbol = formatCurrency(0, 0).replace('0', ''); // e.g. '$'
+	const currencySymbol = formatCurrency(0, 0)
+		.replace('0', '') // e.g. '$0' > '$'
+		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
 
 	// Updates `value` by stripping away the currency formatting
@@ -52,9 +54,10 @@
 		if (Number.isNaN(parseFloat(unformattedValue))) {
 			value = 0;
 		} else {
+			// The order of the following operations is *critical*
 			const isDecimalComma = currencyDecimal === ','; // Remove currency formatting from `formattedValue` so we can assign it to `value`
-			if (isDecimalComma) unformattedValue = unformattedValue.replace(',', '.'); // If the decimal point is a comma, replace it with a period
 			unformattedValue = unformattedValue.replace(isDecimalComma ? /\./g : /\,/g, ''); // Remove all group symbols
+			if (isDecimalComma) unformattedValue = unformattedValue.replace(',', '.'); // If the decimal point is a comma, replace it with a period
 			value = parseFloat(unformattedValue);
 		}
 	};
