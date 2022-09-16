@@ -1,0 +1,50 @@
+{
+  "name": "@canutin/svelte-currency-input",
+  "version": "0.2.3",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./index.js",
+    "./CurrencyInput.svelte": "./CurrencyInput.svelte"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.25.0",
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "@sveltejs/package": "next",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "prettier": "^2.6.2",
+    "prettier-plugin-svelte": "^2.7.0",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.7.1",
+    "svelte-preprocess": "^4.10.6",
+    "tslib": "^2.3.1",
+    "typescript": "^4.7.4",
+    "vite": "^3.1.0"
+  },
+  "type": "module",
+  "description": "A form input that converts numbers to currencies as you type in localized formats",
+  "keywords": [
+    "svelte",
+    "currency",
+    "money",
+    "input",
+    "i18n",
+    "positive",
+    "negative"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canutin/svelte-currency-input.git"
+  },
+  "author": "Fernando Maclen <hello@fernando.is>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/canutin/svelte-currency-input/issues"
+  },
+  "homepage": "https://github.com/canutin/svelte-currency-input#readme",
+  "svelte": "./index.js"
+}

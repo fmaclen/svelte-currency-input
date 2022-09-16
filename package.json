@@ -1,8 +1,8 @@
 {
 	"name": "@canutin/svelte-currency-input",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"exports": {
-		".": "./CurrencyInput.svelte"
+		".": "./index.js"
 	},
 	"scripts": {
 		"dev": "vite dev",
