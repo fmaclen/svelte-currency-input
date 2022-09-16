@@ -16,14 +16,14 @@
 
 <form class="demoForm" on:submit={handleSubmit}>
 	<div class="demoForm__container">
-		<CurrencyInput name="cashflow" value={-42069.69} />
+		<CurrencyInput name="total" value={-42069.69} />
 		<CurrencyInput name="rent" />
-		<CurrencyInput name="total" value={5678.9} />
+		<CurrencyInput name="cashflow" value={5678.9} />
 		<CurrencyInput name="balance" value={1234.56} isNegativeAllowed={false} />
 
 		<CurrencyInput name="amount" value={5678.9} {locale} {currency} />
 		<CurrencyInput name="deficit" value={1234.56} isNegativeAllowed={false} {locale} {currency} />
-		<CurrencyInput name="exchange" value={97532.95} disabled={true} {locale} {currency} />
+		<CurrencyInput name="loss" value={97532.95} disabled={true} {locale} {currency} />
 		<CurrencyInput name="cost" value={-42069.69} {locale} {currency} />
 	</div>
 
@@ -60,9 +60,8 @@
 <style>
 	/* Overriding the styles of the <CurrencyInput /> component */
 	form.demoForm :global(input.currencyInput__formatted) {
-		width: 100%;
-		font-family: monospace;
 		font-size: 13px;
+		font-family: monospace;
 	}
 
 	/* Styles for demo presentation (you can ignore these) */
@@ -131,7 +130,6 @@
 		padding: 10px;
 		margin: 0;
 		color: #666;
-		min-height: 100%;
 		box-sizing: border-box;
 	}
 

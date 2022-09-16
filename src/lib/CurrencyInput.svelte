@@ -88,11 +88,6 @@
 </div>
 
 <style>
-	div.currencyInput {
-		display: flex;
-		flex-direction: column;
-	}
-
 	input.currencyInput__formatted {
 		border: 1px solid #e2e2e2;
 		padding: 10px;
