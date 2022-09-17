@@ -136,6 +136,54 @@ test.describe('CurrencyInput', () => {
 		await expect(rentUnformattedInput).toHaveValue('0');
 	});
 
+	test("Incorrect characters can't be entered", async ({ page }) => {
+		await page.goto('/');
+
+		const isMacOs = process.platform === 'darwin';
+		const rentUnformattedInput = page.locator('.currencyInput__unformatted[name=rent]');
+		const rentFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rent"]');
+
+		// Check the there is no value in the input
+		await expect(rentUnformattedInput).toHaveValue('0');
+		await expect(rentFormattedInput).toHaveValue('');
+
+		// Check typing letters doesn't do anything
+		await rentFormattedInput.focus();
+		await page.keyboard.type('abc');
+		await expect(rentUnformattedInput).toHaveValue('0');
+		await expect(rentFormattedInput).toHaveValue('');
+
+		// Check keyboard combinations don't do anything
+		await page.keyboard.press('Shift+A');
+		await expect(rentFormattedInput).toHaveValue('');
+
+		// Check keyboard shortcuts are allowed
+		await page.keyboard.type('420.69');
+		await expect(rentFormattedInput).toHaveValue('$420.69');
+		await expect(rentUnformattedInput).toHaveValue('420.69');
+
+		// Select all
+		isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
+
+		// Check "Backspace" works
+		await page.keyboard.press('Backspace');
+		await expect(rentUnformattedInput).toHaveValue('0');
+		await expect(rentFormattedInput).toHaveValue('');
+
+		// Add data to the field again
+		await page.keyboard.type('-420.69');
+		await expect(rentFormattedInput).toHaveValue('-$420.69');
+		await expect(rentUnformattedInput).toHaveValue('-420.69');
+
+		// Select all
+		isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
+
+		// Check "Delete" also works
+		await page.keyboard.press('Delete');
+		await expect(rentUnformattedInput).toHaveValue('0');
+		await expect(rentFormattedInput).toHaveValue('');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
