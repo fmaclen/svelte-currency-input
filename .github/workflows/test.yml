@@ -1,11 +1,12 @@
-name: Integration tests
+name: Test only
 
 on:
   pull_request:
     branches: [main, master]
 
 jobs:
-  Playwright:
+  test:
+    name: Playwright
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
