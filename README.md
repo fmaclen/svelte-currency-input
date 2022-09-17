@@ -68,6 +68,7 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 | disabled          | `boolean`       | `false`     | Marks the inputs as disabled                                                                                                                        |
 | placeholder       | `number` `null` | `0`         | Overrides the default placeholder. Setting the value to a `number` will display it as formatted. Setting it to `null` will not show a placeholder   |
 | isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
+| fractionDigits | `number` | `2` | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
 
 ## Styling
 

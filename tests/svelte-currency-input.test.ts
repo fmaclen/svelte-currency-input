@@ -1,4 +1,9 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+const isMacOs = process.platform === 'darwin';
+const selectAll = async (page: Page) => {
+	isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
+};
 
 test.describe('CurrencyInput', () => {
 	test('Default behavior is correct', async ({ page }) => {
@@ -73,8 +78,8 @@ test.describe('CurrencyInput', () => {
 					'formatted-rent': '',
 					balance: '1234.56',
 					'formatted-balance': '$1,234.56',
-					cashflow: '5678.9',
-					'formatted-cashflow': '$5,678.9',
+					btc: '0.87654321',
+					'formatted-btc': '$0.87654321',
 					amount: '5678.9',
 					'formatted-amount': '€ 5.678,9',
 					cost: '-42069.69',
@@ -139,7 +144,6 @@ test.describe('CurrencyInput', () => {
 	test("Incorrect characters can't be entered", async ({ page }) => {
 		await page.goto('/');
 
-		const isMacOs = process.platform === 'darwin';
 		const rentUnformattedInput = page.locator('.currencyInput__unformatted[name=rent]');
 		const rentFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rent"]');
 
@@ -162,10 +166,8 @@ test.describe('CurrencyInput', () => {
 		await expect(rentFormattedInput).toHaveValue('$420.69');
 		await expect(rentUnformattedInput).toHaveValue('420.69');
 
-		// Select all
-		isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
-
 		// Check "Backspace" works
+		await selectAll(page);
 		await page.keyboard.press('Backspace');
 		await expect(rentUnformattedInput).toHaveValue('0');
 		await expect(rentFormattedInput).toHaveValue('');
@@ -175,10 +177,8 @@ test.describe('CurrencyInput', () => {
 		await expect(rentFormattedInput).toHaveValue('-$420.69');
 		await expect(rentUnformattedInput).toHaveValue('-420.69');
 
-		// Select all
-		isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
-
 		// Check "Delete" also works
+		await selectAll(page);
 		await page.keyboard.press('Delete');
 		await expect(rentUnformattedInput).toHaveValue('0');
 		await expect(rentFormattedInput).toHaveValue('');
@@ -202,6 +202,27 @@ test.describe('CurrencyInput', () => {
 			'.currencyInput__formatted[name="formatted-deficit"]'
 		);
 		await expect(deficitFormattedInput).toHaveAttribute('placeholder', '€ 1.234,56'); // The space is `%A0`, not `%20`
+	});
+
+	test('Fraction digits can be overriden', async ({ page }) => {
+		await page.goto('/');
+
+		const btcUnformattedInput = page.locator('.currencyInput__unformatted[name=btc]');
+		const btcFormattedInput = page.locator('.currencyInput__formatted[name="formatted-btc"]');
+
+		await expect(btcUnformattedInput).toHaveValue('0.87654321');
+		await expect(btcFormattedInput).toHaveValue('$0.87654321');
+		await expect(btcFormattedInput).toHaveAttribute('placeholder', '$0.00000000');
+
+		await btcFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await expect(btcUnformattedInput).toHaveValue('0');
+		await expect(btcFormattedInput).toHaveValue('');
+
+		await page.keyboard.type('-0.987654321');
+		await expect(btcUnformattedInput).toHaveValue('-0.987654321');
+		await expect(btcFormattedInput).toHaveValue('-$0.98765432');
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
