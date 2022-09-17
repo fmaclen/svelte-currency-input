@@ -39,6 +39,7 @@
 		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter) event.preventDefault();
 	};
 
+	let inputTarget: HTMLInputElement;
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
 	const isDecimalComma = currencyDecimal === ','; // Remove currency formatting from `formattedValue` so we can assign it to `value`
 	const currencySymbol = formatCurrency(0, 0)
@@ -54,6 +55,9 @@
 		const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
 		const strippedUnformattedValue = formattedValue.replace(' ', '');
 		if (ignoreSymbols.includes(strippedUnformattedValue)) return;
+
+		// Set the starting caret positions
+		inputTarget = event.target as HTMLInputElement;
 
 		// Remove all characters that arent: numbers, commas, periods (or minus signs if `isNegativeAllowed`)
 		let unformattedValue = isNegativeAllowed
@@ -75,7 +79,22 @@
 	};
 
 	const setFormattedValue = () => {
+		// Previous caret position
+		const startCaretPosition = inputTarget?.selectionStart || 0;
+		const previousFormattedValueLength = formattedValue.length;
+
+		// Apply formatting to input
 		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, 0);
+
+		// New caret position
+		const endCaretPosition =
+			startCaretPosition + formattedValue.length - previousFormattedValueLength;
+
+		// HACK:
+		// Delay setting the new caret position until the input has been formatted
+		setTimeout(() => {
+			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
+		}, 0.1);
 	};
 
 	let formattedValue = '';

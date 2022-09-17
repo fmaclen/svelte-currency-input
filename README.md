@@ -105,7 +105,7 @@ The [default styles](https://github.com/canutin/svelte-currency-input/blob/main/
 Here's ways in which you can contribute:
 
 - Found a bug? Open a [new issue](https://github.com/canutin/svelte-currency-input/issues/new)
-- Browse our [existing issues](https://github.com/canutin/svelte-currency-input/issues)
+- Comment or upvote [existing issues](https://github.com/canutin/svelte-currency-input/issues)
 - Submit a [pull request](https://github.com/canutin/svelte-currency-input/pulls)
 
 ## Developing
