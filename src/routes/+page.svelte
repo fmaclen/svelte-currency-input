@@ -14,7 +14,7 @@
 <form class="demoForm" on:submit={handleSubmit}>
 	<div class="demoForm__container">
 		<CurrencyInput name="default" value={-42069.69} />
-		<CurrencyInput name="real" locale="br-pt" currency="BRL" />
+		<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
 		<CurrencyInput
 			name="pound"
 			value={1234.56}

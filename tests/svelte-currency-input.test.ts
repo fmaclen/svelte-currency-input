@@ -10,18 +10,18 @@ test.describe('CurrencyInput', () => {
 		await page.goto('/');
 
 		// Test field with "zero" value
-		const realUnformattedInput = page.locator('.currencyInput__unformatted[name=real]');
-		const realFormattedInput = page.locator('.currencyInput__formatted[name="formatted-real"]');
-		await expect(realUnformattedInput).not.toBeDisabled();
-		await expect(realUnformattedInput).toHaveAttribute('type', 'hidden');
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).not.toBeDisabled();
-		await expect(realFormattedInput).toHaveValue('');
-		await expect(realFormattedInput).toHaveAttribute('type', 'text');
-		await expect(realFormattedInput).toHaveAttribute('placeholder', 'R$0.00');
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--positive/);
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
-		await expect(realFormattedInput).toHaveClass(/currencyInput__formatted--zero/);
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+		await expect(colonUnformattedInput).not.toBeDisabled();
+		await expect(colonUnformattedInput).toHaveAttribute('type', 'hidden');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).not.toBeDisabled();
+		await expect(colonFormattedInput).toHaveValue('');
+		await expect(colonFormattedInput).toHaveAttribute('type', 'text');
+		await expect(colonFormattedInput).toHaveAttribute('placeholder', '₡0,00');
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--positive/);
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
+		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--zero/);
 
 		// Test field with "positive" value
 		const yenUnformattedInput = page.locator('.currencyInput__unformatted[name=yen]');
@@ -76,8 +76,8 @@ test.describe('CurrencyInput', () => {
 				{
 					default: '-42069.69',
 					'formatted-default': '-$42,069.69',
-					real: '0',
-					'formatted-real': '',
+					colon: '0',
+					'formatted-colon': '',
 					pound: '1234.56',
 					'formatted-pound': '£1,234.56',
 					bitcoin: '0.87654321',
@@ -98,91 +98,92 @@ test.describe('CurrencyInput', () => {
 	test('Updating an input has the correct behavior', async ({ page }) => {
 		await page.goto('/');
 
-		const realUnformattedInput = page.locator('.currencyInput__unformatted[name=real]');
-		const realFormattedInput = page.locator('.currencyInput__formatted[name="formatted-real"]');
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
 		// Check the there is no value in the input
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
 
-		await realFormattedInput.focus();
-		await page.keyboard.type('420.69');
-		await expect(realFormattedInput).toHaveValue('R$420.69');
-		await expect(realUnformattedInput).toHaveValue('420.69');
-		await expect(realFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
+		await colonFormattedInput.focus();
+		await page.keyboard.type('420,69');
+		await expect(colonFormattedInput).toHaveValue('₡420,69');
+		await expect(colonUnformattedInput).toHaveValue('420.69');
+		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
 
 		// Use arrow keys to go back to the first character
-		for (let i = 0; i < 'R$420.69'.length; i++) await page.keyboard.press('ArrowLeft');
+		for (let i = 0; i < '₡420,69'.length; i++) await page.keyboard.press('ArrowLeft');
 		await page.keyboard.type('-');
-		await expect(realFormattedInput).toHaveValue('-R$420.69');
-		await expect(realUnformattedInput).toHaveValue('-420.69');
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--positive/);
-		await expect(realFormattedInput).toHaveClass(/currencyInput__formatted--negative/);
-		await expect(realFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
+		await expect(colonFormattedInput).toHaveValue('-₡420,69');
+		await expect(colonUnformattedInput).toHaveValue('-420.69');
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--positive/);
+		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--negative/);
+		await expect(colonFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
 
 		// Use right arrow keys to position cusror at the end of the input
-		for (let i = 0; i < 'R$420.69'.length; i++) await page.keyboard.press('ArrowRight');
+		for (let i = 0; i < '₡420,69'.length; i++) await page.keyboard.press('ArrowRight');
 		// Delete the number but keep the currency symbol and sign
-		for (let i = 1; i < '420.69'.length; i++) await page.keyboard.press('Backspace');
-		await expect(realFormattedInput).toHaveValue('-R$');
-		// FIXME: at this point the hidden value should be set to 0 but without formatting `realFormattedInput`
-		await expect(realUnformattedInput).toHaveValue('-4');
+		for (let i = 1; i < '420,69'.length; i++) await page.keyboard.press('Backspace');
+		await expect(colonFormattedInput).toHaveValue('-₡');
+		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
+		await expect(colonUnformattedInput).toHaveValue('-4');
 
 		await page.keyboard.press('Backspace');
-		await expect(realFormattedInput).toHaveValue('');
-		await expect(realUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('-');
+		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
+		await expect(colonUnformattedInput).toHaveValue('-4');
 
-		await page.keyboard.type('-69.42');
-		await expect(realFormattedInput).toHaveValue('-R$69.42');
-		await expect(realUnformattedInput).toHaveValue('-69.42');
+		await page.keyboard.type('69,42');
+		await expect(colonFormattedInput).toHaveValue('-₡69,42');
+		await expect(colonUnformattedInput).toHaveValue('-69.42');
 
-		for (let i = 0; i < '-R$69.42'.length; i++) await page.keyboard.press('Backspace');
-		await expect(realUnformattedInput).toHaveValue('0');
+		for (let i = 0; i < '-₡69,42'.length; i++) await page.keyboard.press('Backspace');
+		await expect(colonUnformattedInput).toHaveValue('0');
 	});
 
 	test("Incorrect characters can't be entered", async ({ page }) => {
 		await page.goto('/');
 
-		const realUnformattedInput = page.locator('.currencyInput__unformatted[name=real]');
-		const realFormattedInput = page.locator('.currencyInput__formatted[name="formatted-real"]');
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
 		// Check the there is no value in the input
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check typing letters doesn't do anything
-		await realFormattedInput.focus();
+		await colonFormattedInput.focus();
 		await page.keyboard.type('abc');
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check keyboard combinations don't do anything
 		await page.keyboard.press('Shift+A');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check keyboard shortcuts are allowed
-		await page.keyboard.type('420.69');
-		await expect(realFormattedInput).toHaveValue('R$420.69');
-		await expect(realUnformattedInput).toHaveValue('420.69');
+		await page.keyboard.type('420,69');
+		await expect(colonFormattedInput).toHaveValue('₡420,69');
+		await expect(colonUnformattedInput).toHaveValue('420.69');
 
 		// Check "Backspace" works
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
 
 		// Add data to the field again
-		await page.keyboard.type('-420.69');
-		await expect(realFormattedInput).toHaveValue('-R$420.69');
-		await expect(realUnformattedInput).toHaveValue('-420.69');
+		await page.keyboard.type('-420,69');
+		await expect(colonFormattedInput).toHaveValue('-₡420,69');
+		await expect(colonUnformattedInput).toHaveValue('-420.69');
 
 		// Check "Delete" also works
 		await selectAll(page);
 		await page.keyboard.press('Delete');
-		await expect(realUnformattedInput).toHaveValue('0');
-		await expect(realFormattedInput).toHaveValue('');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
 	});
 
 	test('Placeholders can be overriden', async ({ page }) => {
