@@ -2,7 +2,7 @@
 
 A form input that converts numbers to localized currency formats as you type
 
-[<img width="968" alt="image" src="https://user-images.githubusercontent.com/1434675/190871892-beb3992e-f7e1-44d6-b2bf-ec9e504f4065.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
+[<img width="971" alt="image" src="https://user-images.githubusercontent.com/1434675/190872783-18c7d079-a5c7-4e66-b199-53461404120c.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
 
 <p align="center">
   👩‍💻 Play with it on <a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">REPL</a>  &nbsp;—&nbsp; 💵 See it in a <a href="https://github.com/Canutin/desktop/blob/master/sveltekit/src/lib/components/FormCurrency.svelte" target="_blank">real project</a>!
