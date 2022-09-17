@@ -10,6 +10,7 @@
 	export let name: string = DEFAULT_NAME;
 	export let required: boolean = false;
 	export let disabled: boolean = false;
+	export let placeholder: number | null | undefined = DEFAULT_VALUE;
 	export let isNegativeAllowed: boolean = true;
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
@@ -75,11 +76,20 @@
 	};
 
 	let formattedValue = '';
+	let formattedPlaceholder = '';
 	$: isZero = value === 0;
 	$: isNegative = value < 0;
 	$: value, setFormattedValue();
 
-	const placeholder = formatCurrency(DEFAULT_VALUE, 2, 2); // e.g. '$0.00'
+	switch (placeholder) {
+		case null:
+			break;
+		case undefined:
+			formattedPlaceholder = formatCurrency(DEFAULT_VALUE, 2, 2);
+			break;
+		default:
+			formattedPlaceholder = formatCurrency(placeholder, 2, 2);
+	}
 </script>
 
 <div class="currencyInput">
@@ -95,7 +105,7 @@
 		inputmode="numeric"
 		name={`formatted-${name}`}
 		required={required && !isZero}
-		{placeholder}
+		placeholder={formattedPlaceholder}
 		{disabled}
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}
