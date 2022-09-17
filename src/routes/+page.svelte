@@ -1,9 +1,6 @@
 <script lang="ts">
 	import CurrencyInput from '$lib/CurrencyInput.svelte';
 
-	const locale = 'nl-NL';
-	const currency = 'EUR';
-
 	let output: string;
 	const handleSubmit = (event: Event) => {
 		event.preventDefault();
@@ -16,20 +13,33 @@
 
 <form class="demoForm" on:submit={handleSubmit}>
 	<div class="demoForm__container">
-		<CurrencyInput name="total" value={-42069.69} />
-		<CurrencyInput name="rent" />
-		<CurrencyInput name="balance" value={1234.56} isNegativeAllowed={false} placeholder={null} />
-		<CurrencyInput name="btc" value={0.87654321} locale="th-TH" currency="THB" fractionDigits={8} />
-
-		<CurrencyInput name="amount" value={5678.9} {locale} {currency} />
-		<CurrencyInput name="loss" value={97532.95} disabled={true} {locale} {currency} />
-		<CurrencyInput name="cost" value={-42069.69} {locale} {currency} />
+		<CurrencyInput name="default" value={-42069.69} />
+		<CurrencyInput name="real" locale="br-pt" currency="BRL" />
 		<CurrencyInput
-			name="deficit"
+			name="pound"
+			value={1234.56}
+			isNegativeAllowed={false}
+			placeholder={null}
+			locale="en-GB"
+			currency="GBP"
+		/>
+		<CurrencyInput
+			name="bitcoin"
+			value={0.87654321}
+			locale="th-TH"
+			currency="THB"
+			fractionDigits={8}
+		/>
+
+		<CurrencyInput name="yen" value={5678.9} locale="ja-JA" currency="JPY" />
+		<CurrencyInput name="krone" value={97532.95} disabled={true} locale="no-NO" currency="NOK" />
+		<CurrencyInput name="euro" value={-42069.69} locale="nl-NL" currency="EUR" />
+		<CurrencyInput
+			name="won"
 			placeholder={1234.56}
 			isNegativeAllowed={false}
-			{locale}
-			{currency}
+			locale="ko-KO"
+			currency="KRW"
 		/>
 	</div>
 
