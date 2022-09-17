@@ -19,7 +19,7 @@
 		<CurrencyInput name="total" value={-42069.69} />
 		<CurrencyInput name="rent" />
 		<CurrencyInput name="balance" value={1234.56} isNegativeAllowed={false} placeholder={null} />
-		<CurrencyInput name="cashflow" value={5678.9} />
+		<CurrencyInput name="btc" value={0.87654321} fractionDigits={8} />
 
 		<CurrencyInput name="amount" value={5678.9} {locale} {currency} />
 		<CurrencyInput name="loss" value={97532.95} disabled={true} {locale} {currency} />

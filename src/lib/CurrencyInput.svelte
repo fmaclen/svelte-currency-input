@@ -3,6 +3,7 @@
 	const DEFAULT_CURRENCY = 'USD';
 	const DEFAULT_NAME = 'total';
 	const DEFAULT_VALUE = 0;
+	const DEFAULT_FRACTION_DIGITS = 2;
 
 	export let value: number = DEFAULT_VALUE;
 	export let locale: string = DEFAULT_LOCALE;
@@ -12,6 +13,7 @@
 	export let disabled: boolean = false;
 	export let placeholder: number | null = DEFAULT_VALUE;
 	export let isNegativeAllowed: boolean = true;
+	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
 	const formatCurrency = (
@@ -37,16 +39,18 @@
 		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter) event.preventDefault();
 	};
 
+	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
+	const isDecimalComma = currencyDecimal === ','; // Remove currency formatting from `formattedValue` so we can assign it to `value`
+	const currencySymbol = formatCurrency(0, 0)
+		.replace('0', '') // e.g. '$0' > '$'
+		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
+
 	// Updates `value` by stripping away the currency formatting
 	const setUnformattedValue = (event: KeyboardEvent) => {
 		// Don't format if the user is typing a `currencyDecimal` point
-		const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
 		if (event.key === currencyDecimal) return;
 
-		// If `formattedValue` is ['$', '-$', "-"] we don't need to continue
-		const currencySymbol = formatCurrency(0, 0)
-			.replace('0', '') // e.g. '$0' > '$'
-			.replace(/\u00A0/, ''); // e.g '0 €' > '€'
+		// Don't format if `formattedValue` is ['$', '-$', "-"]
 		const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
 		const strippedUnformattedValue = formattedValue.replace(' ', '');
 		if (ignoreSymbols.includes(strippedUnformattedValue)) return;
@@ -64,7 +68,6 @@
 			value = 0;
 		} else {
 			// The order of the following operations is *critical*
-			const isDecimalComma = currencyDecimal === ','; // Remove currency formatting from `formattedValue` so we can assign it to `value`
 			unformattedValue = unformattedValue.replace(isDecimalComma ? /\./g : /\,/g, ''); // Remove all group symbols
 			if (isDecimalComma) unformattedValue = unformattedValue.replace(',', '.'); // If the decimal point is a comma, replace it with a period
 			value = parseFloat(unformattedValue);
@@ -72,11 +75,12 @@
 	};
 
 	const setFormattedValue = () => {
-		formattedValue = isZero ? '' : formatCurrency(value, 2, 0);
+		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, 0);
 	};
 
 	let formattedValue = '';
-	let formattedPlaceholder = placeholder !== null ? formatCurrency(placeholder, 2, 2) : '';
+	let formattedPlaceholder =
+		placeholder !== null ? formatCurrency(placeholder, fractionDigits, fractionDigits) : '';
 	$: isZero = value === 0;
 	$: isNegative = value < 0;
 	$: value, setFormattedValue();
