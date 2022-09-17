@@ -1,11 +1,11 @@
-name: Release npm package
+name: Test, build & release
 
 on:
   push:
     branches: [main, master]
 
 jobs:
-  release:
+  Publish:
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -21,8 +21,8 @@ jobs:
         run: npm test
         env:
           NODE_ENV: CI
-      - name: Release with semantic-release
-        - run: npx semantic-release
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Run semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
