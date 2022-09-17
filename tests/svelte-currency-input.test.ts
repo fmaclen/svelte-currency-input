@@ -85,7 +85,7 @@ test.describe('CurrencyInput', () => {
 					yen: '5678.9',
 					'formatted-yen': '￥5,678.9',
 					euro: '-42069.69',
-					'formatted-euro': '€ -42.069,69',
+					'formatted-euro': '-42.069,69 €',
 					won: '0',
 					'formatted-won': ''
 				},
