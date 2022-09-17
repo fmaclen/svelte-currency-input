@@ -31,9 +31,9 @@
 		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
 		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
 		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
-		const isValidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
+		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
 
-		if (!isDeletion && !isModifier && !isArrowKey && isValidCharacter) event.preventDefault();
+		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter) event.preventDefault();
 	};
 
 	// Updates `value` by stripping away the currency formatting
