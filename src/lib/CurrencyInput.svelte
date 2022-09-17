@@ -26,6 +26,16 @@
 		}).format(value);
 	};
 
+	// Checks if the key pressed is allowed
+	const handleKeyDown = (event: KeyboardEvent) => {
+		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
+		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
+		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+		const isValidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
+
+		if (!isDeletion && !isModifier && !isArrowKey && isValidCharacter) event.preventDefault();
+	};
+
 	// Updates `value` by stripping away the currency formatting
 	const setUnformattedValue = (event: KeyboardEvent) => {
 		// Don't format if the user is typing a `currencyDecimal` point
@@ -64,15 +74,6 @@
 		formattedValue = isZero ? '' : formatCurrency(value, 2, 0);
 	};
 
-	const handleKeyDown = (event: KeyboardEvent) => {
-		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
-		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
-		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
-		const isValidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
-
-		if (!isDeletion && !isModifier && !isArrowKey && isValidCharacter) event.preventDefault();
-	};
-
 	let formattedValue = '';
 	$: isZero = value === 0;
 	$: isNegative = value < 0;
@@ -97,8 +98,8 @@
 		{placeholder}
 		{disabled}
 		bind:value={formattedValue}
-		on:keyup={setUnformattedValue}
 		on:keydown={handleKeyDown}
+		on:keyup={setUnformattedValue}
 	/>
 </div>
 
