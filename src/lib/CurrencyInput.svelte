@@ -1,16 +1,16 @@
 <script lang="ts">
-	export let value: number = 0;
-	export let locale: string = 'en-US';
-	export let currency: string = 'USD';
-	export let name: string = 'total';
+	const DEFAULT_LOCALE = 'en-US';
+	const DEFAULT_CURRENCY = 'USD';
+	const DEFAULT_NAME = 'total';
+	const DEFAULT_VALUE = 0;
+
+	export let value: number = DEFAULT_VALUE;
+	export let locale: string = DEFAULT_LOCALE;
+	export let currency: string = DEFAULT_CURRENCY;
+	export let name: string = DEFAULT_NAME;
 	export let required: boolean = false;
 	export let disabled: boolean = false;
 	export let isNegativeAllowed: boolean = true;
-
-	let formattedValue = '';
-	$: isZero = value === 0;
-	$: isNegative = value < 0;
-	$: value, applyFormatting();
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
 	const formatCurrency = (
@@ -26,18 +26,26 @@
 		}).format(value);
 	};
 
-	const placeholder = formatCurrency(0, 2, 2); // e.g. '$0.00'
-	const currencySymbol = formatCurrency(0, 0)
-		.replace('0', '') // e.g. '$0' > '$'
-		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
-	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
+	// Checks if the key pressed is allowed
+	const handleKeyDown = (event: KeyboardEvent) => {
+		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
+		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
+		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
+
+		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter) event.preventDefault();
+	};
 
 	// Updates `value` by stripping away the currency formatting
-	const setValue = (event?: KeyboardEvent) => {
-		// Don't format if the user is typing a currencyDecimal point
-		if (event?.key === currencyDecimal) return;
+	const setUnformattedValue = (event: KeyboardEvent) => {
+		// Don't format if the user is typing a `currencyDecimal` point
+		const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
+		if (event.key === currencyDecimal) return;
 
 		// If `formattedValue` is ['$', '-$', "-"] we don't need to continue
+		const currencySymbol = formatCurrency(0, 0)
+			.replace('0', '') // e.g. '$0' > '$'
+			.replace(/\u00A0/, ''); // e.g '0 €' > '€'
 		const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
 		const strippedUnformattedValue = formattedValue.replace(' ', '');
 		if (ignoreSymbols.includes(strippedUnformattedValue)) return;
@@ -48,7 +56,7 @@
 			: formattedValue.replace(/[^0-9,.]/g, '');
 
 		// Reverse the value when minus is pressed
-		if (isNegativeAllowed && event?.key === '-') value = value * -1;
+		if (isNegativeAllowed && event.key === '-') value = value * -1;
 
 		// Finally set the value
 		if (Number.isNaN(parseFloat(unformattedValue))) {
@@ -62,9 +70,16 @@
 		}
 	};
 
-	const applyFormatting = () => {
+	const setFormattedValue = () => {
 		formattedValue = isZero ? '' : formatCurrency(value, 2, 0);
 	};
+
+	let formattedValue = '';
+	$: isZero = value === 0;
+	$: isNegative = value < 0;
+	$: value, setFormattedValue();
+
+	const placeholder = formatCurrency(DEFAULT_VALUE, 2, 2); // e.g. '$0.00'
 </script>
 
 <div class="currencyInput">
@@ -83,7 +98,8 @@
 		{placeholder}
 		{disabled}
 		bind:value={formattedValue}
-		on:keyup={setValue}
+		on:keydown={handleKeyDown}
+		on:keyup={setUnformattedValue}
 	/>
 </div>
 
