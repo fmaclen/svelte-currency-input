@@ -79,7 +79,7 @@ test.describe('CurrencyInput', () => {
 					balance: '1234.56',
 					'formatted-balance': '$1,234.56',
 					btc: '0.87654321',
-					'formatted-btc': '$0.87654321',
+					'formatted-btc': '฿0.87654321',
 					amount: '5678.9',
 					'formatted-amount': '€ 5.678,9',
 					cost: '-42069.69',
@@ -211,8 +211,8 @@ test.describe('CurrencyInput', () => {
 		const btcFormattedInput = page.locator('.currencyInput__formatted[name="formatted-btc"]');
 
 		await expect(btcUnformattedInput).toHaveValue('0.87654321');
-		await expect(btcFormattedInput).toHaveValue('$0.87654321');
-		await expect(btcFormattedInput).toHaveAttribute('placeholder', '$0.00000000');
+		await expect(btcFormattedInput).toHaveValue('฿0.87654321');
+		await expect(btcFormattedInput).toHaveAttribute('placeholder', '฿0.00000000');
 
 		await btcFormattedInput.focus();
 		await selectAll(page);
@@ -222,7 +222,7 @@ test.describe('CurrencyInput', () => {
 
 		await page.keyboard.type('-0.987654321');
 		await expect(btcUnformattedInput).toHaveValue('-0.987654321');
-		await expect(btcFormattedInput).toHaveValue('-$0.98765432');
+		await expect(btcFormattedInput).toHaveValue('-฿0.98765432');
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
