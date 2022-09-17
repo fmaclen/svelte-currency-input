@@ -54,18 +54,18 @@ test.describe('CurrencyInput', () => {
 		await expect(defaultFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
 
 		// Test field that is "disabled"
-		const kroneUnformattedInput = page.locator('.currencyInput__unformatted[name=krone]');
-		const kroneFormattedInput = page.locator('.currencyInput__formatted[name="formatted-krone"]');
-		await expect(kroneUnformattedInput).toBeDisabled();
-		await expect(kroneUnformattedInput).toHaveAttribute('type', 'hidden');
-		await expect(kroneUnformattedInput).toHaveValue('97532.95');
-		await expect(kroneFormattedInput).toHaveValue('kr 97 532,95');
-		await expect(kroneFormattedInput).toBeDisabled();
-		await expect(kroneFormattedInput).toHaveAttribute('type', 'text');
-		await expect(kroneFormattedInput).toHaveAttribute('placeholder', 'kr 0,00'); // The space is `%A0`, not `%20`
-		await expect(kroneFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
-		await expect(kroneFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
-		await expect(kroneFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
+		const shekelUnformattedInput = page.locator('.currencyInput__unformatted[name=shekel]');
+		const shekelFormattedInput = page.locator('.currencyInput__formatted[name="formatted-shekel"]');
+		await expect(shekelUnformattedInput).toBeDisabled();
+		await expect(shekelUnformattedInput).toHaveAttribute('type', 'hidden');
+		await expect(shekelUnformattedInput).toHaveValue('97532.95');
+		await expect(shekelFormattedInput).toHaveValue('₪97,532.95');
+		await expect(shekelFormattedInput).toBeDisabled();
+		await expect(shekelFormattedInput).toHaveAttribute('type', 'text');
+		await expect(shekelFormattedInput).toHaveAttribute('placeholder', '₪0.00');
+		await expect(shekelFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
+		await expect(shekelFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
+		await expect(shekelFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
 
 		// Submitting a form returns the correct values
 		const demoSubmitForm = page.locator('button.demoForm__submit');

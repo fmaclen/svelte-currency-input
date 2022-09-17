@@ -32,7 +32,7 @@
 		/>
 
 		<CurrencyInput name="yen" value={5678.9} locale="ja-JA" currency="JPY" />
-		<CurrencyInput name="krone" value={97532.95} disabled={true} locale="no-NO" currency="NOK" />
+		<CurrencyInput name="shekel" value={97532.95} disabled={true} locale="il-IL" currency="ILS" />
 		<CurrencyInput name="euro" value={-42069.69} locale="nl-NL" currency="EUR" />
 		<CurrencyInput
 			name="won"
