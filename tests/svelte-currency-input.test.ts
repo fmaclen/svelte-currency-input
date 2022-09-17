@@ -71,16 +71,16 @@ test.describe('CurrencyInput', () => {
 					'formatted-total': '-$42,069.69',
 					rent: '0',
 					'formatted-rent': '',
-					cashflow: '5678.9',
-					'formatted-cashflow': '$5,678.9',
 					balance: '1234.56',
 					'formatted-balance': '$1,234.56',
+					cashflow: '5678.9',
+					'formatted-cashflow': '$5,678.9',
 					amount: '5678.9',
 					'formatted-amount': '€ 5.678,9',
-					deficit: '1234.56',
-					'formatted-deficit': '€ 1.234,56',
 					cost: '-42069.69',
-					'formatted-cost': '€ -42.069,69'
+					'formatted-cost': '€ -42.069,69',
+					deficit: '0',
+					'formatted-deficit': ''
 				},
 				null,
 				2
@@ -182,6 +182,26 @@ test.describe('CurrencyInput', () => {
 		await page.keyboard.press('Delete');
 		await expect(rentUnformattedInput).toHaveValue('0');
 		await expect(rentFormattedInput).toHaveValue('');
+	});
+
+	test('Placeholders can be overriden', async ({ page }) => {
+		await page.goto('/');
+
+		// Default placeholder
+		const rentFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rent"]');
+		await expect(rentFormattedInput).toHaveAttribute('placeholder', '$0.00');
+
+		// Null placeholder
+		const balanceFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-balance"]'
+		);
+		await expect(balanceFormattedInput).toHaveAttribute('placeholder', '');
+
+		// Overriden placeholder
+		const deficitFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-deficit"]'
+		);
+		await expect(deficitFormattedInput).toHaveAttribute('placeholder', '€ 1.234,56'); // The space is `%A0`, not `%20`
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {

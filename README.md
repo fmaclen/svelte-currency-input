@@ -58,15 +58,16 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 
 ## API
 
-| Option            | Type      | Default     | Description                                                                                                                                         |
-| ----------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value             | `number`  | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder                                                             |
-| locale            | `string`  | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896)                                                                      |
-| currency          | `string`  | `USD`       | Overrides default currency. [Examples](https://github.com/datasets/currency-codes/blob/master/data/codes-all.csv)                                   |
-| name              | `string`  | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
-| required          | `boolean` | `false`     | Marks the inputs as required                                                                                                                        |
-| disabled          | `boolean` | `false`     | Marks the inputs as disabled                                                                                                                        |
-| isNegativeAllowed | `boolean` | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
+| Option            | Type            | Default     | Description                                                                                                                                         |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| value             | `number`        | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder                                                             |
+| locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896)                                                                      |
+| currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://github.com/datasets/currency-codes/blob/master/data/codes-all.csv)                                   |
+| name              | `string`        | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
+| required          | `boolean`       | `false`     | Marks the inputs as required                                                                                                                        |
+| disabled          | `boolean`       | `false`     | Marks the inputs as disabled                                                                                                                        |
+| placeholder       | `number` `null` | `0`         | Overrides the default placeholder. Setting the value to a `number` will display it as formatted. Setting it to `null` will not show a placeholder   |
+| isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
 
 ## Styling
 
