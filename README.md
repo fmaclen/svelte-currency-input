@@ -2,7 +2,7 @@
 
 A form input that converts numbers to localized currency formats as you type
 
-[<img width="1059" alt="image" src="https://user-images.githubusercontent.com/1434675/190315136-c1d310ab-0ef1-441d-a80c-2b3727d74f59.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
+[<img width="962" alt="image" src="https://user-images.githubusercontent.com/1434675/190873948-c0385747-6fa9-4077-8bd5-717e4d1124a0.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
 
 <p align="center">
   👩‍💻 Play with it on <a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">REPL</a>  &nbsp;—&nbsp; 💵 See it in a <a href="https://github.com/Canutin/desktop/blob/master/sveltekit/src/lib/components/FormCurrency.svelte" target="_blank">real project</a>!
@@ -58,17 +58,17 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 
 ## API
 
-| Option            | Type            | Default     | Description                                                                                                                                         |
-| ----------------- | --------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| value             | `number`        | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder                                                             |
-| locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896)                                                                      |
-| currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://github.com/datasets/currency-codes/blob/master/data/codes-all.csv)                                   |
+| Option            | Type            | Default     | Description |
+| ----------------- | --------------- | ----------- | ----------- |
+| value             | `number`        | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder |
+| locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896) |
+| currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://www.xe.com/symbols/) |
 | name              | `string`        | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
-| required          | `boolean`       | `false`     | Marks the inputs as required                                                                                                                        |
-| disabled          | `boolean`       | `false`     | Marks the inputs as disabled                                                                                                                        |
+| required          | `boolean`       | `false`     | Marks the inputs as required |
+| disabled          | `boolean`       | `false`     | Marks the inputs as disabled |
 | placeholder       | `number` `null` | `0`         | Overrides the default placeholder. Setting the value to a `number` will display it as formatted. Setting it to `null` will not show a placeholder   |
 | isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
-| fractionDigits | `number` | `2` | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
+| fractionDigits    | `number`        | `2`         | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
 
 ## Styling
 
