@@ -227,6 +227,32 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765432');
 	});
 
+	test('Pressing the comma or period keys have the correct behavior', async ({ page }) => {
+		await page.goto('/');
+
+		// Pressing `.` when the decimal point is `,` gets converted to `,`
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		await colonFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await page.keyboard.type('-69.42');
+		await expect(colonFormattedInput).toHaveValue('-₡69,42');
+		await expect(colonUnformattedInput).toHaveValue('-69.42');
+
+		// Pressing `,` when the decimal point is `.` gets converted to `.`
+		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
+		const bitcoinFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-bitcoin"]'
+		);
+		await bitcoinFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await page.keyboard.type('69,42');
+		await expect(bitcoinFormattedInput).toHaveValue('฿69.42');
+		await expect(bitcoinUnformattedInput).toHaveValue('69.42');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
