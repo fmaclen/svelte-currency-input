@@ -41,7 +41,7 @@
 
 	let inputTarget: HTMLInputElement;
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
-	const isDecimalComma = currencyDecimal === ','; // Remove currency formatting from `formattedValue` so we can assign it to `value`
+	const isDecimalComma = currencyDecimal === ',';
 	const currencySymbol = formatCurrency(0, 0)
 		.replace('0', '') // e.g. '$0' > '$'
 		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
@@ -50,6 +50,12 @@
 	const setUnformattedValue = (event: KeyboardEvent) => {
 		// Don't format if the user is typing a `currencyDecimal` point
 		if (event.key === currencyDecimal) return;
+
+		// Always convert _the opposite_ decimal key press to the `currencyDecimal` point
+		if (isDecimalComma && event.key === '.')
+			formattedValue = formattedValue.replace('.', currencyDecimal);
+		if (!isDecimalComma && event.key === ',')
+			formattedValue = formattedValue.replace(',', currencyDecimal);
 
 		// Don't format if `formattedValue` is ['$', '-$', "-"]
 		const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
