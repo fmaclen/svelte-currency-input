@@ -51,9 +51,11 @@
 		// Don't format if the user is typing a `currencyDecimal` point
 		if (event.key === currencyDecimal) return;
 
-		// Always convert the opposite decimal key press to the `currencyDecimal` point
-		if (isDecimalComma && event.key === '.') formattedValue = formattedValue.replace('.', ',');
-		if (!isDecimalComma && event.key === ',') formattedValue = formattedValue.replace(',', '.');
+		// Always convert _the opposite_ decimal key press to the `currencyDecimal` point
+		if (isDecimalComma && event.key === '.')
+			formattedValue = formattedValue.replace('.', currencyDecimal);
+		if (!isDecimalComma && event.key === ',')
+			formattedValue = formattedValue.replace(',', currencyDecimal);
 
 		// Don't format if `formattedValue` is ['$', '-$', "-"]
 		const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
