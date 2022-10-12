@@ -63,10 +63,7 @@
 			// Don't format if `formattedValue` is ['$', '-$', "-"]
 			const ignoreSymbols = [currencySymbol, `-${currencySymbol}`, '-'];
 			const strippedUnformattedValue = formattedValue.replace(' ', '');
-			if (ignoreSymbols.includes(strippedUnformattedValue)) {
-				value = 0;
-				return;
-			};
+			if (ignoreSymbols.includes(strippedUnformattedValue)) return;
 
 			// Set the starting caret positions
 			inputTarget = event.target as HTMLInputElement;
