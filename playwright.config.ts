@@ -22,7 +22,7 @@ const config: PlaywrightTestConfig = {
 		command: 'npm run dev',
 		port: 5173
 	},
-	retries: isEnvCI ? 5 : 0,
+	retries: isEnvCI ? 3 : 0,
 	use: {
 		trace: isEnvCI ? 'off' : 'retain-on-failure',
 		screenshot: isEnvCI ? 'off' : 'only-on-failure'

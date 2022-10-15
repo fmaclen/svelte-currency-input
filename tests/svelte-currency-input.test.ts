@@ -230,11 +230,18 @@ test.describe('CurrencyInput', () => {
 			const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 			const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
 			await euroFormattedInput.focus();
+
+			// NOTE: Webkit behavior is affected when the currency symbol is trailing so we
+			// *select all/delete** the contents of the field twice to make sure it's empty.
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
-			await page.keyboard.type('-42069.11');
-			await expect(euroFormattedInput).toHaveValue('-42.069,11 €');
-			await expect(euroUnformattedInput).toHaveValue('-42069.11');
+			await selectAll(page);
+			await page.keyboard.press('Backspace');
+			await expect(euroUnformattedInput).toHaveValue('0');
+
+			await page.keyboard.type('-111222.33');
+			await expect(euroFormattedInput).toHaveValue('-111.222,33 €');
+			await expect(euroUnformattedInput).toHaveValue('-111222.33');
 		});
 
 		test('Pressing "," gets converted to "."', async ({ page }) => {
@@ -246,9 +253,11 @@ test.describe('CurrencyInput', () => {
 			await bitcoinFormattedInput.focus();
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
-			await page.keyboard.type('42069,11');
-			await expect(bitcoinFormattedInput).toHaveValue('฿42,069.11');
-			await expect(bitcoinUnformattedInput).toHaveValue('42069.11');
+			await expect(bitcoinUnformattedInput).toHaveValue('0');
+
+			await page.keyboard.type('444555,66');
+			await expect(bitcoinFormattedInput).toHaveValue('฿444,555.66');
+			await expect(bitcoinUnformattedInput).toHaveValue('444555.66');
 		});
 	});
 
