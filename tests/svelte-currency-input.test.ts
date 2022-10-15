@@ -6,9 +6,12 @@ const selectAll = async (page: Page) => {
 };
 
 test.describe('CurrencyInput', () => {
-	test('Default behavior is correct', async ({ page }) => {
+	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
+		await page.reload(); // Forces the cache to be cleared
+	});
 
+	test('Default behavior is correct', async ({ page }) => {
 		// Test field with "zero" value
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
@@ -96,8 +99,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Updating an input has the correct behavior', async ({ page }) => {
-		await page.goto('/');
-
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
@@ -144,8 +145,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test("Incorrect characters can't be entered", async ({ page }) => {
-		await page.goto('/');
-
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
@@ -187,8 +186,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Placeholders can be overriden', async ({ page }) => {
-		await page.goto('/');
-
 		// Default placeholder
 		const defaultFormattedInput = page.locator(
 			'.currencyInput__formatted[name="formatted-default"]'
@@ -205,8 +202,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Fraction digits can be overriden', async ({ page }) => {
-		await page.goto('/');
-
 		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
 		const bitcoinFormattedInput = page.locator(
 			'.currencyInput__formatted[name="formatted-bitcoin"]'
@@ -229,8 +224,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Pressing the comma or period keys have the correct behavior', async ({ page }) => {
-		await page.goto('/');
-
 		// Pressing `.` when the decimal point is `,` gets converted to `,`
 		const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 		const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
@@ -255,7 +248,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Formatting is applied on:blur', async ({ page }) => {
-		await page.goto('/');
 		const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 		const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
