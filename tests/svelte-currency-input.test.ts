@@ -277,6 +277,33 @@ test.describe('CurrencyInput', () => {
 		await expect(euroUnformattedInput).toHaveValue('0');
 	});
 
+	test('Pressing Tab has the correct behavior', async ({ page }) => {
+		const formattedInputs = page.locator('.currencyInput__formatted');
+		expect(await formattedInputs.count()).toBe(8);
+
+		await formattedInputs.first().focus();
+		await expect(formattedInputs.nth(0)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(1)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(2)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(3)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(4)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(5)).not.toBeFocused(); // The fifth input is disabled
+		await expect(formattedInputs.nth(6)).toBeFocused();
+
+		await page.keyboard.press('Tab');
+		await expect(formattedInputs.nth(7)).toBeFocused();
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
