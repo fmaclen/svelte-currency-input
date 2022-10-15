@@ -237,9 +237,9 @@ test.describe('CurrencyInput', () => {
 		await euroFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await page.keyboard.type('-42069.69');
-		await expect(euroFormattedInput).toHaveValue('-42.069,69 €');
-		await expect(euroUnformattedInput).toHaveValue('-42069.69');
+		await page.keyboard.type('-42069.11');
+		await expect(euroFormattedInput).toHaveValue('-42.069,11 €');
+		await expect(euroUnformattedInput).toHaveValue('-42069.11');
 
 		// Pressing `,` when the decimal point is `.` gets converted to `.`
 		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
@@ -249,9 +249,33 @@ test.describe('CurrencyInput', () => {
 		await bitcoinFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await page.keyboard.type('42069,69');
-		await expect(bitcoinFormattedInput).toHaveValue('฿42,069.69');
-		await expect(bitcoinUnformattedInput).toHaveValue('42069.69');
+		await page.keyboard.type('42069,11');
+		await expect(bitcoinFormattedInput).toHaveValue('฿42,069.11');
+		await expect(bitcoinUnformattedInput).toHaveValue('42069.11');
+	});
+
+	test('Formatting is applied on:blur', async ({ page }) => {
+		await page.goto('/');
+		const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
+		const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+
+		// The old value should remain because `-` doesn't override it
+		await euroFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.type('-');
+		await colonFormattedInput.focus();
+		await expect(euroFormattedInput).toHaveValue('-42.069,69 €');
+		await expect(euroUnformattedInput).toHaveValue('-42069.69');
+
+		// The value is reset to 0 because Backspace overrides it
+		await euroFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await page.keyboard.type('-');
+		await colonFormattedInput.focus();
+		await expect(euroFormattedInput).toHaveValue('');
+		await expect(euroUnformattedInput).toHaveValue('0');
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
