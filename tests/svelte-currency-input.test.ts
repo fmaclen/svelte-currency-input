@@ -6,9 +6,11 @@ const selectAll = async (page: Page) => {
 };
 
 test.describe('CurrencyInput', () => {
-	test('Default behavior is correct', async ({ page }) => {
+	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
+	});
 
+	test('Default behavior is correct', async ({ page }) => {
 		// Test field with "zero" value
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
@@ -30,9 +32,9 @@ test.describe('CurrencyInput', () => {
 		await expect(yenUnformattedInput).toHaveAttribute('type', 'hidden');
 		await expect(yenUnformattedInput).toHaveValue('5678.9');
 		await expect(yenFormattedInput).not.toBeDisabled();
-		await expect(yenFormattedInput).toHaveValue('￥5,678.9');
+		await expect(yenFormattedInput).toHaveValue('¥5,678.9');
 		await expect(yenFormattedInput).toHaveAttribute('type', 'text');
-		await expect(yenFormattedInput).toHaveAttribute('placeholder', '￥0.00');
+		await expect(yenFormattedInput).toHaveAttribute('placeholder', '¥0.00');
 		await expect(yenFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
 		await expect(yenFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
 		await expect(yenFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
@@ -83,9 +85,9 @@ test.describe('CurrencyInput', () => {
 					bitcoin: '0.87654321',
 					'formatted-bitcoin': '฿0.87654321',
 					yen: '5678.9',
-					'formatted-yen': '￥5,678.9',
+					'formatted-yen': '¥5,678.9',
 					euro: '-42069.69',
-					'formatted-euro': '-42.069,69 €',
+					'formatted-euro': '€ -42.069,69',
 					won: '0',
 					'formatted-won': ''
 				},
@@ -96,8 +98,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Updating an input has the correct behavior', async ({ page }) => {
-		await page.goto('/');
-
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
@@ -144,8 +144,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test("Incorrect characters can't be entered", async ({ page }) => {
-		await page.goto('/');
-
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
@@ -187,8 +185,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Placeholders can be overriden', async ({ page }) => {
-		await page.goto('/');
-
 		// Default placeholder
 		const defaultFormattedInput = page.locator(
 			'.currencyInput__formatted[name="formatted-default"]'
@@ -205,8 +201,6 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Fraction digits can be overriden', async ({ page }) => {
-		await page.goto('/');
-
 		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
 		const bitcoinFormattedInput = page.locator(
 			'.currencyInput__formatted[name="formatted-bitcoin"]'
@@ -228,30 +222,89 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
 
-	test('Pressing the comma or period keys have the correct behavior', async ({ page }) => {
-		await page.goto('/');
+	test.describe('Pressing the comma or period keys have the correct behavior', async () => {
+		test('Pressing "." gets converted to ","', async ({ page }) => {
+			const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
+			const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
+			await euroFormattedInput.focus();
 
-		// Pressing `.` when the decimal point is `,` gets converted to `,`
+			await selectAll(page);
+			await page.keyboard.press('Backspace');
+			await expect(euroUnformattedInput).toHaveValue('0');
+
+			await page.keyboard.type('-111222.33');
+			await expect(euroFormattedInput).toHaveValue('€ -111.222,33');
+			await expect(euroUnformattedInput).toHaveValue('-111222.33');
+		});
+
+		test('Pressing "," gets converted to "."', async ({ page }) => {
+			const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
+			const bitcoinFormattedInput = page.locator(
+				'.currencyInput__formatted[name="formatted-bitcoin"]'
+			);
+
+			await bitcoinFormattedInput.focus();
+			await selectAll(page);
+			await page.keyboard.press('Backspace');
+			await expect(bitcoinUnformattedInput).toHaveValue('0');
+
+			await page.keyboard.type('444555,66');
+			await expect(bitcoinFormattedInput).toHaveValue('฿444,555.66');
+			await expect(bitcoinUnformattedInput).toHaveValue('444555.66');
+		});
+	});
+
+	test('Formatting is applied on:blur', async ({ page }) => {
 		const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 		const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+
+		// The old value should remain because `-` doesn't override it
+		await euroFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.type('-');
+		await colonFormattedInput.focus();
+		await expect(euroFormattedInput).toHaveValue('€ -42.069,69');
+		await expect(euroUnformattedInput).toHaveValue('-42069.69');
+
+		// The value is reset to 0 because Backspace overrides it
 		await euroFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await page.keyboard.type('-42069.69');
-		await expect(euroFormattedInput).toHaveValue('-42.069,69 €');
-		await expect(euroUnformattedInput).toHaveValue('-42069.69');
+		await page.keyboard.type('-');
+		await colonFormattedInput.focus();
+		await expect(euroFormattedInput).toHaveValue('');
+		await expect(euroUnformattedInput).toHaveValue('0');
+	});
 
-		// Pressing `,` when the decimal point is `.` gets converted to `.`
-		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
-		const bitcoinFormattedInput = page.locator(
-			'.currencyInput__formatted[name="formatted-bitcoin"]'
-		);
-		await bitcoinFormattedInput.focus();
-		await selectAll(page);
-		await page.keyboard.press('Backspace');
-		await page.keyboard.type('42069,69');
-		await expect(bitcoinFormattedInput).toHaveValue('฿42,069.69');
-		await expect(bitcoinUnformattedInput).toHaveValue('42069.69');
+	test('Pressing Tab has the correct behavior', async ({ page }, testInfo) => {
+		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
+		if (testInfo.project.name !== 'webkit') {
+			const formattedInputs = page.locator('.currencyInput__formatted');
+			expect(await formattedInputs.count()).toBe(8);
+
+			await formattedInputs.first().focus();
+			await expect(formattedInputs.nth(0)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(1)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(2)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(3)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(4)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(5)).not.toBeFocused(); // The fifth input is disabled
+			await expect(formattedInputs.nth(6)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(7)).toBeFocused();
+		}
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {

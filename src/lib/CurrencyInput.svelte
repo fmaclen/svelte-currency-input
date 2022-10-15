@@ -34,9 +34,11 @@
 		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
 		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
 		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+		const isTab = event.key === 'Tab';
 		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
 
-		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter) event.preventDefault();
+		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+			event.preventDefault();
 	};
 
 	let inputTarget: HTMLInputElement;

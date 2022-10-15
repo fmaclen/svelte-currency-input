@@ -118,3 +118,20 @@ npm run dev
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
+
+#### Integration tests
+
+The component is tested using [Playwright](https://playwright.dev/).
+You can find the tests in [`tests/svelte-currency-input.test.ts`](https://github.com/Canutin/svelte-currency-input/blob/main/tests/svelte-currency-input.test.ts)
+
+To run all tests on **Chromium**, **Firefox** and **Webkit**:
+```bash
+npm run test
+```
+
+To run all tests on a specific browser (e.g. **Webkit**):
+```bash
+npx playwright test --project=webkit
+```
+
+Additional debug commands can be found on [Playwright's documentation](https://playwright.dev/docs/test-cli).
