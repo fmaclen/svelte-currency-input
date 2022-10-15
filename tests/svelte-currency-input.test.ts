@@ -87,7 +87,7 @@ test.describe('CurrencyInput', () => {
 					yen: '5678.9',
 					'formatted-yen': '¥5,678.9',
 					euro: '-42069.69',
-					'formatted-euro': '-42.069,69 €',
+					'formatted-euro': '€ -42.069,69',
 					won: '0',
 					'formatted-won': ''
 				},
@@ -235,12 +235,10 @@ test.describe('CurrencyInput', () => {
 			// *select all/delete** the contents of the field twice to make sure it's empty.
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
-			await selectAll(page);
-			await page.keyboard.press('Backspace');
 			await expect(euroUnformattedInput).toHaveValue('0');
 
 			await page.keyboard.type('-111222.33');
-			await expect(euroFormattedInput).toHaveValue('-111.222,33 €');
+			await expect(euroFormattedInput).toHaveValue('€ -111.222,33');
 			await expect(euroUnformattedInput).toHaveValue('-111222.33');
 		});
 
@@ -271,7 +269,7 @@ test.describe('CurrencyInput', () => {
 		await selectAll(page);
 		await page.keyboard.type('-');
 		await colonFormattedInput.focus();
-		await expect(euroFormattedInput).toHaveValue('-42.069,69 €');
+		await expect(euroFormattedInput).toHaveValue('€ -42.069,69');
 		await expect(euroUnformattedInput).toHaveValue('-42069.69');
 
 		// The value is reset to 0 because Backspace overrides it
