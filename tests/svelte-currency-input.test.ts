@@ -222,9 +222,10 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinUnformattedInput).toHaveValue('0');
 		await expect(bitcoinFormattedInput).toHaveValue('');
 
-		await page.keyboard.type('-0.987654321');
-		await expect(bitcoinUnformattedInput).toHaveValue('-0.987654321');
-		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765432');
+		// Decimals beyond the maximum allowed are rounded
+		await page.keyboard.type('-0.987654329');
+		await expect(bitcoinUnformattedInput).toHaveValue('-0.98765433');
+		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
 
 	test('Pressing the comma or period keys have the correct behavior', async ({ page }) => {

@@ -93,8 +93,10 @@
 
 			if (event && previousValue === value) {
 				// Do the formatting if the number of digits after the decimal point exceeds `fractionDigits`
-				if (unformattedValue.includes('.') && unformattedValue.split('.')[1].length > fractionDigits)
-				{
+				if (
+					unformattedValue.includes('.') &&
+					unformattedValue.split('.')[1].length > fractionDigits
+				) {
 					setFormattedValue();
 				}
 			}
