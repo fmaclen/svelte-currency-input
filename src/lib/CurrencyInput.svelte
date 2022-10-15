@@ -85,12 +85,14 @@
 			// The order of the following operations is *critical*
 			unformattedValue = unformattedValue.replace(isDecimalComma ? /\./g : /\,/g, ''); // Remove all group symbols
 			if (isDecimalComma) unformattedValue = unformattedValue.replace(',', '.'); // If the decimal point is a comma, replace it with a period
+
 			// If the zero-key has been pressed
 			// and if the current `value` is the same as the `value` before the key-press
 			// formatting may need to be done (Issue #30)
-			let prevValue = value;
+			const previousValue = value;
 			value = parseFloat(unformattedValue);
-			if (event && prevValue == value) {
+
+			if (event && previousValue === value) {
 				// Do the formatting if the number of digits after the decimal point exceeds `fractionDigits`
 				if (unformattedValue.includes('.') && unformattedValue.split('.')[1].length > fractionDigits)
 				{
