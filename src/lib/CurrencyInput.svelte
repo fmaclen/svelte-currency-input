@@ -25,7 +25,7 @@
 			currency: currency,
 			style: 'currency',
 			maximumFractionDigits: maximumFractionDigits || 0,
-			minimumFractionDigits: minimumFractionDigits || 0,
+			minimumFractionDigits: minimumFractionDigits || 0
 		}).format(value);
 	};
 
@@ -70,9 +70,8 @@
 
 			// Reverse the value when minus is pressed
 			if (isNegativeAllowed && event.key === '-') value = value * -1;
-
 		}
-		
+
 		// Remove all characters that arent: numbers, commas, periods (or minus signs if `isNegativeAllowed`)
 		let unformattedValue = isNegativeAllowed
 			? formattedValue.replace(/[^0-9,.-]/g, '')
