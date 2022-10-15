@@ -32,9 +32,9 @@ test.describe('CurrencyInput', () => {
 		await expect(yenUnformattedInput).toHaveAttribute('type', 'hidden');
 		await expect(yenUnformattedInput).toHaveValue('5678.9');
 		await expect(yenFormattedInput).not.toBeDisabled();
-		await expect(yenFormattedInput).toHaveValue('￥5,678.9');
+		await expect(yenFormattedInput).toHaveValue('¥5,678.9');
 		await expect(yenFormattedInput).toHaveAttribute('type', 'text');
-		await expect(yenFormattedInput).toHaveAttribute('placeholder', '￥0.00');
+		await expect(yenFormattedInput).toHaveAttribute('placeholder', '¥0.00');
 		await expect(yenFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
 		await expect(yenFormattedInput).not.toHaveClass(/currencyInput__formatted--negative/);
 		await expect(yenFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
@@ -85,7 +85,7 @@ test.describe('CurrencyInput', () => {
 					bitcoin: '0.87654321',
 					'formatted-bitcoin': '฿0.87654321',
 					yen: '5678.9',
-					'formatted-yen': '￥5,678.9',
+					'formatted-yen': '¥5,678.9',
 					euro: '-42069.69',
 					'formatted-euro': '-42.069,69 €',
 					won: '0',
@@ -222,28 +222,34 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
 
-	test('Pressing the comma or period keys have the correct behavior', async ({ page }) => {
-		// Pressing `.` when the decimal point is `,` gets converted to `,`
-		const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
-		const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
-		await euroFormattedInput.focus();
-		await selectAll(page);
-		await page.keyboard.press('Backspace');
-		await page.keyboard.type('-42069.11');
-		await expect(euroFormattedInput).toHaveValue('-42.069,11 €');
-		await expect(euroUnformattedInput).toHaveValue('-42069.11');
+	test.describe('Pressing the comma or period keys have the correct behavior', async () => {
+		// NOTE: Have to split these tests because Webkit can't seem to properly
+		// focus on `bitcoinFormattedInput` after `euroFormattedInput` is in focus.
 
-		// Pressing `,` when the decimal point is `.` gets converted to `.`
-		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
-		const bitcoinFormattedInput = page.locator(
-			'.currencyInput__formatted[name="formatted-bitcoin"]'
-		);
-		await bitcoinFormattedInput.focus();
-		await selectAll(page);
-		await page.keyboard.press('Backspace');
-		await page.keyboard.type('42069,11');
-		await expect(bitcoinFormattedInput).toHaveValue('฿42,069.11');
-		await expect(bitcoinUnformattedInput).toHaveValue('42069.11');
+		test('Pressing "." gets converted to ","', async ({ page }) => {
+			const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
+			const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
+			await euroFormattedInput.focus();
+			await selectAll(page);
+			await page.keyboard.press('Backspace');
+			await page.keyboard.type('-42069.11');
+			await expect(euroFormattedInput).toHaveValue('-42.069,11 €');
+			await expect(euroUnformattedInput).toHaveValue('-42069.11');
+		});
+
+		test('Pressing "," gets converted to "."', async ({ page }) => {
+			const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
+			const bitcoinFormattedInput = page.locator(
+				'.currencyInput__formatted[name="formatted-bitcoin"]'
+			);
+
+			await bitcoinFormattedInput.focus();
+			await selectAll(page);
+			await page.keyboard.press('Backspace');
+			await page.keyboard.type('42069,11');
+			await expect(bitcoinFormattedInput).toHaveValue('฿42,069.11');
+			await expect(bitcoinUnformattedInput).toHaveValue('42069.11');
+		});
 	});
 
 	test('Formatting is applied on:blur', async ({ page }) => {

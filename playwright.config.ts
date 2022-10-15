@@ -10,11 +10,11 @@ const enableMultipleBrowsers = [
 	{
 		name: 'firefox',
 		use: { ...devices['Desktop Firefox'] }
+	},
+	{
+		name: 'webkit',
+		use: { ...devices['Desktop Safari'] }
 	}
-	// {
-	// 	name: 'webkit',
-	// 	use: { ...devices['Desktop Safari'] }
-	// }
 ];
 
 const config: PlaywrightTestConfig = {

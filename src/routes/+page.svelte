@@ -31,7 +31,7 @@
 			fractionDigits={8}
 		/>
 
-		<CurrencyInput name="yen" value={5678.9} locale="ja-JA" currency="JPY" />
+		<CurrencyInput name="yen" value={5678.9} locale="en-JP" currency="JPY" />
 		<CurrencyInput name="shekel" value={97532.95} disabled={true} locale="il-IL" currency="ILS" />
 		<CurrencyInput name="euro" value={-42069.69} locale="de-DE" currency="EUR" />
 		<CurrencyInput
