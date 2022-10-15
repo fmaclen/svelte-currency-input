@@ -223,16 +223,11 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test.describe('Pressing the comma or period keys have the correct behavior', async () => {
-		// NOTE: Have to split these tests because Webkit can't seem to properly
-		// focus on `bitcoinFormattedInput` after `euroFormattedInput` is in focus.
-
 		test('Pressing "." gets converted to ","', async ({ page }) => {
 			const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 			const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
 			await euroFormattedInput.focus();
 
-			// NOTE: Webkit behavior is affected when the currency symbol is trailing so we
-			// *select all/delete** the contents of the field twice to make sure it's empty.
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
 			await expect(euroUnformattedInput).toHaveValue('0');
