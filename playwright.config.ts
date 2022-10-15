@@ -10,11 +10,11 @@ const enableMultipleBrowsers = [
 	{
 		name: 'firefox',
 		use: { ...devices['Desktop Firefox'] }
-	},
-	{
-		name: 'webkit',
-		use: { ...devices['Desktop Safari'] }
 	}
+	// {
+	// 	name: 'webkit',
+	// 	use: { ...devices['Desktop Safari'] }
+	// }
 ];
 
 const config: PlaywrightTestConfig = {
@@ -27,7 +27,7 @@ const config: PlaywrightTestConfig = {
 		trace: isEnvCI ? 'off' : 'retain-on-failure',
 		screenshot: isEnvCI ? 'off' : 'only-on-failure'
 	},
-	projects: isEnvCI ? enableMultipleBrowsers : undefined
+	projects: enableMultipleBrowsers
 };
 
 export default config;

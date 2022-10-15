@@ -106,7 +106,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		await colonFormattedInput.focus();
-		await page.keyboard.type('420,69', { delay: 25 });
+		await page.keyboard.type('420,69');
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
@@ -135,7 +135,7 @@ test.describe('CurrencyInput', () => {
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
 
-		await page.keyboard.type('69,42', { delay: 25 });
+		await page.keyboard.type('69,42');
 		await expect(colonFormattedInput).toHaveValue('-₡69,42');
 		await expect(colonUnformattedInput).toHaveValue('-69.42');
 
@@ -162,7 +162,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check keyboard shortcuts are allowed
-		await page.keyboard.type('420,69', { delay: 25 });
+		await page.keyboard.type('420,69');
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 
@@ -173,7 +173,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Add data to the field again
-		await page.keyboard.type('-420,69', { delay: 25 });
+		await page.keyboard.type('-420,69');
 		await expect(colonFormattedInput).toHaveValue('-₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('-420.69');
 
@@ -217,7 +217,7 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinFormattedInput).toHaveValue('');
 
 		// Decimals beyond the maximum allowed are rounded
-		await page.keyboard.type('-0.987654329', { delay: 25 });
+		await page.keyboard.type('-0.987654329');
 		await expect(bitcoinUnformattedInput).toHaveValue('-0.98765433');
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
@@ -229,7 +229,7 @@ test.describe('CurrencyInput', () => {
 		await euroFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await page.keyboard.type('-42069.11', { delay: 25 });
+		await page.keyboard.type('-42069.11');
 		await expect(euroFormattedInput).toHaveValue('-42.069,11 €');
 		await expect(euroUnformattedInput).toHaveValue('-42069.11');
 
@@ -241,7 +241,7 @@ test.describe('CurrencyInput', () => {
 		await bitcoinFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
-		await page.keyboard.type('42069,11', { delay: 25 });
+		await page.keyboard.type('42069,11');
 		await expect(bitcoinFormattedInput).toHaveValue('฿42,069.11');
 		await expect(bitcoinUnformattedInput).toHaveValue('42069.11');
 	});
