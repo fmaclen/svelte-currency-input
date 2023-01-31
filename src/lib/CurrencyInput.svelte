@@ -5,6 +5,22 @@
 	const DEFAULT_VALUE = 0;
 	const DEFAULT_FRACTION_DIGITS = 2;
 
+	const DEFAULT_CLASS_WRAPPER = 'currencyInput';
+	const DEFAULT_CLASS_UNFORMATTED = 'currencyInput__unformatted';
+	const DEFAULT_CLASS_FORMATTED = 'currencyInput__formatted';
+	const DEFAULT_CLASS_FORMATTED_POSITIVE = 'currencyInput__formatted--positive';
+	const DEFAULT_CLASS_FORMATTED_NEGATIVE = 'currencyInput__formatted--negative';
+	const DEFAULT_CLASS_FORMATTED_ZERO = 'currencyInput__formatted--zero';
+
+	interface InputClasses {
+		wrapper?: string;
+		unformatted?: string;
+		formatted?: string;
+		formattedPositive?: string;
+		formattedNegative?: string;
+		formattedZero?: string;
+	}
+
 	export let value: number = DEFAULT_VALUE;
 	export let locale: string = DEFAULT_LOCALE;
 	export let currency: string = DEFAULT_CURRENCY;
@@ -14,6 +30,7 @@
 	export let placeholder: number | null = DEFAULT_VALUE;
 	export let isNegativeAllowed: boolean = true;
 	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
+	export let inputClasses: InputClasses | null = null;
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
 	const formatCurrency = (
@@ -135,14 +152,24 @@
 	$: value, setFormattedValue();
 </script>
 
-<div class="currencyInput">
-	<input class="currencyInput__unformatted" type="hidden" {name} {disabled} bind:value />
+<div class={inputClasses?.wrapper ?? DEFAULT_CLASS_WRAPPER}>
+	<input
+		class={inputClasses?.unformatted ?? DEFAULT_CLASS_UNFORMATTED}
+		type="hidden"
+		{name}
+		{disabled}
+		bind:value
+	/>
 	<input
 		class="
-			currencyInput__formatted
-			{isNegativeAllowed && !isZero && !isNegative && 'currencyInput__formatted--positive'}
-			{isZero && 'currencyInput__formatted--zero'}
-			{isNegativeAllowed && isNegative && 'currencyInput__formatted--negative'}
+			{inputClasses?.formatted ?? DEFAULT_CLASS_FORMATTED}
+			{isNegativeAllowed && !isZero && !isNegative
+			? inputClasses?.formattedPositive ?? DEFAULT_CLASS_FORMATTED_POSITIVE
+			: ''}
+			{isZero ? inputClasses?.formattedZero ?? DEFAULT_CLASS_FORMATTED_ZERO : ''}
+			{isNegativeAllowed && isNegative
+			? inputClasses?.formattedNegative ?? DEFAULT_CLASS_FORMATTED_NEGATIVE
+			: ''}
 		"
 		type="text"
 		inputmode="numeric"

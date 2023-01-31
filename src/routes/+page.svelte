@@ -40,6 +40,10 @@
 			isNegativeAllowed={false}
 			locale="ko-KO"
 			currency="KRW"
+			inputClasses={{
+				wrapper: 'currencyInput custom-wrapper-class',
+				unformatted: 'custom-unformatted-class'
+			}}
 		/>
 	</div>
 
