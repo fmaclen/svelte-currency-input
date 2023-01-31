@@ -69,12 +69,43 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 | placeholder       | `number` `null` | `0`         | Overrides the default placeholder. Setting the value to a `number` will display it as formatted. Setting it to `null` will not show a placeholder   |
 | isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
 | fractionDigits    | `number`        | `2`         | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
+| inputClasses    | `object`        | [See below](#Styling)         | Selectively overrides any class names passed |
 
 ## Styling
 
-The [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118) use [BEM naming conventions](https://getbem.com/naming/). To override the default styles apply your styles as shown below:
+There are two ways of customizing the styling of the input:
+1. Passing it your own CSS classes
+2. Overriding the styles using the existing class names
 
-```html
+You can **override all of the class names** by passing an object to `inputClasses` that has **one or more** of these properties:
+
+```typescript
+interface InputClasses {
+  wrapper?: string; // <div> that contains the two <input> elements
+  unformatted?: string; // <input type="hidden"> that contains the unformatted value
+  formatted?: string; // <input type="text"> that contains the formatted value
+  formattedPositive?: string; // Extra class when the formatted input is positive
+  formattedNegative?: string; // Extra class when the formatted input is negative
+  formattedZero?: string; // Extra class when the formatted input is zero
+}
+```
+
+Usage (with [Tailwind CSS](https://tailwindcss.com/) as an example):
+
+```svelte
+<CurrencyInput name="total" value="{420.69}" inputClasses={
+  { 
+    wrapper: "form-control block",
+    formatted: 'py-1.5 text-gray-700',
+    formattedPositive: 'text-green-700',
+    formattedNegative: 'text-red-700'
+  }
+} />
+```
+
+Alternatively you can **write your own CSS** by overriding the [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118) which use [BEM naming conventions](https://getbem.com/naming/). To do so apply your styles as shown below:
+
+```svelte
 <div class="my-currency-input">
   <CurrencyInput name="total" value="{420.69}" />
 </div>
