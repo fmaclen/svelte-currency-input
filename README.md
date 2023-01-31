@@ -84,9 +84,9 @@ interface InputClasses {
   wrapper?: string; // <div> that contains the two <input> elements
   unformatted?: string; // <input type="hidden"> that contains the unformatted value
   formatted?: string; // <input type="text"> that contains the formatted value
-  formattedPositive?: string; // Extra class when the formatted input is positive
-  formattedNegative?: string; // Extra class when the formatted input is negative
-  formattedZero?: string; // Extra class when the formatted input is zero
+  formattedPositive?: string; // Class added when the formatted input is positive
+  formattedNegative?: string; // Class added when the formatted input is negative
+  formattedZero?: string; // Class added when the formatted input is zero
 }
 ```
 
@@ -103,7 +103,7 @@ Usage (with [Tailwind CSS](https://tailwindcss.com/) as an example):
 } />
 ```
 
-Alternatively you can **write your own CSS** by overriding the [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118) which use [BEM naming conventions](https://getbem.com/naming/). To do so apply your styles as shown below:
+Alternatively you can **write your own CSS** by overriding the [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte) which use [BEM naming conventions](https://getbem.com/naming/). To do so apply your styles as shown below:
 
 ```svelte
 <div class="my-currency-input">
