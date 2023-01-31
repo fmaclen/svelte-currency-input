@@ -307,6 +307,16 @@ test.describe('CurrencyInput', () => {
 		}
 	});
 
+	test('Class names can be overwritten', async ({ page }) => {
+		const customWrapperClass = page.locator('.custom-wrapper-class');
+		const customUnformattedClass = page.locator('.custom-unformatted-class');
+
+		await expect(customWrapperClass).toBeVisible();
+		await expect(customWrapperClass).toHaveClass(/currencyInput/); // We don't override the default class
+		await expect(customUnformattedClass).toHaveValue('0');
+		await expect(customUnformattedClass).not.toHaveClass(/currencyInput__unformatted/); // We override the default class
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
