@@ -15,7 +15,7 @@ A form input that converts numbers to localized currency formats as you type
 - Formats **positive** and **negative** values
 - Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations and masking the input
 - Simple [API](#api)
-- Minimal [default styling](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte#L88-L118), easy to [customize](#styling)
+- Minimal default styling, easy to [customize](#styling)
 
 ## Usage
 
