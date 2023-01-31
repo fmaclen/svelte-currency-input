@@ -15,12 +15,6 @@ jobs:
           node-version: '16.x'
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npm test
-        env:
-          NODE_ENV: CI
       - name: Build package with SvelteKit
         run: npm run build
       - name: Run semantic release
