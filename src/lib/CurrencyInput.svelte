@@ -21,6 +21,8 @@
 		formattedZero?: string;
 	}
 
+	type Callback = (value: number) => any;
+
 	export let value: number = DEFAULT_VALUE;
 	export let locale: string = DEFAULT_LOCALE;
 	export let currency: string = DEFAULT_CURRENCY;
@@ -31,6 +33,7 @@
 	export let isNegativeAllowed: boolean = true;
 	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
 	export let inputClasses: InputClasses | null = null;
+	export let onValueChange: Callback = () => {};
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
 	const formatCurrency = (
@@ -120,6 +123,7 @@
 				}
 			}
 		}
+		onValueChange(value)
 	};
 
 	const setFormattedValue = () => {

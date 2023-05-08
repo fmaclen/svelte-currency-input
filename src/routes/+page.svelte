@@ -22,6 +22,7 @@
 			placeholder={null}
 			locale="en-GB"
 			currency="GBP"
+			onValueChange={(value) => {console.log("you typed in the gbp input", value)}}
 		/>
 		<CurrencyInput
 			name="bitcoin"
