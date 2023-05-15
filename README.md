@@ -70,6 +70,7 @@ This is more or less what `<CurrencyInput />` looks like under the hood:
 | isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
 | fractionDigits    | `number`        | `2`         | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
 | inputClasses    | `object`        | [See below](#Styling)         | Selectively overrides any class names passed |
+| onValueChange          | `Callback`       | `undefined`     | Runs a callback function after the value changes |
 
 ## Styling
 

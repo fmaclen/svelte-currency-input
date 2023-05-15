@@ -123,7 +123,6 @@
 				}
 			}
 		}
-		onValueChange(value)
 	};
 
 	const setFormattedValue = () => {
@@ -146,6 +145,9 @@
 		setTimeout(() => {
 			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
 		}, 0.1);
+
+		// Run callback function when `value` changes
+		onValueChange(value);
 	};
 
 	let formattedValue = '';

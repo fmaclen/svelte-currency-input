@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import CurrencyInput from '$lib/CurrencyInput.svelte';
 
 	let output: string;
@@ -9,6 +10,8 @@
 		// Pretty-print the data as JSON
 		output = JSON.stringify(Object.fromEntries(data.entries()), null, 2);
 	};
+
+	let unchangedValue = 999; // Used for onValueChange()
 </script>
 
 <form class="demoForm" on:submit={handleSubmit}>
@@ -22,7 +25,6 @@
 			placeholder={null}
 			locale="en-GB"
 			currency="GBP"
-			onValueChange={(value) => {console.log("you typed in the gbp input", value)}}
 		/>
 		<CurrencyInput
 			name="bitcoin"
@@ -44,6 +46,21 @@
 			inputClasses={{
 				wrapper: 'currencyInput custom-wrapper-class',
 				unformatted: 'custom-unformatted-class'
+			}}
+		/>
+		<CurrencyInput
+			name="pesos"
+			value={unchangedValue}
+			isNegativeAllowed={false}
+			placeholder={null}
+			locale="es-AR"
+			currency="ARS"
+			onValueChange={(value) => {
+				// Prevent alerting on initial load
+				if (unchangedValue !== value) {
+					unchangedValue = value; // Update the unchanged value
+					if (browser) window.alert(`The value for ARS has changed to: ${value}`); // Alert the user
+				}
 			}}
 		/>
 	</div>
