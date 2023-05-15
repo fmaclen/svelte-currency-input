@@ -123,7 +123,9 @@
 				}
 			}
 		}
-		onValueChange(value)
+
+		// Run callback function when `value` changes
+		onValueChange(value);
 	};
 
 	const setFormattedValue = () => {
