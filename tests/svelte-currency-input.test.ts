@@ -317,6 +317,21 @@ test.describe('CurrencyInput', () => {
 		await expect(customUnformattedClass).not.toHaveClass(/currencyInput__unformatted/); // We override the default class
 	});
 
+	test('A callback function is fired when value changes', async ({ page }) => {
+		const pesosFormattedInput = page.locator('.currencyInput__formatted[name="formatted-pesos"]');
+
+		// Prepare to assert and accept dialog
+		page.on('dialog', (dialog) => {
+			expect(dialog.message()).not.toMatch('The value for ARS has changed to: 999');
+			expect(dialog.message()).toMatch('The value for ARS has changed to: 99');
+			dialog.accept();
+		});
+
+		await expect(pesosFormattedInput).toBeVisible();
+		await pesosFormattedInput.focus();
+		await page.keyboard.press('Backspace');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
