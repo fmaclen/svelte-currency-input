@@ -20,7 +20,7 @@ A form input that converts numbers to localized currency formats as you type
 ## Usage
 
 ```bash
-npm install svelte-currency-input --save
+npm install @canutin/svelte-currency-input --save
 ```
 
 ```html
