@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-// `DELAY_FOR_CARET_UPDATE_IN_MS` + 0.01
-const DELAY_FOR_DECIMAL_VALUES_IN_MS = 0.11;
+const DELAY_FOR_FORMATTED_VALUE_IN_MS = 25;
 
 const isMacOs = process.platform === 'darwin';
 const selectAll = async (page: Page) => {
@@ -111,7 +110,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		await colonFormattedInput.focus();
-		await page.keyboard.type('420,69', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+		await page.keyboard.type('420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
@@ -140,7 +139,7 @@ test.describe('CurrencyInput', () => {
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
 
-		await page.keyboard.type('69,42', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+		await page.keyboard.type('69,42', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-₡69,42');
 		await expect(colonUnformattedInput).toHaveValue('-69.42');
 
@@ -167,7 +166,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check keyboard shortcuts are allowed
-		await page.keyboard.type('420,69', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+		await page.keyboard.type('420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 
@@ -178,7 +177,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Add data to the field again
-		await page.keyboard.type('-420,69', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+		await page.keyboard.type('-420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('-420.69');
 
@@ -222,7 +221,7 @@ test.describe('CurrencyInput', () => {
 		await expect(bitcoinFormattedInput).toHaveValue('');
 
 		// Decimals beyond the maximum allowed are rounded
-		await page.keyboard.type('-0.987654329', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+		await page.keyboard.type('-0.987654329', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(bitcoinUnformattedInput).toHaveValue('-0.98765433');
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
@@ -237,7 +236,7 @@ test.describe('CurrencyInput', () => {
 			await page.keyboard.press('Backspace');
 			await expect(euroUnformattedInput).toHaveValue('0');
 
-			await page.keyboard.type('-111222.33', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+			await page.keyboard.type('-111222.33', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(euroFormattedInput).toHaveValue('€ -111.222,33');
 			await expect(euroUnformattedInput).toHaveValue('-111222.33');
 		});
@@ -253,7 +252,7 @@ test.describe('CurrencyInput', () => {
 			await page.keyboard.press('Backspace');
 			await expect(bitcoinUnformattedInput).toHaveValue('0');
 
-			await page.keyboard.type('444555,66', { delay: DELAY_FOR_DECIMAL_VALUES_IN_MS });
+			await page.keyboard.type('444555,66', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(bitcoinFormattedInput).toHaveValue('฿444,555.66');
 			await expect(bitcoinUnformattedInput).toHaveValue('444555.66');
 		});

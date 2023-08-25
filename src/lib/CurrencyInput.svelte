@@ -144,7 +144,7 @@
 
 		// HACK:
 		// Delay setting the new caret position until the input has been formatted.
-		// If this is ever fixed consider removing `{ delay: DELAY_FOR_DECIMAL_VALUES_IN_MS }` in the tests.
+		// If this is ever fixed consider removing `{ delay: DELAY_FOR_FORMATTED_VALUE_IN_MS }` in the tests.
 		setTimeout(() => {
 			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
 		}, DELAY_FOR_CARET_UPDATE_IN_MS);
