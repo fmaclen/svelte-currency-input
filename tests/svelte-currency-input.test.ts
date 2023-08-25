@@ -129,12 +129,12 @@ test.describe('CurrencyInput', () => {
 		// Use right arrow keys to position cusror at the end of the input
 		for (let i = 0; i < '₡420,69'.length; i++) await page.keyboard.press('ArrowRight');
 		// Delete the number but keep the currency symbol and sign
-		for (let i = 1; i < '420,69'.length; i++) await page.keyboard.press('Backspace');
+		for (let i = 1; i < '420,69'.length; i++) await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-₡');
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
 
-		await page.keyboard.press('Backspace');
+		await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-');
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
@@ -143,7 +143,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('-₡69,42');
 		await expect(colonUnformattedInput).toHaveValue('-69.42');
 
-		for (let i = 0; i < '-₡69,42'.length; i++) await page.keyboard.press('Backspace');
+		for (let i = 0; i < '-₡69,42'.length; i++) await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonUnformattedInput).toHaveValue('0');
 	});
 
@@ -172,7 +172,7 @@ test.describe('CurrencyInput', () => {
 
 		// Check "Backspace" works
 		await selectAll(page);
-		await page.keyboard.press('Backspace');
+		await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonUnformattedInput).toHaveValue('0');
 		await expect(colonFormattedInput).toHaveValue('');
 
@@ -216,7 +216,7 @@ test.describe('CurrencyInput', () => {
 
 		await bitcoinFormattedInput.focus();
 		await selectAll(page);
-		await page.keyboard.press('Backspace');
+		await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(bitcoinUnformattedInput).toHaveValue('0');
 		await expect(bitcoinFormattedInput).toHaveValue('');
 
@@ -233,7 +233,7 @@ test.describe('CurrencyInput', () => {
 			await euroFormattedInput.focus();
 
 			await selectAll(page);
-			await page.keyboard.press('Backspace');
+			await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(euroUnformattedInput).toHaveValue('0');
 
 			await page.keyboard.type('-111222.33', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
@@ -249,7 +249,7 @@ test.describe('CurrencyInput', () => {
 
 			await bitcoinFormattedInput.focus();
 			await selectAll(page);
-			await page.keyboard.press('Backspace');
+			await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(bitcoinUnformattedInput).toHaveValue('0');
 
 			await page.keyboard.type('444555,66', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
@@ -274,7 +274,7 @@ test.describe('CurrencyInput', () => {
 		// The value is reset to 0 because Backspace overrides it
 		await euroFormattedInput.focus();
 		await selectAll(page);
-		await page.keyboard.press('Backspace');
+		await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await page.keyboard.type('-');
 		await colonFormattedInput.focus();
 		await expect(euroFormattedInput).toHaveValue('');
@@ -336,7 +336,7 @@ test.describe('CurrencyInput', () => {
 
 		await expect(pesosFormattedInput).toBeVisible();
 		await pesosFormattedInput.focus();
-		await page.keyboard.press('Backspace');
+		await page.keyboard.press('Backspace', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
