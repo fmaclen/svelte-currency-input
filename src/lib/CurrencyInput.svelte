@@ -136,19 +136,14 @@
 		// Update `value` after formatting
 		setUnformattedValue();
 
-		// New caret position
-		const endCaretPosition =
-			startCaretPosition + formattedValue.length - previousFormattedValueLength;
+		let retries = 0;
+		while (previousFormattedValueLength === formattedValue.length && retries < 10) retries++;
 
-		let tries = 0;
-    while (previousFormattedValueLength === formattedValue.length && tries < 10) {
-			tries++;
-    }
-
-    if (previousFormattedValueLength !== formattedValue.length) {
-			const endCaretPosition = startCaretPosition + formattedValue.length - previousFormattedValueLength;
+		if (previousFormattedValueLength !== formattedValue.length) {
+			const endCaretPosition =
+				startCaretPosition + formattedValue.length - previousFormattedValueLength;
 			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
-    }
+		}
 
 		// Run callback function when `value` changes
 		onValueChange(value);
