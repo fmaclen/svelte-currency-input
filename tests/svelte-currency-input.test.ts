@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const DELAY_FOR_FORMATTED_VALUE_IN_MS = 0;
+const DELAY_FOR_FORMATTED_VALUE_IN_MS = 25;
 
 const isMacOs = process.platform === 'darwin';
 const selectAll = async (page: Page) => {
