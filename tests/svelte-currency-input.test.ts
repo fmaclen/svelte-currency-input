@@ -1,5 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
+const DELAY_FOR_FORMATTED_VALUE_IN_MS = 25;
+
 const isMacOs = process.platform === 'darwin';
 const selectAll = async (page: Page) => {
 	isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
@@ -89,7 +91,9 @@ test.describe('CurrencyInput', () => {
 					euro: '-42069.69',
 					'formatted-euro': '€ -42.069,69',
 					won: '0',
-					'formatted-won': ''
+					'formatted-won': '',
+					pesos: '999',
+					'formatted-pesos': '$ 999',
 				},
 				null,
 				2
@@ -106,7 +110,7 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		await colonFormattedInput.focus();
-		await page.keyboard.type('420,69');
+		await page.keyboard.type('420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 		await expect(colonFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
@@ -126,20 +130,23 @@ test.describe('CurrencyInput', () => {
 		for (let i = 0; i < '₡420,69'.length; i++) await page.keyboard.press('ArrowRight');
 		// Delete the number but keep the currency symbol and sign
 		for (let i = 1; i < '420,69'.length; i++) await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await expect(colonFormattedInput).toHaveValue('-₡');
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
 
 		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await expect(colonFormattedInput).toHaveValue('-');
 		// FIXME: at this point the hidden value should be set to 0 but without formatting `colonFormattedInput`
 		await expect(colonUnformattedInput).toHaveValue('-4');
 
-		await page.keyboard.type('69,42');
+		await page.keyboard.type('69,42', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-₡69,42');
 		await expect(colonUnformattedInput).toHaveValue('-69.42');
 
 		for (let i = 0; i < '-₡69,42'.length; i++) await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await expect(colonUnformattedInput).toHaveValue('0');
 	});
 
@@ -162,18 +169,19 @@ test.describe('CurrencyInput', () => {
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Check keyboard shortcuts are allowed
-		await page.keyboard.type('420,69');
+		await page.keyboard.type('420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('420.69');
 
 		// Check "Backspace" works
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await expect(colonUnformattedInput).toHaveValue('0');
 		await expect(colonFormattedInput).toHaveValue('');
 
 		// Add data to the field again
-		await page.keyboard.type('-420,69');
+		await page.keyboard.type('-420,69', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(colonFormattedInput).toHaveValue('-₡420,69');
 		await expect(colonUnformattedInput).toHaveValue('-420.69');
 
@@ -213,11 +221,12 @@ test.describe('CurrencyInput', () => {
 		await bitcoinFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await expect(bitcoinUnformattedInput).toHaveValue('0');
 		await expect(bitcoinFormattedInput).toHaveValue('');
 
 		// Decimals beyond the maximum allowed are rounded
-		await page.keyboard.type('-0.987654329');
+		await page.keyboard.type('-0.987654329', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 		await expect(bitcoinUnformattedInput).toHaveValue('-0.98765433');
 		await expect(bitcoinFormattedInput).toHaveValue('-฿0.98765433');
 	});
@@ -230,9 +239,10 @@ test.describe('CurrencyInput', () => {
 
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
+			await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 			await expect(euroUnformattedInput).toHaveValue('0');
 
-			await page.keyboard.type('-111222.33');
+			await page.keyboard.type('-111222.33', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(euroFormattedInput).toHaveValue('€ -111.222,33');
 			await expect(euroUnformattedInput).toHaveValue('-111222.33');
 		});
@@ -246,9 +256,10 @@ test.describe('CurrencyInput', () => {
 			await bitcoinFormattedInput.focus();
 			await selectAll(page);
 			await page.keyboard.press('Backspace');
+			await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 			await expect(bitcoinUnformattedInput).toHaveValue('0');
 
-			await page.keyboard.type('444555,66');
+			await page.keyboard.type('444555,66', { delay: DELAY_FOR_FORMATTED_VALUE_IN_MS });
 			await expect(bitcoinFormattedInput).toHaveValue('฿444,555.66');
 			await expect(bitcoinUnformattedInput).toHaveValue('444555.66');
 		});
@@ -271,6 +282,7 @@ test.describe('CurrencyInput', () => {
 		await euroFormattedInput.focus();
 		await selectAll(page);
 		await page.keyboard.press('Backspace');
+		await page.waitForTimeout(DELAY_FOR_FORMATTED_VALUE_IN_MS);
 		await page.keyboard.type('-');
 		await colonFormattedInput.focus();
 		await expect(euroFormattedInput).toHaveValue('');
@@ -281,7 +293,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(8);
+			expect(await formattedInputs.count()).toBe(9);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
@@ -304,6 +316,9 @@ test.describe('CurrencyInput', () => {
 
 			await page.keyboard.press('Tab');
 			await expect(formattedInputs.nth(7)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(8)).toBeFocused();
 		}
 	});
 
