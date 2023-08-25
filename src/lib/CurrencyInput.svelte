@@ -12,8 +12,6 @@
 	const DEFAULT_CLASS_FORMATTED_NEGATIVE = 'currencyInput__formatted--negative';
 	const DEFAULT_CLASS_FORMATTED_ZERO = 'currencyInput__formatted--zero';
 
-	const DELAY_FOR_CARET_UPDATE_IN_MS = 0.1;
-
 	interface InputClasses {
 		wrapper?: string;
 		unformatted?: string;
