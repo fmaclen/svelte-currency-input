@@ -142,12 +142,15 @@
 		const endCaretPosition =
 			startCaretPosition + formattedValue.length - previousFormattedValueLength;
 
-		// HACK:
-		// Delay setting the new caret position until the input has been formatted.
-		// If this is ever fixed consider removing `{ delay: DELAY_FOR_FORMATTED_VALUE_IN_MS }` in the tests.
-		setTimeout(() => {
+		let tries = 0;
+    while (previousFormattedValueLength === formattedValue.length && tries < 10) {
+			tries++;
+    }
+
+    if (previousFormattedValueLength !== formattedValue.length) {
+			const endCaretPosition = startCaretPosition + formattedValue.length - previousFormattedValueLength;
 			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
-		}, DELAY_FOR_CARET_UPDATE_IN_MS);
+    }
 
 		// Run callback function when `value` changes
 		onValueChange(value);
