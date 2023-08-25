@@ -89,7 +89,9 @@ test.describe('CurrencyInput', () => {
 					euro: '-42069.69',
 					'formatted-euro': '€ -42.069,69',
 					won: '0',
-					'formatted-won': ''
+					'formatted-won': '',
+					pesos: '999',
+					'formatted-pesos': '$ 999',
 				},
 				null,
 				2
@@ -281,7 +283,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(8);
+			expect(await formattedInputs.count()).toBe(9);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
@@ -304,6 +306,9 @@ test.describe('CurrencyInput', () => {
 
 			await page.keyboard.press('Tab');
 			await expect(formattedInputs.nth(7)).toBeFocused();
+
+			await page.keyboard.press('Tab');
+			await expect(formattedInputs.nth(8)).toBeFocused();
 		}
 	});
 
