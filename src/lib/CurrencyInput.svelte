@@ -12,6 +12,8 @@
 	const DEFAULT_CLASS_FORMATTED_NEGATIVE = 'currencyInput__formatted--negative';
 	const DEFAULT_CLASS_FORMATTED_ZERO = 'currencyInput__formatted--zero';
 
+	const DELAY_FOR_CARET_UPDATE_IN_MS = 0.1;
+
 	interface InputClasses {
 		wrapper?: string;
 		unformatted?: string;
@@ -141,10 +143,11 @@
 			startCaretPosition + formattedValue.length - previousFormattedValueLength;
 
 		// HACK:
-		// Delay setting the new caret position until the input has been formatted
+		// Delay setting the new caret position until the input has been formatted.
+		// If this is ever fixed consider removing `{ delay: DELAY_FOR_DECIMAL_VALUES_IN_MS }` in the tests.
 		setTimeout(() => {
 			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
-		}, 0.1);
+		}, DELAY_FOR_CARET_UPDATE_IN_MS);
 
 		// Run callback function when `value` changes
 		onValueChange(value);
