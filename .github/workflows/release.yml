@@ -18,7 +18,7 @@ jobs:
         run: npm run build
       - name: Run semantic release
         run: npx semantic-release --branches main
-        working-directory: ./package
+        working-directory: ./dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
