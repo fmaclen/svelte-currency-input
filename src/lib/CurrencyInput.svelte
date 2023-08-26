@@ -182,7 +182,7 @@
 		name={`formatted-${name}`}
 		required={required && !isZero}
 		placeholder={formattedPlaceholder}
-		autocomplete={autocomplete}
+		{autocomplete}
 		{disabled}
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}
