@@ -30,6 +30,7 @@
 	export let required: boolean = false;
 	export let disabled: boolean = false;
 	export let placeholder: number | null = DEFAULT_VALUE;
+	export let autocomplete: string | null | undefined = undefined;
 	export let isNegativeAllowed: boolean = true;
 	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
 	export let inputClasses: InputClasses | null = null;
@@ -181,6 +182,7 @@
 		name={`formatted-${name}`}
 		required={required && !isZero}
 		placeholder={formattedPlaceholder}
+		{autocomplete}
 		{disabled}
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}

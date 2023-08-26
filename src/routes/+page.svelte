@@ -53,6 +53,7 @@
 			value={unchangedValue}
 			isNegativeAllowed={false}
 			placeholder={null}
+			autocomplete="off"
 			locale="es-AR"
 			currency="ARS"
 			onValueChange={(value) => {
