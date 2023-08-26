@@ -347,6 +347,11 @@ test.describe('CurrencyInput', () => {
 		await page.keyboard.press('Backspace');
 	});
 
+	test('Autocomplete attribute can be set', async ({ page }) => {
+		const pesosFormattedInput = page.locator('.currencyInput__formatted[name="formatted-pesos"]');
+		await expect(pesosFormattedInput).toHaveAttribute('autocomplete', 'off');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
