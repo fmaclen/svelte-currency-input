@@ -135,13 +135,13 @@
 		}
 	};
 
-	const setFormattedValue = (shouldFormatFractionDigits?: boolean) => {
+	const setFormattedValue = (hasMinFractionDigits?: boolean) => {
 		// Previous caret position
 		const startCaretPosition = inputTarget?.selectionStart || 0;
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, shouldFormatFractionDigits ? fractionDigits : 0);
+		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
 
 		// Update `value` after formatting
 		setUnformattedValue();
