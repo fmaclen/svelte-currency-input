@@ -34,7 +34,7 @@ test.describe('CurrencyInput', () => {
 		await expect(yenUnformattedInput).toHaveAttribute('type', 'hidden');
 		await expect(yenUnformattedInput).toHaveValue('5678.9');
 		await expect(yenFormattedInput).not.toBeDisabled();
-		await expect(yenFormattedInput).toHaveValue('¥5,678.9');
+		await expect(yenFormattedInput).toHaveValue('¥5,678.90');
 		await expect(yenFormattedInput).toHaveAttribute('type', 'text');
 		await expect(yenFormattedInput).toHaveAttribute('placeholder', '¥0.00');
 		await expect(yenFormattedInput).toHaveClass(/currencyInput__formatted--positive/);
@@ -87,13 +87,15 @@ test.describe('CurrencyInput', () => {
 					bitcoin: '0.87654321',
 					'formatted-bitcoin': '฿0.87654321',
 					yen: '5678.9',
-					'formatted-yen': '¥5,678.9',
+					'formatted-yen': '¥5,678.90',
 					euro: '-42069.69',
 					'formatted-euro': '€ -42.069,69',
 					won: '0',
 					'formatted-won': '',
 					pesos: '999',
-					'formatted-pesos': '$ 999',
+					'formatted-pesos': '$ 999,00',
+					rupees: '678',
+					'formatted-rupees': '₹678.000',
 				},
 				null,
 				2
@@ -293,7 +295,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(9);
+			expect(await formattedInputs.count()).toBe(10);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
@@ -350,6 +352,23 @@ test.describe('CurrencyInput', () => {
 	test('Autocomplete attribute can be set', async ({ page }) => {
 		const pesosFormattedInput = page.locator('.currencyInput__formatted[name="formatted-pesos"]');
 		await expect(pesosFormattedInput).toHaveAttribute('autocomplete', 'off');
+	});
+
+	test('A value with zero cents and more than 1 fraction digits gets formatted on blur', async ({ page }) => {
+		const rupeesFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rupees"]');
+		const rupeesUnformattedInput = page.locator('.currencyInput__unformatted[name="rupees"]');
+		await expect(rupeesFormattedInput).toHaveValue('₹678.000');
+		await expect(rupeesUnformattedInput).toHaveValue('678');
+
+		await rupeesFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await page.keyboard.type('123');
+		await expect(rupeesFormattedInput).toHaveValue('₹123');
+
+		await page.locator('body').click(); // Click outside the input to trigger formatting
+		await expect(rupeesFormattedInput).toHaveValue('₹123.000');
+		await expect(rupeesUnformattedInput).toHaveValue('123');
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
