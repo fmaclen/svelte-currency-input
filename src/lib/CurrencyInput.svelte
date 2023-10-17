@@ -66,10 +66,10 @@
 
 	// Formats the value when the input loses focus and sets the correct number of
 	// fraction digits when the value is zero
-	const handleOnBlur = () => setFormattedValue(fractionDigits);
+	const handleOnBlur = () => setFormattedValue(true);
 
 	// Also set the correct fraction digits when the value is zero on initial load
-	onMount(() => setFormattedValue(fractionDigits));
+	onMount(() => setFormattedValue(true));
 
 	let inputTarget: HTMLInputElement;
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
@@ -135,13 +135,13 @@
 		}
 	};
 
-	const setFormattedValue = (fractionDigitsOnZero?: number) => {
+	const setFormattedValue = (shouldFormatFractionDigits?: boolean) => {
 		// Previous caret position
 		const startCaretPosition = inputTarget?.selectionStart || 0;
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, fractionDigitsOnZero || 0);
+		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, shouldFormatFractionDigits ? fractionDigits : 0);
 
 		// Update `value` after formatting
 		setUnformattedValue();

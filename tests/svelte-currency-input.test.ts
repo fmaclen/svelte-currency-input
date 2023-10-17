@@ -365,6 +365,7 @@ test.describe('CurrencyInput', () => {
 		await page.keyboard.press('Backspace');
 		await page.keyboard.type('123');
 		await expect(rupeesFormattedInput).toHaveValue('₹123');
+		await expect(rupeesFormattedInput).not.toHaveValue('₹123.000');
 
 		await page.locator('body').click(); // Click outside the input to trigger formatting
 		await expect(rupeesFormattedInput).toHaveValue('₹123.000');
