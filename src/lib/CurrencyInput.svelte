@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from "svelte";
+
 	const DEFAULT_LOCALE = 'en-US';
 	const DEFAULT_CURRENCY = 'USD';
 	const DEFAULT_NAME = 'total';
@@ -61,6 +63,13 @@
 		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
 			event.preventDefault();
 	};
+
+	// Formats the value when the input loses focus and sets the correct number of
+	// fraction digits when the value is zero
+	const handleOnBlur = () => setFormattedValue(true);
+
+	// Also set the correct fraction digits when the value is zero on initial load
+	onMount(() => setFormattedValue(true));
 
 	let inputTarget: HTMLInputElement;
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
@@ -126,13 +135,13 @@
 		}
 	};
 
-	const setFormattedValue = () => {
+	const setFormattedValue = (hasMinFractionDigits?: boolean) => {
 		// Previous caret position
 		const startCaretPosition = inputTarget?.selectionStart || 0;
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, 0);
+		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
 
 		// Update `value` after formatting
 		setUnformattedValue();
@@ -187,7 +196,7 @@
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}
 		on:keyup={setUnformattedValue}
-		on:blur={setFormattedValue}
+		on:blur={handleOnBlur}
 	/>
 </div>
 
