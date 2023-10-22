@@ -96,6 +96,8 @@ test.describe('CurrencyInput', () => {
 					'formatted-pesos': '$ 999,00',
 					rupees: '678',
 					'formatted-rupees': '₹678.000',
+					soles: '0',
+					'formatted-soles': 'S/ 0.00',
 				},
 				null,
 				2
@@ -295,7 +297,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(10);
+			expect(await formattedInputs.count()).toBe(11);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
