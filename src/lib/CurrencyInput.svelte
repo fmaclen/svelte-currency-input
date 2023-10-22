@@ -34,6 +34,7 @@
 	export let placeholder: number | null = DEFAULT_VALUE;
 	export let autocomplete: string | null | undefined = undefined;
 	export let isNegativeAllowed: boolean = true;
+	export let isZeroNullish: boolean = false;
 	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
 	export let inputClasses: InputClasses | null = null;
 	export let onValueChange: Callback = () => {};
@@ -141,7 +142,7 @@
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
+		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
 
 		// Update `value` after formatting
 		setUnformattedValue();
@@ -162,8 +163,9 @@
 	let formattedValue = '';
 	let formattedPlaceholder =
 		placeholder !== null ? formatCurrency(placeholder, fractionDigits, fractionDigits) : '';
-	$: isZero = value === 0;
 	$: isNegative = value < 0;
+	$: isPositive = value > 0;
+	$: isZero = !isNegative && !isPositive;
 	$: value, setFormattedValue();
 </script>
 
