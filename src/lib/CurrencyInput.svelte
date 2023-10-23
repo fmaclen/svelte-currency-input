@@ -31,7 +31,7 @@
 	export let name: string = DEFAULT_NAME;
 	export let required: boolean = false;
 	export let disabled: boolean = false;
-	export let placeholder: number | null = DEFAULT_VALUE;
+	export let placeholder: string | number | null = DEFAULT_VALUE;
 	export let autocomplete: string | null | undefined = undefined;
 	export let isNegativeAllowed: boolean = true;
 	export let isZeroNullish: boolean = false;
@@ -160,9 +160,13 @@
 		onValueChange(value);
 	};
 
+	const handlePlaceholder = (placeholder: string | number | null) => {
+		if (typeof placeholder === "number") return formatCurrency(placeholder, fractionDigits, fractionDigits);
+		if (placeholder === null) return "";
+		return placeholder;
+	};
+
 	let formattedValue = '';
-	let formattedPlaceholder =
-		placeholder !== null ? formatCurrency(placeholder, fractionDigits, fractionDigits) : '';
 	$: isNegative = value < 0;
 	$: isPositive = value > 0;
 	$: isZero = !isNegative && !isPositive;
@@ -192,7 +196,7 @@
 		inputmode="numeric"
 		name={`formatted-${name}`}
 		required={required && !isZero}
-		placeholder={formattedPlaceholder}
+		placeholder={handlePlaceholder(placeholder)}
 		{autocomplete}
 		{disabled}
 		bind:value={formattedValue}
