@@ -1,9 +1,6 @@
 {
 	"name": "@canutin/svelte-currency-input",
 	"version": "0.0.0-development",
-	"exports": {
-		".": "./index.js"
-	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -21,6 +18,11 @@
 			"svelte": "./dist/index.js"
 		}
 	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
 	"peerDependencies": {
 		"svelte": "^4.0.0"
 	},
