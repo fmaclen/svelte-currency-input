@@ -96,6 +96,8 @@ test.describe('CurrencyInput', () => {
 					'formatted-pesos': '$ 999,00',
 					rupees: '678',
 					'formatted-rupees': '₹678.000',
+					soles: '0',
+					'formatted-soles': 'S/ 0.00',
 				},
 				null,
 				2
@@ -295,7 +297,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(10);
+			expect(await formattedInputs.count()).toBe(11);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
@@ -370,6 +372,20 @@ test.describe('CurrencyInput', () => {
 		await page.locator('body').click(); // Click outside the input to trigger formatting
 		await expect(rupeesFormattedInput).toHaveValue('₹123.000');
 		await expect(rupeesUnformattedInput).toHaveValue('123');
+	});
+
+	test("isZeroNullish doesn't render placeholder when the value is 0", async ({ page }) => {
+		const solesUnformattedInput = page.locator('.currencyInput__unformatted[name="soles"]');
+		const solesFormattedInput = page.locator('.currencyInput__formatted[name="formatted-soles"]');
+		await expect(solesUnformattedInput).toHaveValue('0');
+		await expect(solesFormattedInput).toHaveValue('S/ 0.00');
+		await expect(solesFormattedInput).toHaveAttribute('placeholder', '');
+
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).not.toHaveValue('₡0,00');
+		await expect(colonFormattedInput).toHaveAttribute('placeholder', '₡0,00');
 	});
 
 	test.skip('Updating chained inputs have the correct behavior', async () => {
