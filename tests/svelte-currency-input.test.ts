@@ -374,6 +374,20 @@ test.describe('CurrencyInput', () => {
 		await expect(rupeesUnformattedInput).toHaveValue('123');
 	});
 
+	test("isZeroNullish doesn't render placeholder when the value is 0", async ({ page }) => {
+		const solesUnformattedInput = page.locator('.currencyInput__unformatted[name="soles"]');
+		const solesFormattedInput = page.locator('.currencyInput__formatted[name="formatted-soles"]');
+		await expect(solesUnformattedInput).toHaveValue('0');
+		await expect(solesFormattedInput).toHaveValue('S/ 0.00');
+		await expect(solesFormattedInput).toHaveAttribute('placeholder', '');
+
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).not.toHaveValue('₡0,00');
+		await expect(colonFormattedInput).toHaveAttribute('placeholder', '₡0,00');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
