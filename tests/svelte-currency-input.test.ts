@@ -7,6 +7,19 @@ const selectAll = async (page: Page) => {
 	isMacOs ? await page.keyboard.press('Meta+A') : await page.keyboard.press('Control+A');
 };
 
+// HACK:
+// This is a workaround because Playwright starts running the assertions immediately
+// after the DOM loads but the component is updated a few milliseconds later.
+// This causes a race condition in some tests causing assertions to fail.
+//
+// The real solution would be to figure out why some fields are not already updated
+// when the component is mounted, or why is it triggering a re-render.
+// REF: https://github.com/fmaclen/svelte-currency-input/issues/62
+const waitForInitialLoad = async (page: Page) => {
+	const DELAY_IN_MS = 100;
+	await page.waitForTimeout(DELAY_IN_MS);
+}
+
 test.describe('CurrencyInput', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto('/');
@@ -108,6 +121,8 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Updating an input has the correct behavior', async ({ page }) => {
+		await waitForInitialLoad(page);
+
 		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
 		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
 
@@ -215,6 +230,8 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Fraction digits can be overriden', async ({ page }) => {
+		await waitForInitialLoad(page);
+
 		const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
 		const bitcoinFormattedInput = page.locator(
 			'.currencyInput__formatted[name="formatted-bitcoin"]'
@@ -239,6 +256,8 @@ test.describe('CurrencyInput', () => {
 
 	test.describe('Pressing the comma or period keys have the correct behavior', async () => {
 		test('Pressing "." gets converted to ","', async ({ page }) => {
+			await waitForInitialLoad(page);
+
 			const euroFormattedInput = page.locator('.currencyInput__formatted[name="formatted-euro"]');
 			const euroUnformattedInput = page.locator('.currencyInput__unformatted[name=euro]');
 			await euroFormattedInput.focus();
@@ -254,6 +273,8 @@ test.describe('CurrencyInput', () => {
 		});
 
 		test('Pressing "," gets converted to "."', async ({ page }) => {
+			await waitForInitialLoad(page);
+
 			const bitcoinUnformattedInput = page.locator('.currencyInput__unformatted[name=bitcoin]');
 			const bitcoinFormattedInput = page.locator(
 				'.currencyInput__formatted[name="formatted-bitcoin"]'
