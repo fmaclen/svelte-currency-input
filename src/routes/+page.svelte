@@ -65,6 +65,8 @@
 			}}
 		/>
 		<CurrencyInput name="rupees" value={678} locale="hi-IN" currency="INR" fractionDigits={3} />
+		<CurrencyInput name="soles" value={0} isZeroNullish={true} placeholder={null} locale="es-PE" currency="PEN" />
+		<CurrencyInput name="dinars" value={0} placeholder={"How many Dinars?"} locale="en-US" currency="RSD" />
 	</div>
 
 	<nav class="demoForm__output">

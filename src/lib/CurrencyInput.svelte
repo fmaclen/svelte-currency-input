@@ -31,9 +31,10 @@
 	export let name: string = DEFAULT_NAME;
 	export let required: boolean = false;
 	export let disabled: boolean = false;
-	export let placeholder: number | null = DEFAULT_VALUE;
+	export let placeholder: string | number | null = DEFAULT_VALUE;
 	export let autocomplete: string | null | undefined = undefined;
 	export let isNegativeAllowed: boolean = true;
+	export let isZeroNullish: boolean = false;
 	export let fractionDigits: number = DEFAULT_FRACTION_DIGITS;
 	export let inputClasses: InputClasses | null = null;
 	export let onValueChange: Callback = () => {};
@@ -141,7 +142,7 @@
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
+		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
 
 		// Update `value` after formatting
 		setUnformattedValue();
@@ -159,11 +160,16 @@
 		onValueChange(value);
 	};
 
+	const handlePlaceholder = (placeholder: string | number | null) => {
+		if (typeof placeholder === "number") return formatCurrency(placeholder, fractionDigits, fractionDigits);
+		if (placeholder === null) return "";
+		return placeholder;
+	};
+
 	let formattedValue = '';
-	let formattedPlaceholder =
-		placeholder !== null ? formatCurrency(placeholder, fractionDigits, fractionDigits) : '';
-	$: isZero = value === 0;
 	$: isNegative = value < 0;
+	$: isPositive = value > 0;
+	$: isZero = !isNegative && !isPositive;
 	$: value, setFormattedValue();
 </script>
 
@@ -190,7 +196,7 @@
 		inputmode="numeric"
 		name={`formatted-${name}`}
 		required={required && !isZero}
-		placeholder={formattedPlaceholder}
+		placeholder={handlePlaceholder(placeholder)}
 		{autocomplete}
 		{disabled}
 		bind:value={formattedValue}
