@@ -160,14 +160,13 @@
 		onValueChange(value);
 	};
 
-	const formatPlaceholder = (placeholder: string | number | null) => {
+	const handlePlaceholder = (placeholder: string | number | null) => {
 		if (typeof placeholder === "number") return formatCurrency(placeholder, fractionDigits, fractionDigits);
 		if (placeholder === null) return "";
 		return placeholder;
 	};
 
 	let formattedValue = '';
-	let formattedPlaceholder = formatPlaceholder(placeholder);
 	$: isNegative = value < 0;
 	$: isPositive = value > 0;
 	$: isZero = !isNegative && !isPositive;
@@ -197,7 +196,7 @@
 		inputmode="numeric"
 		name={`formatted-${name}`}
 		required={required && !isZero}
-		placeholder={formattedPlaceholder}
+		placeholder={handlePlaceholder(placeholder)}
 		{autocomplete}
 		{disabled}
 		bind:value={formattedValue}
