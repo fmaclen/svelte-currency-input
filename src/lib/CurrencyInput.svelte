@@ -64,8 +64,9 @@
 		// If there is already a decimal point, don't allow more than one
 		const isPunctuationDuplicated = () => {
 			const isPressedKeyPunctuation = event.key === ',' || event.key === '.';
-			if (isDecimalComma) return isPressedKeyPunctuation && formattedValue.split(',').length >= 2;
-			if (!isDecimalComma) return isPressedKeyPunctuation && formattedValue.split('.').length >= 2;
+			if (!isPressedKeyPunctuation) return false;
+			if (isDecimalComma) return formattedValue.split(',').length >= 2;
+			if (!isDecimalComma) return formattedValue.split('.').length >= 2;
 			return false;
 		};
 
