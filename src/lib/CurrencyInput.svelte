@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount } from 'svelte';
 
 	const DEFAULT_LOCALE = 'en-US';
 	const DEFAULT_CURRENCY = 'USD';
@@ -63,13 +63,16 @@
 
 		// If there is already a decimal point, don't allow more than one
 		const isPunctuationDuplicated = () => {
-			const isPunctuation = event.key === "," || event.key === ".";
-			if (isDecimalComma) return isPunctuation && formattedValue.split(',').length >= 2;
-			if (!isDecimalComma) return isPunctuation && formattedValue.split('.').length >= 2;
+			const isPressedKeyPunctuation = event.key === ',' || event.key === '.';
+			if (isDecimalComma) return isPressedKeyPunctuation && formattedValue.split(',').length >= 2;
+			if (!isDecimalComma) return isPressedKeyPunctuation && formattedValue.split('.').length >= 2;
 			return false;
-		}
+		};
 
-		if (isPunctuationDuplicated() || !isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+		if (
+			isPunctuationDuplicated() ||
+			(!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+		)
 			event.preventDefault();
 	};
 
