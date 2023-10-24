@@ -419,6 +419,41 @@ test.describe('CurrencyInput', () => {
 		await expect(dinarsFormattedInput).toHaveAttribute('placeholder', 'How many Dinars?');
 	});
 
+	test('Prevent duplicated decimal points', async ({ page }) => {
+		// Periods as decimals
+		const poundUnformattedInput = page.locator('.currencyInput__unformatted[name=pound]');
+		const poundFormattedInput = page.locator('.currencyInput__formatted[name="formatted-pound"]');
+		await expect(poundUnformattedInput).toHaveValue('1234.56');
+		await expect(poundFormattedInput).toHaveValue('£1,234.56');
+
+		await poundFormattedInput.focus();
+		await page.keyboard.type('....');
+		await expect(poundUnformattedInput).toHaveValue('1234.56');
+		await expect(poundFormattedInput).toHaveValue('£1,234.56');
+
+		// Commas as decimals
+		const colonUnformattedInput = page.locator('.currencyInput__unformatted[name=colon]');
+		const colonFormattedInput = page.locator('.currencyInput__formatted[name="formatted-colon"]');
+		await expect(colonUnformattedInput).toHaveValue('0');
+		await expect(colonFormattedInput).toHaveValue('');
+
+		await colonFormattedInput.focus();
+		await page.keyboard.type('123,,,,,');
+		await expect(colonUnformattedInput).toHaveValue('123');
+		await expect(colonFormattedInput).toHaveValue('₡123,');
+
+		// Pressing multiple commas when locale for decimals is a period
+		const dinarsUnformattedInput = page.locator('.currencyInput__unformatted[name="dinars"]');
+		const dinarsFormattedInput = page.locator('.currencyInput__formatted[name="formatted-dinars"]');
+		await expect(dinarsUnformattedInput).toHaveValue('0');
+		await expect(dinarsFormattedInput).toHaveValue('');
+
+		await dinarsFormattedInput.focus();
+		await page.keyboard.type('123,,,,,');
+		await expect(dinarsUnformattedInput).toHaveValue('123');
+		await expect(dinarsFormattedInput).toHaveValue('RSD 123.');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
