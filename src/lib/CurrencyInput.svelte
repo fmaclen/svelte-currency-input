@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount } from 'svelte';
 
 	const DEFAULT_LOCALE = 'en-US';
 	const DEFAULT_CURRENCY = 'USD';
@@ -61,7 +61,18 @@
 		const isTab = event.key === 'Tab';
 		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key); // Keys that are not a digit, comma, period or minus sign
 
-		if (!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+		// If there is already a decimal point, don't allow more than one
+		const isPunctuationDuplicated = () => {
+			if (event.key !== ',' && event.key !== '.') return false; // Is `false` because it's not a punctuation key
+			if (isDecimalComma) return formattedValue.split(',').length >= 2;
+			if (!isDecimalComma) return formattedValue.split('.').length >= 2;
+			return false;
+		};
+
+		if (
+			isPunctuationDuplicated() ||
+			(!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+		)
 			event.preventDefault();
 	};
 
