@@ -63,8 +63,7 @@
 
 		// If there is already a decimal point, don't allow more than one
 		const isPunctuationDuplicated = () => {
-			const isPressedKeyPunctuation = event.key === ',' || event.key === '.';
-			if (!isPressedKeyPunctuation) return false;
+			if (event.key !== ',' && event.key !== '.') return false; // Is `false` because it's not a punctuation key
 			if (isDecimalComma) return formattedValue.split(',').length >= 2;
 			if (!isDecimalComma) return formattedValue.split('.').length >= 2;
 			return false;
