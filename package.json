@@ -23,9 +23,6 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
-	"peerDependencies": {
-		"svelte": "^3.59.2"
-	},
 	"devDependencies": {
 		"@playwright/test": "^1.39.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
