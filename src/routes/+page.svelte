@@ -160,9 +160,9 @@
 		font-size: 20px;
 		letter-spacing: -0.025em;
 		line-height: 1em;
-		margin: unset;
+		margin-block: unset;
 		margin-right: auto;
-		text-align: center;
+		padding-right: 16px;
 	}
 
 	nav.demoForm__nav {
