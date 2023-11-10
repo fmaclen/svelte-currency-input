@@ -35,6 +35,11 @@
 			href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
 			target="_blank">NPM</a
 		>
+		<a
+			class="demoForm__a"
+			href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.59.2"
+			target="_blank">REPL</a
+		>
 	</nav>
 
 	<div class="demoForm__container">
