@@ -454,6 +454,20 @@ test.describe('CurrencyInput', () => {
 		await expect(dinarsFormattedInput).toHaveValue('RSD 123.');
 	});
 
+	test("inputmode is set correctly based on fractionDigits", async ({ page }) => {
+		// fractionDigits == undefined (defaults to 2)
+		const solesFormattedInput = page.locator('.currencyInput__formatted[name="formatted-soles"]');
+		await expect(solesFormattedInput).toHaveAttribute('inputmode', 'decimal');
+
+		// fractionDigits == 3
+		const rupeesFormattedInput = page.locator('.currencyInput__formatted[name="formatted-rupees"]');
+		await expect(rupeesFormattedInput).toHaveAttribute('inputmode', 'decimal');
+
+		// fractionDigits == 0
+		const dinarsFormattedInput = page.locator('.currencyInput__formatted[name="formatted-dinars"]');
+		await expect(dinarsFormattedInput).toHaveAttribute('inputmode', 'numeric');
+	});
+
 	test.skip('Updating chained inputs have the correct behavior', async () => {
 		// TODO
 	});
