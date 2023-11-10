@@ -204,7 +204,7 @@
 			: ''}
 		"
 		type="text"
-		inputmode="numeric"
+		inputmode={fractionDigits > 0 ? "decimal" : "numeric"}
 		name={`formatted-${name}`}
 		required={required && !isZero}
 		placeholder={handlePlaceholder(placeholder)}
