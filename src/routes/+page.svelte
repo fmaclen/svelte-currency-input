@@ -15,6 +15,28 @@
 </script>
 
 <form class="demoForm" on:submit={handleSubmit}>
+	<nav class="demoForm__nav">
+		<h1 class="demoForm__h1">svelte-currency-input</h1>
+		<a class="demoForm__a" href="https://github.com/canutin/svelte-currency-input" target="_blank"
+			>GitHub repository</a
+		>
+		<a
+			class="demoForm__a"
+			href="https://github.com/canutin/svelte-currency-input/issues"
+			target="_blank">Known issues</a
+		>
+		<a
+			class="demoForm__a"
+			href="https://github.com/canutin/svelte-currency-input#contributing"
+			target="_blank">Contribute</a
+		>
+		<a
+			class="demoForm__a"
+			href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
+			target="_blank">NPM</a
+		>
+	</nav>
+
 	<div class="demoForm__container">
 		<CurrencyInput name="default" value={-42069.69} />
 		<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
@@ -66,7 +88,7 @@
 		/>
 		<CurrencyInput name="rupees" value={678} locale="hi-IN" currency="INR" fractionDigits={3} />
 		<CurrencyInput name="soles" value={0} isZeroNullish={true} placeholder={null} locale="es-PE" currency="PEN" />
-		<CurrencyInput name="dinars" value={0} placeholder={"How many Dinars?"} locale="en-US" currency="RSD" />
+		<CurrencyInput name="dinars" value={0} placeholder={"How many Dinars?"} locale="en-US" currency="RSD" fractionDigits={0} />
 	</div>
 
 	<nav class="demoForm__output">
@@ -75,27 +97,6 @@
 		<pre class="demoForm__pre {!output && 'demoForm__pre--placeholder'}">{output
 				? output
 				: 'Submit form to see a JSON output of the values'}</pre>
-	</nav>
-
-	<nav class="demoForm__nav">
-		<a class="demoForm__a" href="https://github.com/canutin/svelte-currency-input" target="_blank"
-			>GitHub repository</a
-		>
-		<a
-			class="demoForm__a"
-			href="https://github.com/canutin/svelte-currency-input/issues"
-			target="_blank">Known issues</a
-		>
-		<a
-			class="demoForm__a"
-			href="https://github.com/canutin/svelte-currency-input#contributing"
-			target="_blank">Contribute</a
-		>
-		<a
-			class="demoForm__a"
-			href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
-			target="_blank">NPM</a
-		>
 	</nav>
 </form>
 
@@ -113,7 +114,7 @@
 
 		font-family: sans-serif;
 		box-sizing: border-box;
-		height: 100vh;
+		min-height: 100vh;
 		margin: 0;
 		background-color: #eaeaea;
 		display: flex;
@@ -121,6 +122,14 @@
 		justify-content: center;
 		place-items: center;
 		padding: var(--gap);
+
+		@media (max-width: 768px) {
+			--gap: 48px;
+		}
+
+		@media (max-width: 512px) {
+			--gap: 32px;
+		}
 	}
 
 	form.demoForm {
@@ -136,13 +145,36 @@
 		justify-content: center;
 		gap: calc(var(--gap) / 2);
 		height: max-content;
+
+		@media (max-width: 768px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		
+		@media (max-width: 512px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	h1.demoForm__h1 {
+		color: #333;
+		font-size: 20px;
+		letter-spacing: -0.025em;
+		line-height: 1em;
+		margin: unset;
+		margin-right: auto;
+		text-align: center;
 	}
 
 	nav.demoForm__nav {
 		font-size: 13px;
 		display: flex;
-		column-gap: 16px;
+		gap: 16px;
 		justify-content: center;
+
+		@media (max-width: 512px) {
+			flex-direction: column;
+			gap: 24px;
+		}
 	}
 
 	a.demoForm__a {
@@ -165,7 +197,11 @@
 	nav.demoForm__output {
 		display: grid;
 		grid-template-columns: max-content auto;
-		column-gap: calc(var(--gap) / 2);
+		gap: calc(var(--gap) / 2);
+
+		@media (max-width: 512px) {
+			grid-template-columns: unset;
+		}
 	}
 
 	pre.demoForm__pre {
@@ -174,6 +210,8 @@
 		margin: 0;
 		color: #666;
 		box-sizing: border-box;
+		max-width: 100%;
+		overflow-y: auto;
 	}
 
 	pre.demoForm__pre--placeholder {
