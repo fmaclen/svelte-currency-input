@@ -164,7 +164,7 @@
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, dom.activeElement == inputElement ? 0 : fractionDigits);
+		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, dom.activeElement === inputElement ? 0 : fractionDigits);
 
 		// Update `value` after formatting
 		setUnformattedValue();
