@@ -78,12 +78,20 @@
 
 	// Formats the value when the input loses focus and sets the correct number of
 	// fraction digits when the value is zero
-	const handleOnBlur = () => setFormattedValue(true);
+	const handleOnBlur = () => setFormattedValue();
 
-	// Also set the correct fraction digits when the value is zero on initial load
-	onMount(() => setFormattedValue(true));
+	let dom: Document;
+	let inputElement: HTMLInputElement;
 
-	let inputTarget: HTMLInputElement;
+	onMount(() => {
+		// Set the document object as a variable so we know the page has mounted
+		dom = document;
+
+		// Set the correct fraction digits when the value is zero on initial load
+		setFormattedValue()
+	});
+
+	let inputTarget: EventTarget | null;
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1); // '.' or ','
 	const isDecimalComma = currencyDecimal === ',';
 	const currencySymbol = formatCurrency(0, 0)
@@ -110,7 +118,7 @@
 			if (ignoreSymbols.includes(strippedUnformattedValue)) return;
 
 			// Set the starting caret positions
-			inputTarget = event.target as HTMLInputElement;
+			inputTarget = event.target;
 
 			// Reverse the value when minus is pressed
 			if (isNegativeAllowed && event.key === '-') value = value * -1;
@@ -147,13 +155,16 @@
 		}
 	};
 
-	const setFormattedValue = (hasMinFractionDigits?: boolean) => {
+	const setFormattedValue = () => {
+		// Do nothing because the page hasn't mounted yet
+		if (!dom) return;
+
 		// Previous caret position
-		const startCaretPosition = inputTarget?.selectionStart || 0;
+		const startCaretPosition = inputElement?.selectionStart || 0;
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, hasMinFractionDigits ? fractionDigits : 0);
+		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, dom.activeElement == inputElement ? 0 : fractionDigits);
 
 		// Update `value` after formatting
 		setUnformattedValue();
@@ -164,7 +175,7 @@
 		if (previousFormattedValueLength !== formattedValue.length) {
 			const endCaretPosition =
 				startCaretPosition + formattedValue.length - previousFormattedValueLength;
-			inputTarget?.setSelectionRange(endCaretPosition, endCaretPosition);
+			inputElement?.setSelectionRange(endCaretPosition, endCaretPosition);
 		}
 
 		// Run callback function when `value` changes
@@ -210,6 +221,7 @@
 		placeholder={handlePlaceholder(placeholder)}
 		{autocomplete}
 		{disabled}
+		bind:this={inputElement}
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}
 		on:keyup={setUnformattedValue}
