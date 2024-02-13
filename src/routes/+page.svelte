@@ -12,6 +12,11 @@
 	};
 
 	let unchangedValue = 999; // Used for onValueChange()
+	let chainedValue = 9999.99; // Used for chained inputs
+
+	const setChainedValue = () => {
+		chainedValue = 420.69;
+	};
 </script>
 
 <form class="demoForm" on:submit={handleSubmit}>
@@ -43,61 +48,105 @@
 	</nav>
 
 	<div class="demoForm__container">
-		<CurrencyInput name="default" value={-42069.69} />
-		<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
-		<CurrencyInput
-			name="pound"
-			value={1234.56}
-			isNegativeAllowed={false}
-			placeholder={null}
-			locale="en-GB"
-			currency="GBP"
-		/>
-		<CurrencyInput
-			name="bitcoin"
-			value={0.87654321}
-			locale="th-TH"
-			currency="THB"
-			fractionDigits={8}
-		/>
+		<fieldset class="demoForm__fieldset">
+			<legend class="demoForm__legend">Stand-alone inputs</legend>
+			<CurrencyInput name="default" value={-42069.69} />
+			<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
+			<CurrencyInput
+				name="pound"
+				value={1234.56}
+				isNegativeAllowed={false}
+				placeholder={null}
+				locale="en-GB"
+				currency="GBP"
+			/>
+			<CurrencyInput
+				name="bitcoin"
+				value={0.87654321}
+				locale="th-TH"
+				currency="THB"
+				fractionDigits={8}
+			/>
 
-		<CurrencyInput name="yen" value={5678.9} locale="en-JP" currency="JPY" />
-		<CurrencyInput name="shekel" value={97532.95} disabled={true} locale="il-IL" currency="ILS" />
-		<CurrencyInput name="euro" value={-42069.69} locale="nl-NL" currency="EUR" />
-		<CurrencyInput
-			name="won"
-			placeholder={1234.56}
-			isNegativeAllowed={false}
-			locale="ko-KO"
-			currency="KRW"
-			inputClasses={{
-				wrapper: 'currencyInput custom-wrapper-class',
-				unformatted: 'custom-unformatted-class'
-			}}
-		/>
-		<CurrencyInput
-			name="pesos"
-			value={unchangedValue}
-			isNegativeAllowed={false}
-			placeholder={null}
-			autocomplete="off"
-			locale="es-AR"
-			currency="ARS"
-			onValueChange={(value) => {
-				// Prevent alerting on initial load
-				if (unchangedValue !== value) {
-					unchangedValue = value; // Update the unchanged value
-					if (browser) window.alert(`The value for ARS has changed to: ${value}`); // Alert the user
-				}
-			}}
-		/>
-		<CurrencyInput name="rupees" value={678} locale="hi-IN" currency="INR" fractionDigits={3} />
-		<CurrencyInput name="soles" value={0} isZeroNullish={true} placeholder={null} locale="es-PE" currency="PEN" />
-		<CurrencyInput name="dinars" value={0} placeholder={"How many Dinars?"} locale="en-US" currency="RSD" fractionDigits={0} />
+			<CurrencyInput name="yen" value={5678.9} locale="en-JP" currency="JPY" />
+			<CurrencyInput name="shekel" value={97532.95} disabled={true} locale="il-IL" currency="ILS" />
+			<CurrencyInput name="euro" value={-42069.69} locale="nl-NL" currency="EUR" />
+			<CurrencyInput
+				name="won"
+				placeholder={1234.56}
+				isNegativeAllowed={false}
+				locale="ko-KO"
+				currency="KRW"
+				inputClasses={{
+					wrapper: 'currencyInput custom-wrapper-class',
+					unformatted: 'custom-unformatted-class'
+				}}
+			/>
+			<CurrencyInput
+				name="pesos"
+				value={unchangedValue}
+				isNegativeAllowed={false}
+				placeholder={null}
+				autocomplete="off"
+				locale="es-AR"
+				currency="ARS"
+				onValueChange={(value) => {
+					// Prevent alerting on initial load
+					if (unchangedValue !== value) {
+						unchangedValue = value; // Update the unchanged value
+						if (browser) window.alert(`The value for ARS has changed to: ${value}`); // Alert the user
+					}
+				}}
+			/>
+			<CurrencyInput name="rupees" value={678} locale="hi-IN" currency="INR" fractionDigits={3} />
+			<CurrencyInput
+				name="soles"
+				value={0}
+				isZeroNullish={true}
+				placeholder={null}
+				locale="es-PE"
+				currency="PEN"
+			/>
+			<CurrencyInput
+				name="dinars"
+				value={0}
+				placeholder={'How many Dinars?'}
+				locale="en-US"
+				currency="RSD"
+				fractionDigits={0}
+			/>
+		</fieldset>
+
+		<fieldset class="demoForm__fieldset">
+			<legend class="demoForm__legend">Chained inputs</legend>
+			<CurrencyInput
+				name="chained-east-caribbean-dollar"
+				bind:value={chainedValue}
+				locale="aig"
+				currency="XCD"
+				fractionDigits={4}
+			/>
+			<CurrencyInput name="chained-euros" bind:value={chainedValue} locale="nl-NL" currency="EUR" />
+			<CurrencyInput
+				name="chained-dollars"
+				bind:value={chainedValue}
+				locale="en-US"
+				currency="USD"
+				fractionDigits={0}
+			/>
+			<button
+				id="set-chained-value"
+				type="button"
+				class="demoForm__button"
+				on:click={setChainedValue}
+			>
+				Set chained value to <strong>420.69</strong>
+			</button>
+		</fieldset>
 	</div>
 
 	<nav class="demoForm__output">
-		<button type="submit" class="demoForm__submit">Submit form</button>
+		<button id="submit-form" type="submit" class="demoForm__button">Submit form</button>
 
 		<pre class="demoForm__pre {!output && 'demoForm__pre--placeholder'}">{output
 				? output
@@ -144,20 +193,33 @@
 	}
 
 	div.demoForm__container {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
+
+	fieldset.demoForm__fieldset {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		align-items: center;
 		justify-content: center;
 		gap: calc(var(--gap) / 2);
 		height: max-content;
+		border: 1px solid #ccc;
+		padding: 16px;
 
 		@media (max-width: 768px) {
 			grid-template-columns: repeat(2, 1fr);
 		}
-		
+
 		@media (max-width: 512px) {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	legend.demoForm__legend {
+		font-size: 13px;
+		color: #666;
 	}
 
 	h1.demoForm__h1 {
@@ -224,7 +286,7 @@
 		font-size: 13px;
 	}
 
-	button.demoForm__submit {
+	button.demoForm__button {
 		border: none;
 		background-color: #333;
 		color: #fff;
@@ -234,7 +296,7 @@
 		height: max-content;
 	}
 
-	button.demoForm__submit:hover {
+	button.demoForm__button:hover {
 		background-color: #000;
 	}
 </style>
