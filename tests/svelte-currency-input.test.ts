@@ -85,7 +85,7 @@ test.describe('CurrencyInput', () => {
 		await expect(shekelFormattedInput).not.toHaveClass(/currencyInput__formatted--zero/);
 
 		// Submitting a form returns the correct values
-		const demoSubmitForm = page.locator('button.demoForm__submit');
+		const demoSubmitForm = page.locator('button#submit-form');
 		const demoOutput = page.locator('pre.demoForm__pre');
 		await demoSubmitForm.click();
 		expect(await demoOutput.textContent()).toMatch(
@@ -113,14 +113,12 @@ test.describe('CurrencyInput', () => {
 					'formatted-soles': 'S/ 0.00',
 					dinars: '0',
 					'formatted-dinars': '',
-					'chained-dollars': '1235',
-					'formatted-chained-dollars': '$1,235',
-					'chained-euros': '1235',
-					'formatted-chained-euros': '€ 1.235,00',
-					'chained-pesos': '1235',
-					'formatted-chained-pesos': '$ 1.235,0000',
-					'chained-bitcoin': '1235',
-					'formatted-chained-bitcoin': '฿1,235.00000000'
+					'chained-east-caribbean-dollar': '10000',
+					'formatted-chained-east-caribbean-dollar': 'EC$10,000.0000',
+					'chained-euros': '10000',
+					'formatted-chained-euros': '€ 10.000,00',
+					'chained-dollars': '10000',
+					'formatted-chained-dollars': '$10,000'
 				},
 				null,
 				2
@@ -328,7 +326,7 @@ test.describe('CurrencyInput', () => {
 		// Tabbing in Webkit is broken: https://github.com/Canutin/svelte-currency-input/issues/40
 		if (testInfo.project.name !== 'webkit') {
 			const formattedInputs = page.locator('.currencyInput__formatted');
-			expect(await formattedInputs.count()).toBe(16);
+			expect(await formattedInputs.count()).toBe(15);
 
 			await formattedInputs.first().focus();
 			await expect(formattedInputs.nth(0)).toBeFocused();
@@ -476,7 +474,46 @@ test.describe('CurrencyInput', () => {
 		await expect(dinarsFormattedInput).toHaveAttribute('inputmode', 'numeric');
 	});
 
-	test.skip('Updating chained inputs have the correct behavior', async () => {
-		// TODO
+	test('Updating chained inputs have the correct behavior', async ({ page }) => {
+		const chainedDollarsUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-dollars"]');
+		const chainedDollarsFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-dollars"]');
+		const chainedEurosUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-euros"]');
+		const chainedEurosFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-euros"]');
+		const chainedEastCaribbeanDollarUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-east-caribbean-dollar"]');
+		const chainedEastCaribbeanDollarFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-east-caribbean-dollar"]');
+		const chainedValueButton = page.locator('button#set-chained-value');
+
+		// The default chained value is `9999.99` but because `chainedDollars` has fraction
+		// digits set to 0 it gets rounded to `10_000` onMount.
+		// Thus updating the other chained inputs to `100` as well.
+		await expect(chainedDollarsUnformattedInput).toHaveValue('10000');
+		await expect(chainedDollarsFormattedInput).toHaveValue('$10,000');
+		await expect(chainedEurosUnformattedInput).toHaveValue('10000');
+		await expect(chainedEurosFormattedInput).toHaveValue('€ 10.000,00');
+		await expect(chainedEastCaribbeanDollarUnformattedInput).toHaveValue('10000');
+		await expect(chainedEastCaribbeanDollarFormattedInput).toHaveValue('EC$10,000.0000');
+
+		// Set a new chained value by clicking a button
+		await chainedValueButton.click()
+		// USD input has fraction digits is 0
+		await expect(chainedDollarsUnformattedInput).toHaveValue('421');
+		await expect(chainedDollarsFormattedInput).toHaveValue('$421');
+		// EUR input has fraction digits is 2
+		await expect(chainedEurosFormattedInput).toHaveValue('€ 420,69');
+		await expect(chainedEurosUnformattedInput).toHaveValue('420.69');
+		// XCD input has fraction digits is 4
+		await expect(chainedEastCaribbeanDollarUnformattedInput).toHaveValue('420.69');
+		await expect(chainedEastCaribbeanDollarFormattedInput).toHaveValue('EC$420.6900');
+
+		// Set a new chained value by deleting the value in the USD input
+		await chainedDollarsFormattedInput.focus();
+		await selectAll(page);
+		await page.keyboard.press('Backspace');
+		await expect(chainedDollarsUnformattedInput).toHaveValue('0');
+		await expect(chainedDollarsFormattedInput).toHaveValue('');
+		await expect(chainedEurosUnformattedInput).toHaveValue('0');
+		await expect(chainedEurosFormattedInput).toHaveValue('');
+		await expect(chainedEastCaribbeanDollarUnformattedInput).toHaveValue('0');
+		await expect(chainedEastCaribbeanDollarFormattedInput).toHaveValue('');
 	});
 });

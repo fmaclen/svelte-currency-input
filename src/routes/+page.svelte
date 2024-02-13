@@ -12,7 +12,11 @@
 	};
 
 	let unchangedValue = 999; // Used for onValueChange()
-	let chainedValue = 1234.56; // Used for chained inputs
+	let chainedValue = 9999.99; // Used for chained inputs
+
+	const setChainedValue = () => {
+		chainedValue = 420.69;
+	};
 </script>
 
 <form class="demoForm" on:submit={handleSubmit}>
@@ -116,32 +120,28 @@
 		<fieldset class="demoForm__fieldset">
 			<legend class="demoForm__legend">Chained inputs</legend>
 			<CurrencyInput
+				name="chained-east-caribbean-dollar"
+				bind:value={chainedValue}
+				locale="aig"
+				currency="XCD"
+				fractionDigits={4}
+			/>
+			<CurrencyInput name="chained-euros" bind:value={chainedValue} locale="nl-NL" currency="EUR" />
+			<CurrencyInput
 				name="chained-dollars"
 				bind:value={chainedValue}
 				locale="en-US"
 				currency="USD"
 				fractionDigits={0}
 			/>
-			<CurrencyInput name="chained-euros" bind:value={chainedValue} locale="nl-NL" currency="EUR" />
-			<CurrencyInput
-				name="chained-pesos"
-				bind:value={chainedValue}
-				locale="es-AR"
-				currency="ARS"
-				fractionDigits={4}
-			/>
-			<CurrencyInput
-				name="chained-bitcoin"
-				bind:value={chainedValue}
-				locale="th-TH"
-				currency="THB"
-				fractionDigits={8}
-			/>
+			<button id="set-chained-value" type="button" class="demoForm__button" on:click={setChainedValue}>
+				Set chained value to <strong>420.69</strong>
+			</button>
 		</fieldset>
 	</div>
 
 	<nav class="demoForm__output">
-		<button type="submit" class="demoForm__submit">Submit form</button>
+		<button id="submit-form" type="submit" class="demoForm__button">Submit form</button>
 
 		<pre class="demoForm__pre {!output && 'demoForm__pre--placeholder'}">{output
 				? output
@@ -281,7 +281,7 @@
 		font-size: 13px;
 	}
 
-	button.demoForm__submit {
+	button.demoForm__button {
 		border: none;
 		background-color: #333;
 		color: #fff;
@@ -291,7 +291,7 @@
 		height: max-content;
 	}
 
-	button.demoForm__submit:hover {
+	button.demoForm__button:hover {
 		background-color: #000;
 	}
 </style>
