@@ -495,9 +495,9 @@ test.describe('CurrencyInput', () => {
 		);
 		const chainedValueButton = page.locator('button#set-chained-value');
 
-		// The default chained value is `9999.99` but because `chainedDollars` has fraction
-		// digits set to 0 it gets rounded to `10_000` onMount.
-		// Thus updating the other chained inputs to `100` as well.
+		// The default chained value is `9999.99` but because `chainedDollars` has
+		// fraction digits set to `0` it gets rounded to `10_000` onMount(),
+		// thus updating the other chained inputs to `10_000` as well.
 		await expect(chainedDollarsUnformattedInput).toHaveValue('10000');
 		await expect(chainedDollarsFormattedInput).toHaveValue('$10,000');
 		await expect(chainedEurosUnformattedInput).toHaveValue('10000');
