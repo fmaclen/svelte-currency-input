@@ -475,12 +475,24 @@ test.describe('CurrencyInput', () => {
 	});
 
 	test('Updating chained inputs have the correct behavior', async ({ page }) => {
-		const chainedDollarsUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-dollars"]');
-		const chainedDollarsFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-dollars"]');
-		const chainedEurosUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-euros"]');
-		const chainedEurosFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-euros"]');
-		const chainedEastCaribbeanDollarUnformattedInput = page.locator('.currencyInput__unformatted[name="chained-east-caribbean-dollar"]');
-		const chainedEastCaribbeanDollarFormattedInput = page.locator('.currencyInput__formatted[name="formatted-chained-east-caribbean-dollar"]');
+		const chainedDollarsUnformattedInput = page.locator(
+			'.currencyInput__unformatted[name="chained-dollars"]'
+		);
+		const chainedDollarsFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-chained-dollars"]'
+		);
+		const chainedEurosUnformattedInput = page.locator(
+			'.currencyInput__unformatted[name="chained-euros"]'
+		);
+		const chainedEurosFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-chained-euros"]'
+		);
+		const chainedEastCaribbeanDollarUnformattedInput = page.locator(
+			'.currencyInput__unformatted[name="chained-east-caribbean-dollar"]'
+		);
+		const chainedEastCaribbeanDollarFormattedInput = page.locator(
+			'.currencyInput__formatted[name="formatted-chained-east-caribbean-dollar"]'
+		);
 		const chainedValueButton = page.locator('button#set-chained-value');
 
 		// The default chained value is `9999.99` but because `chainedDollars` has fraction
@@ -494,7 +506,7 @@ test.describe('CurrencyInput', () => {
 		await expect(chainedEastCaribbeanDollarFormattedInput).toHaveValue('EC$10,000.0000');
 
 		// Set a new chained value by clicking a button
-		await chainedValueButton.click()
+		await chainedValueButton.click();
 		// USD input has fraction digits is 0
 		await expect(chainedDollarsUnformattedInput).toHaveValue('421');
 		await expect(chainedDollarsFormattedInput).toHaveValue('$421');

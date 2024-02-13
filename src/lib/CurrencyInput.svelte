@@ -88,7 +88,7 @@
 		dom = document;
 
 		// Set the correct fraction digits when the value is zero on initial load
-		setFormattedValue()
+		setFormattedValue();
 	});
 
 	let inputTarget: EventTarget | null;
@@ -164,7 +164,14 @@
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
-		formattedValue = isZero && !isZeroNullish ? '' : formatCurrency(value, fractionDigits, dom.activeElement === inputElement ? 0 : fractionDigits);
+		formattedValue =
+			isZero && !isZeroNullish
+				? ''
+				: formatCurrency(
+						value,
+						fractionDigits,
+						dom.activeElement === inputElement ? 0 : fractionDigits
+				  );
 
 		// Update `value` after formatting
 		setUnformattedValue();
@@ -183,8 +190,9 @@
 	};
 
 	const handlePlaceholder = (placeholder: string | number | null) => {
-		if (typeof placeholder === "number") return formatCurrency(placeholder, fractionDigits, fractionDigits);
-		if (placeholder === null) return "";
+		if (typeof placeholder === 'number')
+			return formatCurrency(placeholder, fractionDigits, fractionDigits);
+		if (placeholder === null) return '';
 		return placeholder;
 	};
 
@@ -215,7 +223,7 @@
 			: ''}
 		"
 		type="text"
-		inputmode={fractionDigits > 0 ? "decimal" : "numeric"}
+		inputmode={fractionDigits > 0 ? 'decimal' : 'numeric'}
 		name={`formatted-${name}`}
 		required={required && !isZero}
 		placeholder={handlePlaceholder(placeholder)}

@@ -134,7 +134,12 @@
 				currency="USD"
 				fractionDigits={0}
 			/>
-			<button id="set-chained-value" type="button" class="demoForm__button" on:click={setChainedValue}>
+			<button
+				id="set-chained-value"
+				type="button"
+				class="demoForm__button"
+				on:click={setChainedValue}
+			>
 				Set chained value to <strong>420.69</strong>
 			</button>
 		</fieldset>
