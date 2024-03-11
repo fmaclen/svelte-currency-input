@@ -1,6 +1,6 @@
 # svelte-currency-input
 
-A form input that converts numbers to localized currency formats as you type
+A masked form input that converts numbers to localized currency formats as you type
 
 [<img width="962" alt="image" src="https://user-images.githubusercontent.com/1434675/190873948-c0385747-6fa9-4077-8bd5-717e4d1124a0.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
 
