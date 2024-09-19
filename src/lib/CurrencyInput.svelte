@@ -46,6 +46,19 @@
 	let formattedValue = '';
 	let inputTarget: EventTarget | null;
 
+	// Svelte reactive statements
+	$: isNegative = value < 0;
+	$: isPositive = value > 0;
+	$: isZero = !isNegative && !isPositive;
+	$: value, setFormattedValue();
+
+	onMount(() => {
+		// Set the document object as a variable so we know the page has mounted
+		dom = document;
+		// Set the correct fraction digits when the value is zero on initial load
+		setFormattedValue();
+	});
+
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
 	const formatCurrency = (
 		value: number,
@@ -94,13 +107,6 @@
 	const currencySymbol = formatCurrency(0, 0)
 		.replace('0', '')
 		.replace(/\u00A0/, '');
-
-	onMount(() => {
-		// Set the document object as a variable so we know the page has mounted
-		dom = document;
-		// Set the correct fraction digits when the value is zero on initial load
-		setFormattedValue();
-	});
 
 	// Updates `value` by stripping away the currency formatting
 	const setUnformattedValue = (event?: KeyboardEvent) => {
@@ -187,12 +193,6 @@
 		// Run callback function when `value` changes
 		onValueChange(value);
 	};
-
-	// Svelte reactive statements
-	$: isNegative = value < 0;
-	$: isPositive = value > 0;
-	$: isZero = !isNegative && !isPositive;
-	$: value, setFormattedValue();
 </script>
 
 <div class={inputClasses?.wrapper ?? DEFAULT_CLASS_WRAPPER}>
