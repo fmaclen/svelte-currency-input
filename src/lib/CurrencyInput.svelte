@@ -60,21 +60,21 @@
 	});
 
 	// Formats value as: e.g. $1,523.00 | -$1,523.00
-	const formatCurrency = (
+	function formatCurrency(
 		value: number,
 		maximumFractionDigits?: number,
 		minimumFractionDigits?: number
-	) => {
+	) {
 		return new Intl.NumberFormat(locale, {
 			currency: currency,
 			style: 'currency',
 			maximumFractionDigits: maximumFractionDigits || 0,
 			minimumFractionDigits: minimumFractionDigits || 0
 		}).format(value);
-	};
+	}
 
 	// Checks if the key pressed is allowed
-	const handleKeyDown = (event: KeyboardEvent) => {
+	function handleKeyDown(event: KeyboardEvent) {
 		const isDeletion = event.key === 'Backspace' || event.key === 'Delete';
 		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
 		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
@@ -82,29 +82,27 @@
 		// Keys that are not a digit, comma, period or minus sign
 		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key);
 
-		const isPunctuationDuplicated = () => {
+		function isPunctuationDuplicated() {
 			// Is `false` because it's not a punctuation key
 			if (event.key !== ',' && event.key !== '.') return false;
 			if (isDecimalComma) return formattedValue.split(',').length >= 2;
 			if (!isDecimalComma) return formattedValue.split('.').length >= 2;
 			return false;
-		};
+		}
 
 		if (
 			isPunctuationDuplicated() ||
 			(!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
 		)
 			event.preventDefault();
-	};
+	}
 
-	// Formats the value when the input loses focus and sets the correct number of
-	// fraction digits when the value is zero
-	const handlePlaceholder = (placeholder: string | number | null) => {
+	function handlePlaceholder(placeholder: string | number | null) {
 		if (typeof placeholder === 'number')
 			return formatCurrency(placeholder, fractionDigits, fractionDigits);
 		if (placeholder === null) return '';
 		return placeholder;
-	};
+	}
 
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1);
 	const isDecimalComma = currencyDecimal === ',';
@@ -113,7 +111,7 @@
 		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
 
 	// Updates `value` by stripping away the currency formatting
-	const setUnformattedValue = (event?: KeyboardEvent) => {
+	function setUnformattedValue(event?: KeyboardEvent) {
 		if (event) {
 			// Don't format if the user is typing a `currencyDecimal` point
 			if (event.key === currencyDecimal) return;
@@ -168,9 +166,9 @@
 				}
 			}
 		}
-	};
+	}
 
-	const setFormattedValue = () => {
+	function setFormattedValue() {
 		// Do nothing because the page hasn't mounted yet
 		if (!dom) return;
 
@@ -202,7 +200,7 @@
 
 		// Run callback function when `value` changes
 		onValueChange(value);
-	};
+	}
 </script>
 
 <div class={inputClasses?.wrapper ?? DEFAULT_CLASS_WRAPPER}>
