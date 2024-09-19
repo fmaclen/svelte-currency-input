@@ -79,9 +79,11 @@
 		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
 		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
 		const isTab = event.key === 'Tab';
+		// Keys that are not a digit, comma, period or minus sign
 		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key);
 
 		const isPunctuationDuplicated = () => {
+			// Is `false` because it's not a punctuation key
 			if (event.key !== ',' && event.key !== '.') return false;
 			if (isDecimalComma) return formattedValue.split(',').length >= 2;
 			if (!isDecimalComma) return formattedValue.split('.').length >= 2;
@@ -95,6 +97,8 @@
 			event.preventDefault();
 	};
 
+	// Formats the value when the input loses focus and sets the correct number of
+	// fraction digits when the value is zero
 	const handlePlaceholder = (placeholder: string | number | null) => {
 		if (typeof placeholder === 'number')
 			return formatCurrency(placeholder, fractionDigits, fractionDigits);
@@ -105,8 +109,8 @@
 	const currencyDecimal = new Intl.NumberFormat(locale).format(1.1).charAt(1);
 	const isDecimalComma = currencyDecimal === ',';
 	const currencySymbol = formatCurrency(0, 0)
-		.replace('0', '')
-		.replace(/\u00A0/, '');
+		.replace('0', '') // e.g. '$0' > '$'
+		.replace(/\u00A0/, ''); // e.g '0 €' > '€'
 
 	// Updates `value` by stripping away the currency formatting
 	const setUnformattedValue = (event?: KeyboardEvent) => {
@@ -116,10 +120,12 @@
 
 			// Pressing `.` when the decimal point is `,` gets replaced with `,`
 			if (isDecimalComma && event.key === '.')
+				// Only replace the last occurence
 				formattedValue = formattedValue.replace(/\.([^.]*)$/, currencyDecimal + '$1');
 
 			// Pressing `,` when the decimal point is `.` gets replaced with `.`
 			if (!isDecimalComma && event.key === ',')
+				// Only replace the last occurence
 				formattedValue = formattedValue.replace(/\,([^,]*)$/, currencyDecimal + '$1');
 
 			// Don't format if `formattedValue` is ['$', '-$', '-']
@@ -146,10 +152,14 @@
 			unformattedValue = unformattedValue.replace(isDecimalComma ? /\./g : /\,/g, '');
 			if (isDecimalComma) unformattedValue = unformattedValue.replace(',', '.');
 
+			// If the zero-key has been pressed
+			// and if the current `value` is the same as the `value` before the key-press
+			// formatting may need to be done (Issue #30)
 			const previousValue = value;
 			value = parseFloat(unformattedValue);
 
 			if (event && previousValue === value) {
+				// Do the formatting if the number of digits after the decimal point exceeds `fractionDigits`
 				if (
 					unformattedValue.includes('.') &&
 					unformattedValue.split('.')[1].length > fractionDigits
