@@ -38,13 +38,10 @@
 	// Callback
 	export let onValueChange: Callback = () => {};
 
-	// DOM references
-	let dom: Document;
+	// Private variables
 	let inputElement: HTMLInputElement;
-
-	// State variables
-	let formattedValue = '';
 	let inputTarget: EventTarget | null;
+	let formattedValue = '';
 
 	// Svelte reactive statements
 	$: isNegative = value < 0;
@@ -53,8 +50,6 @@
 	$: value, setFormattedValue();
 
 	onMount(() => {
-		// Set the document object as a variable so we know the page has mounted
-		dom = document;
 		// Set the correct fraction digits when the value is zero on initial load
 		setFormattedValue();
 	});
@@ -170,10 +165,10 @@
 
 	function setFormattedValue() {
 		// Do nothing because the page hasn't mounted yet
-		if (!dom) return;
+		if (!inputElement) return;
 
 		// Previous caret position
-		const startCaretPosition = inputElement?.selectionStart || 0;
+		const startCaretPosition = inputElement.selectionStart || 0;
 		const previousFormattedValueLength = formattedValue.length;
 
 		// Apply formatting to input
@@ -183,7 +178,7 @@
 				: formatCurrency(
 						value,
 						fractionDigits,
-						dom.activeElement === inputElement ? 0 : fractionDigits
+						document.activeElement === inputElement ? 0 : fractionDigits
 				  );
 
 		// Update `value` after formatting
