@@ -1,6 +1,6 @@
 import { type PlaywrightTestConfig, devices } from '@playwright/test';
 
-const isEnvCI = process.env.NODE_ENV === 'CI';
+const isEnvCI = process.env.CI;
 
 const enableMultipleBrowsers = [
 	{
@@ -22,7 +22,8 @@ const config: PlaywrightTestConfig = {
 		command: 'npm run dev',
 		port: 5173
 	},
-	retries: isEnvCI ? 3 : 0,
+	workers: isEnvCI ? 1 : undefined,
+	retries: isEnvCI ? 2 : 0,
 	use: {
 		trace: isEnvCI ? 'off' : 'retain-on-failure',
 		screenshot: isEnvCI ? 'off' : 'only-on-failure'
