@@ -50,7 +50,7 @@
 	<div class="demoForm__container">
 		<fieldset class="demoForm__fieldset">
 			<legend class="demoForm__legend">Stand-alone inputs</legend>
-			<CurrencyInput name="default" value={-42069.69} />
+			<CurrencyInput name="default" value={-42069.69} id="four-twenty-six-nine" />
 			<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
 			<CurrencyInput
 				name="pound"

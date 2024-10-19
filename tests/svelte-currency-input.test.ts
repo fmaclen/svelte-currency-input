@@ -528,4 +528,10 @@ test.describe('CurrencyInput', () => {
 		await expect(chainedEastCaribbeanDollarUnformattedInput).toHaveValue('0');
 		await expect(chainedEastCaribbeanDollarFormattedInput).toHaveValue('');
 	});
+
+	test('an id can be set', async ({ page }) => {
+		const fourTwentySixNineInput = page.locator('#four-twenty-six-nine');
+		await expect(fourTwentySixNineInput).toBeVisible();
+		await expect(fourTwentySixNineInput).toHaveValue('-$42,069.69');
+	});
 });

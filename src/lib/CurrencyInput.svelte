@@ -23,6 +23,7 @@
 
 	// Input attributes
 	export let name: string = DEFAULT_NAME;
+	export let id: string | undefined = undefined;
 	export let required: boolean = false;
 	export let disabled: boolean = false;
 	export let placeholder: string | number | null = DEFAULT_VALUE;
@@ -224,6 +225,7 @@
 		placeholder={handlePlaceholder(placeholder)}
 		{autocomplete}
 		{disabled}
+		{id}
 		bind:this={inputElement}
 		bind:value={formattedValue}
 		on:keydown={handleKeyDown}
