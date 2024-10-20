@@ -64,8 +64,9 @@ value             | `number`        | `undefined` | Initial value. If left `unde
 locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896) |
 currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://www.xe.com/symbols/) |
 name              | `string`        | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
-required          | `boolean`       | `false`     | Marks the inputs as required |
-disabled          | `boolean`       | `false`     | Marks the inputs as disabled |
+id                | `string`        | `undefined` | Sets the `id` attribute on the input |
+required          | `boolean`       | `false`     | Marks the input as required |
+disabled          | `boolean`       | `false`     | Marks the input as disabled |
 placeholder       | `string` `number` `null` | `0`         | A `string` will override the default placeholder. A `number` will override  it by formatting it to the set currency. Setting it to `null` will not show a placeholder   |
 isZeroNullish | `boolean`       | `false`      | If `true` and when the value is `0`, it will override the default placeholder and render the formatted value in the field like any other value. _Note: this option might become the default in future versions_                                   |
 autocomplete      | `string`        | `undefined` | Sets the autocomplete attribute. Accepts any valid HTML [autocomplete attribute values](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values) |
