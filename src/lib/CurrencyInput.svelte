@@ -75,6 +75,7 @@
 		const isModifier = event.metaKey || event.altKey || event.ctrlKey;
 		const isArrowKey = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
 		const isTab = event.key === 'Tab';
+		const isEnter = event.key === 'Enter';
 		// Keys that are not a digit, comma, period or minus sign
 		const isInvalidCharacter = !/^\d|,|\.|-$/g.test(event.key);
 
@@ -88,7 +89,7 @@
 
 		if (
 			isPunctuationDuplicated() ||
-			(!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab)
+			(!isDeletion && !isModifier && !isArrowKey && isInvalidCharacter && !isTab && !isEnter)
 		)
 			event.preventDefault();
 	}

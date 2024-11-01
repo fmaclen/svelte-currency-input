@@ -534,4 +534,18 @@ test.describe('CurrencyInput', () => {
 		await expect(fourTwentySixNineInput).toBeVisible();
 		await expect(fourTwentySixNineInput).toHaveValue('-$42,069.69');
 	});
+
+	test('pressing enter submits the form', async ({ page }) => {
+		const preTag = page.locator('.demoForm__pre');
+		await expect(preTag).toContainText('Submit form to see a JSON output of the values');
+		await expect(preTag).not.toContainText('bitcoin');
+
+		const allInputs = page.locator('.currencyInput__formatted');
+		await allInputs.first().focus();
+		await expect(allInputs.first()).toHaveValue('-$42,069.69');
+
+		await page.keyboard.press('Enter');
+		await expect(preTag).not.toContainText('Submit form to see a JSON output of the values');
+		await expect(preTag).toContainText('bitcoin');
+	});
 });
