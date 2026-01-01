@@ -1,6 +1,9 @@
 {
 	"name": "@canutin/svelte-currency-input",
 	"version": "1.0.0-next.3",
+	"engines": {
+		"node": ">=22"
+	},
 	"description": "A fully-featured currency input component for Svelte 5 that handles formatting, localization, and validation",
 	"keywords": [
 		"svelte",
