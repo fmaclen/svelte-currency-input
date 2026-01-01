@@ -49,6 +49,7 @@
 		intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
 		placeholder="0,00 €"
 		class={INPUT_CLASS}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<CurrencyInput
 		bind:value
@@ -56,6 +57,7 @@
 		placeholder="£0.00"
 		class="{INPUT_CLASS} bg-slate-100 text-slate-400"
 		disabled
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

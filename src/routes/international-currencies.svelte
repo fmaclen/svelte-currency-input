@@ -42,12 +42,14 @@
 		intlConfig={{ locale: 'en-IN', currency: 'INR' }}
 		placeholder="₹0.00"
 		class={INPUT_CLASS}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<CurrencyInput
 		bind:value
 		intlConfig={{ locale: 'es-PE', currency: 'PEN' }}
 		placeholder="S/ 0.00"
 		class={INPUT_CLASS}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>
