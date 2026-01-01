@@ -4,11 +4,8 @@
 	let value = $state('');
 </script>
 
-<h1>Svelte Currency Input</h1>
-
 <label>
 	Amount
 	<CurrencyInput bind:value intlConfig={{ locale: 'en-US', currency: 'USD' }} />
 </label>
-
-<p>Value: {value || '(empty)'}</p>
+<output>{value}</output>

@@ -1,3 +1,6 @@
+// Component
+export { default as CurrencyInput } from './CurrencyInput.svelte';
+
 // Types
 export type {
 	IntlConfig,
