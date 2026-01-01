@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { fixedDecimalValue } from '../fixedDecimalValue.js';
+import { fixedDecimalValue } from './fixedDecimalValue.js';
 
 describe('fixedDecimalValue', () => {
 	it('should return value if no fixedDecimalLength', () => {

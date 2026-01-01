@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getLocaleConfig } from '../getLocaleConfig.js';
+import { getLocaleConfig } from './getLocaleConfig.js';
 
 describe('getLocaleConfig', () => {
 	it('should return locale config even if no intlConfig', () => {

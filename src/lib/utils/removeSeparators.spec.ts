@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { removeSeparators } from '../removeSeparators.js';
+import { removeSeparators } from './removeSeparators.js';
 
 describe('removeSeparators', () => {
 	it('should remove default comma separator', () => {

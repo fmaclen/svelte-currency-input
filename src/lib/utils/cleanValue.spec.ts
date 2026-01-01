@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cleanValue } from '../cleanValue.js';
+import { cleanValue } from './cleanValue.js';
 
 describe('cleanValue', () => {
 	it('should remove group separator in string', () => {
