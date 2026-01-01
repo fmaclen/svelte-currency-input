@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import CodeBlock from './CodeBlock.svelte';
+	import CodeBlock from './code-block.svelte';
 
 	interface Props {
 		id: string;
