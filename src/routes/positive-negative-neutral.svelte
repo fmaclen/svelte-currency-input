@@ -29,18 +29,18 @@
   import { CurrencyInput } from '@canutin/svelte-currency-input';
   let value = $state('-3.14');
 
-  const getColor = (val: string) => {
+  const getValueColor = (val: string) => {
     if (!val || val === '-') return '';
     const num = parseFloat(val);
     if (num === 0) return 'text-slate-400';
     return num < 0 ? 'text-rose-500' : 'text-emerald-500';
   };
-<\/script>
+</script>
 
 <CurrencyInput
   bind:value
   intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
-  class={getColor(value)}
+  class={getValueColor(value)}
 />`}
 >
 	<CurrencyInput

@@ -26,7 +26,7 @@
 
   let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
   let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
-<\/script>
+</script>
 
 <CurrencyInput
   value={String(billFloat)}

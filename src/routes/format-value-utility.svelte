@@ -33,7 +33,7 @@
   let groupSeparator = $state(',');
   let decimalSeparator = $state('.');
 
-  let formatted = $derived(
+  let formattedResult = $derived(
     formatValue({
       value,
       prefix,
@@ -41,7 +41,9 @@
       decimalSeparator
     })
   );
-<\/script>`}
+</script>
+
+<p>{formattedResult}</p>`}
 >
 	<div class="grid grid-cols-2 gap-2">
 		<input bind:value={valueInput} placeholder="Value" class={INPUT_CLASS} />

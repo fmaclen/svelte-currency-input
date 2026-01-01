@@ -21,7 +21,7 @@
 	code={`<script lang="ts">
   import { CurrencyInput } from '@canutin/svelte-currency-input';
   let value = $state('50');
-<\/script>
+</script>
 
 <!-- Use arrow keys to step -->
 <CurrencyInput
