@@ -5,19 +5,13 @@
 	const INPUT_CLASS =
 		'w-full rounded border border-slate-300 px-2 py-2 font-mono text-xs focus:border-slate-400 focus:outline-none placeholder:text-slate-400';
 
-	let billValue = $state('8550');
+	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
+
+	let billFloat = $state(250.75);
 	let tipPercent = $state(18);
 
-	let tipAmount = $derived(() => {
-		const bill = parseFloat(billValue.replace(',', '.')) || 0;
-		return ((bill * tipPercent) / 100).toFixed(2);
-	});
-
-	let totalAmount = $derived(() => {
-		const bill = parseFloat(billValue.replace(',', '.')) || 0;
-		const tip = parseFloat(tipAmount()) || 0;
-		return (bill + tip).toFixed(2);
-	});
+	let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
+	let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
 </script>
 
 <Example
@@ -27,29 +21,28 @@
   import { CurrencyInput, formatValue } from '@canutin/svelte-currency-input';
 
   const intlConfig = { locale: 'es-AR', currency: 'ARS' };
-  let bill = $state('8550');
+  let billFloat = $state(250.75);
   let tipPercent = $state(18);
 
-  let tip = $derived(() => {
-    const amount = parseFloat(bill) || 0;
-    return ((amount * tipPercent) / 100).toFixed(2);
-  });
-
-  let total = $derived(() => {
-    return (parseFloat(bill) + parseFloat(tip())).toFixed(2);
-  });
+  let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
+  let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
 <\/script>
 
-<CurrencyInput bind:value={bill} {intlConfig} />
+<CurrencyInput
+  value={String(billFloat)}
+  oninputvalue={(v) => (billFloat = v.float ?? 0)}
+  {intlConfig}
+/>
 <input type="range" bind:value={tipPercent} min="0" max="30" />
 
-<p>Tip: {formatValue({ value: tip(), intlConfig })}</p>
-<p>Total: {formatValue({ value: total(), intlConfig })}</p>`}
+<p>Tip: {formatValue({ value: tipAmount, intlConfig })}</p>
+<p>Total: {formatValue({ value: totalAmount, intlConfig })}</p>`}
 >
 	<div class="grid grid-cols-2 gap-2">
 		<CurrencyInput
-			bind:value={billValue}
-			intlConfig={{ locale: 'es-AR', currency: 'ARS' }}
+			value={String(billFloat)}
+			oninputvalue={(v) => (billFloat = v.float ?? 0)}
+			{intlConfig}
 			placeholder="$ 0,00"
 			class={INPUT_CLASS}
 		/>
@@ -60,13 +53,13 @@
 		<div class="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs">
 			<span class="text-slate-400">Tip</span>
 			<span class="ml-2 font-mono">
-				{formatValue({ value: tipAmount(), intlConfig: { locale: 'es-AR', currency: 'ARS' } })}
+				{formatValue({ value: tipAmount, intlConfig })}
 			</span>
 		</div>
 		<div class="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs">
 			<span class="text-slate-400">Total</span>
 			<span class="ml-2 font-mono">
-				{formatValue({ value: totalAmount(), intlConfig: { locale: 'es-AR', currency: 'ARS' } })}
+				{formatValue({ value: totalAmount, intlConfig })}
 			</span>
 		</div>
 	</div>
