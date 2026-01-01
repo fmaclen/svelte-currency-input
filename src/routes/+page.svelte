@@ -42,7 +42,7 @@
 		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://svelte-currency-input.canutin.com" />
+	<meta property="og:url" content="https://svelte-currency-input.fernando.is" />
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="Svelte Currency Input" />
@@ -51,7 +51,7 @@
 		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
 	/>
 
-	<link rel="canonical" href="https://svelte-currency-input.canutin.com" />
+	<link rel="canonical" href="https://svelte-currency-input.fernando.is" />
 </svelte:head>
 
 <div class="mx-auto max-w-5xl overflow-hidden px-4 py-8">
@@ -65,7 +65,7 @@
 			</div>
 			<nav class="flex items-center gap-3 text-sm">
 				<a
-					href="https://github.com/canutin/svelte-currency-input#readme"
+					href="https://github.com/fmaclen/svelte-currency-input#readme"
 					target="_blank"
 					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
 				>
@@ -79,15 +79,15 @@
 					NPM
 				</a>
 				<a
-					href="https://github.com/canutin/svelte-currency-input"
+					href="https://github.com/fmaclen/svelte-currency-input"
 					target="_blank"
 					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
 				>
 					GitHub
 				</a>
-				<a href="https://github.com/canutin/svelte-currency-input" target="_blank">
+				<a href="https://github.com/fmaclen/svelte-currency-input" target="_blank">
 					<img
-						src="https://img.shields.io/github/stars/canutin/svelte-currency-input?style=flat&color=black"
+						src="https://img.shields.io/github/stars/fmaclen/svelte-currency-input?style=flat&color=black"
 						alt="GitHub stars"
 						class="h-5"
 					/>
