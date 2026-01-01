@@ -25,7 +25,33 @@
 </script>
 
 <svelte:head>
-	<title>Svelte Currency Input</title>
+	<title>Svelte Currency Input - Currency masking for Svelte 5</title>
+	<meta
+		name="description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support. Works with any currency and locale."
+	/>
+	<meta
+		name="keywords"
+		content="svelte, svelte 5, currency input, currency mask, form input, internationalization, i18n, number format"
+	/>
+	<meta name="author" content="Canutin" />
+
+	<meta property="og:title" content="Svelte Currency Input" />
+	<meta
+		property="og:description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://svelte-currency-input.canutin.com" />
+
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Svelte Currency Input" />
+	<meta
+		name="twitter:description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
+	/>
+
+	<link rel="canonical" href="https://svelte-currency-input.canutin.com" />
 </svelte:head>
 
 <div class="mx-auto max-w-5xl overflow-hidden px-4 py-8">
