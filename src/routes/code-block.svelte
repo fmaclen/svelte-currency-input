@@ -14,7 +14,7 @@
 	}
 </script>
 
-<div class="relative">
+<div class="relative min-w-0">
 	<button
 		onclick={copyCode}
 		class="absolute top-3 right-3 text-slate-400 transition-colors hover:text-slate-600"
@@ -35,7 +35,8 @@
 			</svg>
 		{/if}
 	</button>
-	<pre class="overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 pr-10 text-xs"><code
+	<pre
+		class="max-w-full overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 pr-10 text-xs"><code
 			class="font-mono text-slate-700">{code.trim()}</code
 		></pre>
 </div>

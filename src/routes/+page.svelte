@@ -28,9 +28,9 @@
 	<title>Svelte Currency Input</title>
 </svelte:head>
 
-<div class="mx-auto max-w-5xl px-4 py-8">
+<div class="mx-auto max-w-5xl overflow-hidden px-4 py-8">
 	<header>
-		<div class="mb-8 grid grid-cols-[1fr_auto] items-end gap-4">
+		<div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
 				<h1 class="text-xl font-bold text-slate-900">svelte-currency-input</h1>
 				<p class="text-sm text-balance text-slate-600">
