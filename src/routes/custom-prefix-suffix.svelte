@@ -43,6 +43,7 @@
 		class={INPUT_CLASS}
 		oninputvalue={(v) => (customValues = v)}
 	/>
+	<ValueDisplay values={customValues} />
 	<CurrencyInput
 		bind:value={btcValue}
 		prefix="₿ "
@@ -51,6 +52,5 @@
 		class={INPUT_CLASS}
 		oninputvalue={(v) => (btcValues = v)}
 	/>
-	<ValueDisplay values={customValues} />
 	<ValueDisplay values={btcValues} />
 </Example>
