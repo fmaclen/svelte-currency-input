@@ -1,172 +1,58 @@
-# svelte-currency-input
+# Svelte library
 
-A masked form input that converts numbers to localized currency formats as you type
+Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
 
-[<img width="962" alt="image" src="https://user-images.githubusercontent.com/1434675/190873948-c0385747-6fa9-4077-8bd5-717e4d1124a0.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
+Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
 
-<p align="center">
-  👩‍💻 Play with it on <a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">REPL</a>  &nbsp;—&nbsp; 💵 See it in a <a href="https://github.com/Canutin/desktop/blob/master/sveltekit/src/lib/components/FormCurrency.svelte" target="_blank">real project</a>!
-</p>
+## Creating a project
 
----
+If you're seeing this, you've probably already done this step. Congrats!
 
-## Features
+```sh
+# create a new project in the current directory
+npx sv create
 
-- Formats **positive** and **negative** values
-- Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations and masking the input
-- Simple [API](#api)
-- Minimal default styling, easy to [customize](#styling)
-
-## Usage
-
-```bash
-npm install @canutin/svelte-currency-input --save
+# create a new project in my-app
+npx sv create my-app
 ```
-
-```html
-<script lang="ts">
-  import CurrencyInput from '@canutin/svelte-currency-input';
-</script>
-
-<CurrencyInput name="total" value={-420.69} locale="nl-NL" currency="EUR" />
-```
-
-## How it works
-
-When the form is submitted you get _unformatted_ or _formatted_ values from two `<input />`'s.
-This is more or less what `<CurrencyInput />` looks like under the hood:
-
-```html
-<div class="currencyInput">
-  <!-- Unformatted value -->
-  <input
-    class="currencyInput__unformatted"
-    type="hidden"
-    name="total"
-    value="-420.69"
-  />
-
-  <!-- Formatted value -->
-  <input
-    class="currencyInput__formatted"
-    type="text"
-    name="formatted-total"
-    value="€ -420,69"
-  />
-</div>
-```
-
-## API
-
-Option            | Type            | Default     | Description |
------------------ | --------------- | ----------- | ----------- |
-value             | `number`        | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder |
-locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896) |
-currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://www.xe.com/symbols/) |
-name              | `string`        | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
-id                | `string`        | `undefined` | Sets the `id` attribute on the input |
-required          | `boolean`       | `false`     | Marks the input as required |
-disabled          | `boolean`       | `false`     | Marks the input as disabled |
-placeholder       | `string` `number` `null` | `0`         | A `string` will override the default placeholder. A `number` will override  it by formatting it to the set currency. Setting it to `null` will not show a placeholder   |
-isZeroNullish | `boolean`       | `false`      | If `true` and when the value is `0`, it will override the default placeholder and render the formatted value in the field like any other value. _Note: this option might become the default in future versions_                                   |
-autocomplete      | `string`        | `undefined` | Sets the autocomplete attribute. Accepts any valid HTML [autocomplete attribute values](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values) |
-isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
-fractionDigits    | `number`        | `2`         | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
-inputClasses      | `object`        | [See below](#Styling)         | Selectively overrides any class names passed |
-onValueChange     | `Callback`      | `undefined` | Runs a callback function after the value changes |
-
-## Styling
-
-There are two ways of customizing the styling of the input:
-1. Passing it your own CSS classes
-2. Overriding the styles using the existing class names
-
-You can **override all of the class names** by passing an object to `inputClasses` that has **one or more** of these properties:
-
-```typescript
-interface InputClasses {
-  wrapper?: string; // <div> that contains the two <input> elements
-  unformatted?: string; // <input type="hidden"> that contains the unformatted value
-  formatted?: string; // <input type="text"> that contains the formatted value
-  formattedPositive?: string; // Class added when the formatted input is positive
-  formattedNegative?: string; // Class added when the formatted input is negative
-  formattedZero?: string; // Class added when the formatted input is zero
-}
-```
-
-Usage (with [Tailwind CSS](https://tailwindcss.com/) as an example):
-
-```svelte
-<CurrencyInput name="total" value="{420.69}" inputClasses={
-  { 
-    wrapper: "form-control block",
-    formatted: 'py-1.5 text-gray-700',
-    formattedPositive: 'text-green-700',
-    formattedNegative: 'text-red-700'
-  }
-} />
-```
-
-Alternatively you can **write your own CSS** by overriding the [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte) which use [BEM naming conventions](https://getbem.com/naming/). To do so apply your styles as shown below:
-
-```svelte
-<div class="my-currency-input">
-  <CurrencyInput name="total" value="{420.69}" />
-</div>
-
-<style>
-  /* Container */
-  div.my-currency-input :global(div.currencyInput) { /* ... */ }
-
-  /* Formatted input */
-  div.my-currency-input :global(input.currencyInput__formatted) { /* ... */ }
-
-  /* Formatted input when the it's disabled */
-  div.my-currency-input :global(input.currencyInput__formatted:disabled) { /* ... */ }
-
-  /* Formatted input when the value is zero */
-  div.my-currency-input :global(input.currencyInput__formatted--zero) { /* ... */ }
-
-  /* Formatted input when the value is positive */
-  div.my-currency-input :global(input.currencyInput__formatted--positive) { /* ... */ }
-
-  /* Formatted input when the value is negative */
-  div.my-currency-input :global(input.currencyInput__formatted--negative) { /* ... */ }
-</style>
-```
-
-## Contributing
-
-Here's ways in which you can contribute:
-
-- Found a bug? Open a [new issue](https://github.com/canutin/svelte-currency-input/issues/new)
-- Comment or upvote [existing issues](https://github.com/canutin/svelte-currency-input/issues)
-- Submit a [pull request](https://github.com/canutin/svelte-currency-input/pulls)
 
 ## Developing
 
-This package was generated with [SvelteKit](https://kit.svelte.dev/). Install dependencies with `npm install`, then start a development server:
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
+```sh
 npm run dev
 
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-#### Integration tests
+Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
 
-The component is tested using [Playwright](https://playwright.dev/).
-You can find the tests in [`tests/svelte-currency-input.test.ts`](https://github.com/Canutin/svelte-currency-input/blob/main/tests/svelte-currency-input.test.ts)
+## Building
 
-To run all tests on **Chromium**, **Firefox** and **Webkit**:
-```bash
-npm run test
+To build your library:
+
+```sh
+npm pack
 ```
 
-To run all tests on a specific browser (e.g. **Webkit**):
-```bash
-npx playwright test --project=webkit
+To create a production version of your showcase app:
+
+```sh
+npm run build
 ```
 
-Additional debug commands can be found on [Playwright's documentation](https://playwright.dev/docs/test-cli).
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Publishing
+
+Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+
+To publish your library to [npm](https://www.npmjs.com):
+
+```sh
+npm publish
+```
