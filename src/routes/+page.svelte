@@ -19,7 +19,12 @@
 
 	let selectedPm = $state(0);
 
-	const sections = [
+	const UTM = 'utm_source=svelte-currency-input&utm_medium=demo';
+
+	const sections: {
+		title: string;
+		items: { id: string; label: string; href?: string }[];
+	}[] = [
 		{
 			title: 'Getting started',
 			items: [
@@ -44,6 +49,26 @@
 				{ id: 'tip', label: 'Tip calculator' },
 				{ id: 'chained', label: 'Chained inputs' },
 				{ id: 'formatvalue', label: 'Format utility' }
+			]
+		},
+		{
+			title: 'Resources',
+			items: [
+				{
+					id: 'docs',
+					label: 'Docs',
+					href: `https://github.com/fmaclen/svelte-currency-input?${UTM}#readme`
+				},
+				{
+					id: 'npm',
+					label: 'NPM',
+					href: `https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`
+				},
+				{
+					id: 'github',
+					label: 'GitHub',
+					href: `https://github.com/fmaclen/svelte-currency-input?${UTM}`
+				}
 			]
 		}
 	];
@@ -81,99 +106,143 @@
 
 <div class="mx-auto max-w-5xl overflow-hidden px-4 py-8">
 	<header>
-		<div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
 				<h1 class="text-xl font-bold text-slate-900">svelte-currency-input</h1>
 				<p class="text-sm text-balance text-slate-600">
 					A Svelte 5 form input with currency masking and internationalization support
 				</p>
 			</div>
-			<nav class="flex items-center gap-3 text-sm">
+			<nav class="flex items-center gap-2">
 				<a
-					href="https://github.com/fmaclen/svelte-currency-input#readme"
+					href={`https://github.com/fmaclen/svelte-currency-input?${UTM}`}
 					target="_blank"
-					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+					rel="noopener noreferrer"
 				>
-					Docs
-				</a>
-				<a
-					href="https://github.com/fmaclen/svelte-currency-input"
-					target="_blank"
-					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
-				>
-					GitHub
-				</a>
-				<a href="https://www.npmjs.com/package/@canutin/svelte-currency-input" target="_blank">
-					<img
-						src="https://img.shields.io/npm/dm/@canutin/svelte-currency-input?style=flat&color=black"
-						alt="NPM downloads"
-						class="h-5"
-					/>
-				</a>
-				<a href="https://github.com/fmaclen/svelte-currency-input" target="_blank">
 					<img
 						src="https://img.shields.io/github/stars/fmaclen/svelte-currency-input?style=flat&color=black"
 						alt="GitHub stars"
 						class="h-5"
 					/>
 				</a>
+				<a
+					href={`https://github.com/fmaclen/svelte-currency-input/blob/main/LICENSE?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/l/@canutin/svelte-currency-input?style=flat&color=3178c6"
+						alt="License"
+						class="h-5"
+					/>
+				</a>
+				<a
+					href={`https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/v/@canutin/svelte-currency-input?style=flat&color=cb3837"
+						alt="NPM version"
+						class="h-5"
+					/>
+				</a>
+				<a
+					href={`https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/dm/@canutin/svelte-currency-input?style=flat&color=cb3837"
+						alt="NPM downloads"
+						class="h-5"
+					/>
+				</a>
 			</nav>
 		</div>
 
-		<div class="border-y border-slate-200 bg-white py-4">
-			<div class="grid gap-6 text-sm sm:grid-cols-3">
-				{#each sections as section (section.title)}
-					<div>
-						<h2 class="mb-2 text-xs font-medium text-slate-400">{section.title}</h2>
-						<ul class="flex flex-col gap-1.5">
-							{#each section.items as item (item.id)}
-								<li>
+		<hr class="my-8 border-slate-200" />
+
+		<nav class="grid gap-6 text-sm sm:grid-cols-4">
+			{#each sections as section (section.title)}
+				<div>
+					<h2 class="mb-2 text-xs font-medium text-slate-400">{section.title}</h2>
+					<ul class="flex flex-col gap-1.5">
+						{#each section.items as item (item.id)}
+							<li>
+								{#if item.href}
+									<!-- eslint-disable svelte/no-navigation-without-resolve -- external link -->
+									<a
+										href={item.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+									>
+										{item.label}
+									</a>
+									<!-- eslint-enable svelte/no-navigation-without-resolve -->
+								{:else}
 									<a
 										href="#{item.id}"
 										class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
 									>
 										{item.label}
 									</a>
-								</li>
-							{/each}
-						</ul>
-					</div>
-				{/each}
-			</div>
-		</div>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
+		</nav>
 	</header>
 
-	<section id="install" class="mt-8">
-		<div class="mb-3 flex items-center justify-between">
-			<h2 class="text-base font-medium text-slate-800">Installation</h2>
-			<div class="flex items-center gap-1">
-				{#each packageManagers as pm, i (pm.name)}
-					<button
-						onclick={() => (selectedPm = i)}
-						class="rounded border px-2 py-1 text-xs font-medium transition-colors {selectedPm === i
-							? 'border-transparent bg-slate-200 text-slate-900'
-							: 'border-slate-300 text-slate-500 hover:text-slate-700'}"
-					>
-						{pm.name}
-					</button>
-				{/each}
+	<hr class="my-8 border-slate-200" />
+
+	<!-- Getting started -->
+	<section id="install" class="flex flex-col gap-8">
+		<div>
+			<div class="mb-3 flex items-center justify-between">
+				<h2 class="text-base font-medium text-slate-800">Installation</h2>
+				<div class="flex items-center gap-1">
+					{#each packageManagers as pm, i (pm.name)}
+						<button
+							onclick={() => (selectedPm = i)}
+							class="rounded border px-2 py-1 text-xs font-medium transition-colors {selectedPm ===
+							i
+								? 'border-transparent bg-slate-200 text-slate-900'
+								: 'border-slate-300 text-slate-500 hover:text-slate-700'}"
+						>
+							{pm.name}
+						</button>
+					{/each}
+				</div>
 			</div>
+			<pre class="overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 text-xs"><code
+					class="font-mono text-slate-700">{packageManagers[selectedPm].command}</code
+				></pre>
 		</div>
-		<pre class="overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 text-xs"><code
-				class="font-mono text-slate-700">{packageManagers[selectedPm].command}</code
-			></pre>
+		<BasicUsage />
 	</section>
 
-	<div class="mt-8 flex flex-col gap-8">
-		<BasicUsage />
+	<hr class="my-8 border-slate-200" />
+
+	<!-- Features -->
+	<section class="flex flex-col gap-8">
 		<InternationalCurrencies />
 		<Abbreviations />
 		<DecimalPrecision />
 		<MinMaxStep />
 		<CustomPrefixSuffix />
+	</section>
+
+	<hr class="my-8 border-slate-200" />
+
+	<!-- Examples -->
+	<section class="flex flex-col gap-8">
 		<PositiveNegativeNeutral />
 		<TipCalculator />
 		<ChainedInputs />
 		<FormatValueUtility />
-	</div>
+	</section>
 </div>
