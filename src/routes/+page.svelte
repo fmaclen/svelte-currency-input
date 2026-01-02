@@ -8,7 +8,7 @@
 	import MinMaxStep from './min-max-step.svelte';
 	import ChainedInputs from './chained-inputs.svelte';
 	import FormatValueUtility from './format-value-utility.svelte';
-	import TipCalculator from './tip-calculator.svelte';
+	import ArgentinaRates from './argentina-rates.svelte';
 
 	const packageManagers = [
 		{ name: 'bun', command: 'bun add @canutin/svelte-currency-input' },
@@ -46,9 +46,9 @@
 			title: 'Examples',
 			items: [
 				{ id: 'styling', label: 'Dynamic styling' },
-				{ id: 'tip', label: 'Tip calculator' },
 				{ id: 'chained', label: 'Chained inputs' },
-				{ id: 'formatvalue', label: 'Format utility' }
+				{ id: 'formatvalue', label: 'Format utility' },
+				{ id: 'one-usd', label: 'One USD, many pesos' }
 			]
 		},
 		{
@@ -255,9 +255,9 @@
 	<!-- Examples -->
 	<section class="flex flex-col gap-8">
 		<PositiveNegativeNeutral />
-		<TipCalculator />
 		<ChainedInputs />
 		<FormatValueUtility />
+		<ArgentinaRates />
 	</section>
 
 	{@render hr()}

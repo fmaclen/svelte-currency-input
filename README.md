@@ -276,7 +276,7 @@ const expanded = parseAbbrValue('2.5m', 'en-US');
 
 ## Svelte 4
 
-For Svelte 4 support, use the [0.x version](https://github.com/fmaclen/svelte-currency-input/tree/main):
+For Svelte 4 support, use the [0.x version](https://github.com/fmaclen/svelte-currency-input/tree/v0.13.0):
 
 ```bash
 npm install @canutin/svelte-currency-input@0

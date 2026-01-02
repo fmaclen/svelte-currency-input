@@ -43,18 +43,18 @@ The demo site will be available at `http://localhost:5173`.
 
 ```
 src/
-├── lib/                    # Library source code (published to npm)
+├── lib/                       # Library source code (published to npm)
 │   ├── currency-input.svelte  # Main component
-│   ├── index.ts            # Public exports
-│   ├── types.ts            # TypeScript types
-│   └── utils/              # Utility functions
-│       ├── *.ts            # Individual utilities
-│       └── *.spec.ts       # Unit tests for utilities
-├── routes/                 # Demo site (SvelteKit routes)
-│   ├── +page.svelte        # Demo homepage
-│   ├── test/               # E2E test fixtures
-│   └── *.svelte            # Demo components
-e2e/                        # End-to-end tests (Playwright)
+│   ├── index.ts               # Public exports
+│   ├── types.ts               # TypeScript types
+│   └── utils/                 # Utility functions
+├── routes/                    # Demo site (SvelteKit routes)
+│   ├── +page.svelte           # Demo homepage
+│   ├── test/                  # E2E test fixtures
+│   └── *.svelte               # Demo components
+tests/
+├── unit/                      # Unit tests (Vitest)
+└── e2e/                       # End-to-end tests (Playwright)
 ```
 
 ## Testing strategy
@@ -66,12 +66,10 @@ The project uses a multi-layered testing approach:
 Pure utility functions are tested in isolation. Each utility has a corresponding `.spec.ts` file:
 
 ```
-src/lib/utils/
-├── cleanValue.ts
-├── cleanValue.spec.ts
-├── formatValue.ts
-├── formatValue.spec.ts
-└── ...
+src/lib/utils/          tests/unit/
+├── cleanValue.ts       ├── cleanValue.spec.ts
+├── formatValue.ts      ├── formatValue.spec.ts
+└── ...                 └── ...
 ```
 
 **Run unit tests:**
@@ -106,7 +104,7 @@ E2E tests use the test fixture page at `/test` which provides a configurable inp
 bun run test:e2e
 
 # Run specific test file
-npx playwright test e2e/basic.test.ts
+npx playwright test tests/e2e/basic.test.ts
 
 # Run in headed mode (see the browser)
 npx playwright test --headed
@@ -115,7 +113,7 @@ npx playwright test --headed
 npx playwright test --ui
 
 # Debug a specific test
-npx playwright test e2e/basic.test.ts --debug
+npx playwright test tests/e2e/basic.test.ts --debug
 ```
 
 ### 3. Running all tests

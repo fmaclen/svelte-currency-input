@@ -1,0 +1,41 @@
+<script lang="ts">
+	import { CurrencyInput, formatValue } from '@canutin/svelte-currency-input';
+
+	const arsConfig = { locale: 'es-AR', currency: 'ARS' };
+	const usdConfig = { locale: 'es-AR', currency: 'USD' };
+
+	const dollarRates = [
+		{ name: 'Oficial', rate: 1495 },
+		{ name: 'MEP', rate: 1503.6 },
+		{ name: 'Blue', rate: 1530 },
+		{ name: 'CCL', rate: 1534.9 },
+		{ name: 'Cripto', rate: 1549.72 },
+		{ name: 'Tarjeta', rate: 1943.5 }
+	];
+
+	let usdAmount = $state<number | null>(1);
+
+	function formatUSD(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: usdConfig });
+	}
+
+	function formatARS(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: arsConfig });
+	}
+</script>
+
+<CurrencyInput
+	value={usdAmount != null ? String(usdAmount) : ''}
+	oninputvalue={(v) => (usdAmount = v.float)}
+	intlConfig={usdConfig}
+/>
+
+<table>
+	{#each dollarRates as { name, rate } (name)}
+		<tr>
+			<td>{name}</td>
+			<td>{formatUSD(rate)}</td>
+			<td>{formatARS((usdAmount ?? 0) * rate)}</td>
+		</tr>
+	{/each}
+</table>
