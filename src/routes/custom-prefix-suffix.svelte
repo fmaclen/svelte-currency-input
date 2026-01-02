@@ -28,7 +28,7 @@
 		decimalsLimit={0}
 		placeholder="0 pts"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (customValues = v)}
+		oninputvalue={(v) => (customValues = v)}
 	/>
 	<ValueDisplay values={customValues} />
 	<CurrencyInput
@@ -37,7 +37,7 @@
 		decimalsLimit={8}
 		placeholder="₿ 0.00000000"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (btcValues = v)}
+		oninputvalue={(v) => (btcValues = v)}
 	/>
 	<ValueDisplay values={btcValues} />
 </Example>

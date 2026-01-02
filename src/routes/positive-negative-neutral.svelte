@@ -27,7 +27,7 @@
 		intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
 		placeholder="£0.00"
 		class="{INPUT_CLASS} {getValueColor(value)}"
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

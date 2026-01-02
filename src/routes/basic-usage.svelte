@@ -20,7 +20,7 @@
 		intlConfig={{ locale: 'en-US', currency: 'USD' }}
 		placeholder="$0.00"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>
