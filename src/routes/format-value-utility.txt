@@ -16,4 +16,4 @@
 	);
 </script>
 
-<p>{formattedResult}</p>
+{formattedResult}
