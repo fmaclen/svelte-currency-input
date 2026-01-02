@@ -135,14 +135,6 @@ const replaceParts = (
 					return prefix ? prev : [...prev, value];
 				}
 
-				if (type === 'literal' && prefix) {
-					const prevPart = parts[i - 1];
-					const nextPart = parts[i + 1];
-					if (prevPart?.type === 'currency' || nextPart?.type === 'currency') {
-						return prev;
-					}
-				}
-
 				if (type === 'group') {
 					return !disableGroupSeparators
 						? [...prev, groupSeparator !== undefined ? groupSeparator : value]

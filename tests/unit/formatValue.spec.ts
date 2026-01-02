@@ -297,7 +297,7 @@ describe('formatValue', () => {
 					intlConfig: { locale: 'nl-NL', currency: 'EUR' },
 					prefix: '€'
 				})
-			).toBe('€-123');
+			).toBe('€\xa0-123');
 		});
 
 		it('should able to omit intlConfig.currency', () => {

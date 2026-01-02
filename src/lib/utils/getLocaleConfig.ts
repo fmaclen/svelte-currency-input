@@ -17,17 +17,12 @@ export const getLocaleConfig = (intlConfig?: IntlConfig): LocaleConfig => {
 			})
 		: new Intl.NumberFormat();
 
-	const parts = numberFormatter.formatToParts(1000.1);
-	return parts.reduce((prev, curr, i): LocaleConfig => {
+	return numberFormatter.formatToParts(1000.1).reduce((prev, curr, i): LocaleConfig => {
 		if (curr.type === 'currency') {
 			if (i === 0) {
-				const nextPart = parts[i + 1];
-				const literal = nextPart?.type === 'literal' ? nextPart.value : '';
-				return { ...prev, currencySymbol: curr.value, prefix: curr.value + literal };
+				return { ...prev, currencySymbol: curr.value, prefix: curr.value };
 			} else {
-				const prevPart = parts[i - 1];
-				const literal = prevPart?.type === 'literal' ? prevPart.value : '';
-				return { ...prev, currencySymbol: curr.value, suffix: literal + curr.value };
+				return { ...prev, currencySymbol: curr.value, suffix: curr.value };
 			}
 		}
 		if (curr.type === 'group') {

@@ -46,19 +46,4 @@ describe('getLocaleConfig', () => {
 		expect(config.decimalSeparator).toBe('.');
 		expect(config.groupSeparator).toBe(',');
 	});
-
-	it('should include literal space in prefix for es-AR with USD', () => {
-		const config = getLocaleConfig({ locale: 'es-AR', currency: 'USD' });
-		expect(config.currencySymbol).toBe('US$');
-		expect(config.prefix).toBe('US$\u00A0');
-		expect(config.decimalSeparator).toBe(',');
-		expect(config.groupSeparator).toBe('.');
-	});
-
-	it('should include literal space in suffix for de-DE with EUR', () => {
-		const config = getLocaleConfig({ locale: 'de-DE', currency: 'EUR' });
-		expect(config.currencySymbol).toBe('€');
-		expect(config.suffix).toBe('\u00A0€');
-		expect(config.decimalSeparator).toBe(',');
-	});
 });
