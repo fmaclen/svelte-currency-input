@@ -1,4 +1,3 @@
-```svelte
 <script lang="ts">
 	import { CurrencyInput, formatValue } from '@canutin/svelte-currency-input';
 
@@ -11,12 +10,11 @@
 </script>
 
 <CurrencyInput
-	value={String(billFloat)}
-	oninputvalue={(v) => (billFloat = v.float ?? 0)}
-	{intlConfig}
+value={String(billFloat)}
+oninputvalue={(v) => (billFloat = v.float ?? 0)}
+{intlConfig}
 />
 <input type="range" bind:value={tipPercent} min="0" max="30" />
 
 <p>Tip: {formatValue({ value: tipAmount, intlConfig })}</p>
 <p>Total: {formatValue({ value: totalAmount, intlConfig })}</p>
-```

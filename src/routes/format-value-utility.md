@@ -1,4 +1,3 @@
-```svelte
 <script lang="ts">
 	import { formatValue } from '@canutin/svelte-currency-input';
 
@@ -18,4 +17,3 @@
 </script>
 
 <p>{formattedResult}</p>
-```

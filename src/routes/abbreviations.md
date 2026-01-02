@@ -1,9 +1,8 @@
-```svelte
 <script lang="ts">
 	import { CurrencyInput } from '@canutin/svelte-currency-input';
 	let value = $state('');
 </script>
 
 <!-- Type 1k, 2.5m, or 1b -->
+
 <CurrencyInput bind:value intlConfig={{ locale: 'en-US', currency: 'USD' }} />
-```

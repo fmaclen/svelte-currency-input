@@ -1,4 +1,3 @@
-```svelte
 <script lang="ts">
 	import { CurrencyInput } from '@canutin/svelte-currency-input';
 	let value = $state('-3.14');
@@ -12,8 +11,7 @@
 </script>
 
 <CurrencyInput
-	bind:value
-	intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
-	class={getValueColor(value)}
+bind:value
+intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
+class={getValueColor(value)}
 />
-```
