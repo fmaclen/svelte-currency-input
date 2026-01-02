@@ -85,6 +85,13 @@
 				>
 					GitHub
 				</a>
+				<a href="https://www.npmjs.com/package/@canutin/svelte-currency-input" target="_blank">
+					<img
+						src="https://img.shields.io/npm/dm/@canutin/svelte-currency-input?style=flat&color=black"
+						alt="NPM downloads"
+						class="h-5"
+					/>
+				</a>
 				<a href="https://github.com/fmaclen/svelte-currency-input" target="_blank">
 					<img
 						src="https://img.shields.io/github/stars/fmaclen/svelte-currency-input?style=flat&color=black"
