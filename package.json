@@ -1,6 +1,6 @@
 {
 	"name": "@canutin/svelte-currency-input",
-	"version": "1.0.0-next.8",
+	"version": "1.0.0",
 	"engines": {
 		"node": ">=22"
 	},
