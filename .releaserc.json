@@ -13,7 +13,6 @@
 		[
 			"@semantic-release/npm",
 			{
-				"npmPublish": false,
 				"provenance": true
 			}
 		],
