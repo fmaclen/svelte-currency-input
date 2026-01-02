@@ -2,6 +2,8 @@
 
 A fully-featured currency input component for Svelte 5 that handles formatting, localization, and validation as you type.
 
+![svelte-currency-input examples](static/svelte-currency-input-examples.png)
+
 <p align="center">
   👩‍💻 Play with it in the <a href="https://svelte-currency-input.fernando.is" target="_blank">live demo</a>
 </p>
