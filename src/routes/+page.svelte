@@ -60,6 +60,16 @@
 					href: `https://github.com/fmaclen/svelte-currency-input?${UTM}#readme`
 				},
 				{
+					id: 'contributing',
+					label: 'Contributing',
+					href: `https://github.com/fmaclen/svelte-currency-input/blob/main/CONTRIBUTING.md?${UTM}`
+				},
+				{
+					id: 'migration',
+					label: 'Migration guide (v0.x to v1)',
+					href: `https://github.com/fmaclen/svelte-currency-input/blob/main/MIGRATION.md?${UTM}`
+				},
+				{
 					id: 'npm',
 					label: 'NPM',
 					href: `https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`
