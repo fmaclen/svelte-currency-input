@@ -1,0 +1,13 @@
+```svelte
+<script lang="ts">
+	import { CurrencyInput } from '@canutin/svelte-currency-input';
+	let value = $state('99.99');
+</script>
+
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	decimalsLimit={2}
+	decimalScale={2}
+/>
+```

@@ -1,6 +1,6 @@
-import type { FormatValueOptions } from '../types.js';
-import { escapeRegExp } from './escapeRegExp.js';
-import { getSuffix } from './getSuffix.js';
+import type { FormatValueOptions } from '../types';
+import { escapeRegExp } from './escapeRegExp';
+import { getSuffix } from './getSuffix';
 
 export const formatValue = (options: FormatValueOptions): string => {
 	const {

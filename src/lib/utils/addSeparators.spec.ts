@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { addSeparators } from './addSeparators.js';
+import { addSeparators } from './addSeparators';
 
 describe('addSeparators', () => {
 	it('should add default comma separator', () => {

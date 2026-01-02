@@ -1,5 +1,5 @@
 // Component
-export { default as CurrencyInput } from './CurrencyInput.svelte';
+export { default as CurrencyInput } from './currency-input.svelte';
 
 // Types
 export type {
@@ -8,7 +8,7 @@ export type {
 	LocaleConfig,
 	FormatValueOptions,
 	CleanValueOptions
-} from './types.js';
+} from './types';
 
 // Utilities
 export {
@@ -26,4 +26,4 @@ export {
 	removeInvalidChars,
 	removeSeparators,
 	repositionCursor
-} from './utils/index.js';
+} from './utils/index';

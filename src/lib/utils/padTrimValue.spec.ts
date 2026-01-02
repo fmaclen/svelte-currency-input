@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { padTrimValue } from './padTrimValue.js';
+import { padTrimValue } from './padTrimValue';
 
 describe('padTrimValue', () => {
 	it('should return value if no decimalScale', () => {

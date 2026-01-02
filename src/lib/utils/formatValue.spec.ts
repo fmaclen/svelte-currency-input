@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatValue } from './formatValue.js';
+import { formatValue } from './formatValue';
 
 describe('formatValue', () => {
 	it('should return empty if blank value', () => {

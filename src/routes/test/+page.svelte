@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { CurrencyInput } from '$lib/index';
 	import Field from './field.svelte';
-	import TestInput from './test-input.svelte';
+	import { INPUT_CLASS } from '../styles';
 
 	let basic1 = $state('');
 	let basic2 = $state('');
@@ -51,25 +52,39 @@
 </svelte:head>
 
 <div class="mx-auto max-w-2xl space-y-8 p-8">
-	<h1 class="text-2xl font-bold">E2E Test Page</h1>
-
 	<section class="space-y-3">
 		<h2 class="text-lg font-semibold text-gray-800">Basic</h2>
 
 		<Field label="formats numbers with currency symbol and separators">
-			<TestInput bind:value={basic1} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={basic1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="strips invalid characters">
-			<TestInput bind:value={basic2} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={basic2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="shows empty for only invalid characters">
-			<TestInput bind:value={basic3} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={basic3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="updates bound value">
-			<TestInput bind:value={basic4} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={basic4}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 		<output class="text-sm text-gray-500">{basic4}</output>
 	</section>
@@ -78,27 +93,48 @@
 		<h2 class="text-lg font-semibold text-gray-800">Decimals</h2>
 
 		<Field label="allows decimal values">
-			<TestInput bind:value={decimal1} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="limits decimals to 2 by default">
-			<TestInput bind:value={decimal2} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="does not allow multiple decimal separators">
-			<TestInput bind:value={decimal3} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="allows starting with decimal separator">
-			<TestInput bind:value={decimal4} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal4}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="clears decimal-only input on blur">
-			<TestInput bind:value={decimal5} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="does not allow decimals when allowDecimals is false">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={decimal6}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				allowDecimals={false}
@@ -106,7 +142,8 @@
 		</Field>
 
 		<Field label="pads decimals to scale on blur">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={decimal7}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				decimalScale={2}
@@ -114,7 +151,8 @@
 		</Field>
 
 		<Field label="pads single decimal to scale on blur">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={decimal8}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				decimalScale={2}
@@ -126,19 +164,32 @@
 		<h2 class="text-lg font-semibold text-gray-800">Negative</h2>
 
 		<Field label="allows negative value with minus at start">
-			<TestInput bind:value={negative1} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="allows just minus sign while typing">
-			<TestInput bind:value={negative2} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="clears minus-only input on blur">
-			<TestInput bind:value={negative3} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="does not allow negative when disabled">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={negative4}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				allowNegativeValue={false}
@@ -150,11 +201,19 @@
 		<h2 class="text-lg font-semibold text-gray-800">Locale</h2>
 
 		<Field label="formats Euro with German locale">
-			<TestInput bind:value={locale1} intlConfig={{ locale: 'de-DE', currency: 'EUR' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={locale1}
+				intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
+			/>
 		</Field>
 
 		<Field label="formats Yen with Japanese locale">
-			<TestInput bind:value={locale2} intlConfig={{ locale: 'ja-JP', currency: 'JPY' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={locale2}
+				intlConfig={{ locale: 'ja-JP', currency: 'JPY' }}
+			/>
 		</Field>
 	</section>
 
@@ -162,27 +221,51 @@
 		<h2 class="text-lg font-semibold text-gray-800">Editing</h2>
 
 		<Field label="can type digits at the end of existing value">
-			<TestInput bind:value={editing1} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="can type digits in the middle of existing value">
-			<TestInput bind:value={editing2} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="can delete characters with backspace">
-			<TestInput bind:value={editing3} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="can select all and replace">
-			<TestInput bind:value={editing4} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing4}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="can clear input and type new value">
-			<TestInput bind:value={editing5} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="can delete the decimal separator">
-			<TestInput bind:value={editing6} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing6}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 	</section>
 
@@ -190,7 +273,8 @@
 		<h2 class="text-lg font-semibold text-gray-800">Min/Max</h2>
 
 		<Field label="prevents step above max">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={minmax1}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				max={100}
@@ -199,7 +283,8 @@
 		</Field>
 
 		<Field label="prevents step below min">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={minmax2}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				min={0}
@@ -212,15 +297,30 @@
 		<h2 class="text-lg font-semibold text-gray-800">Step</h2>
 
 		<Field label="increments value with arrow up">
-			<TestInput bind:value={step1} intlConfig={{ locale: 'en-US', currency: 'USD' }} step={5} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={5}
+			/>
 		</Field>
 
 		<Field label="decrements value with arrow down">
-			<TestInput bind:value={step2} intlConfig={{ locale: 'en-US', currency: 'USD' }} step={5} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={5}
+			/>
 		</Field>
 
 		<Field label="handles decimal step values">
-			<TestInput bind:value={step3} intlConfig={{ locale: 'en-US', currency: 'USD' }} step={0.25} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={0.25}
+			/>
 		</Field>
 	</section>
 
@@ -228,19 +328,32 @@
 		<h2 class="text-lg font-semibold text-gray-800">Abbreviations</h2>
 
 		<Field label="expands k to thousands">
-			<TestInput bind:value={abbr1} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr1}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="expands m to millions">
-			<TestInput bind:value={abbr2} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr2}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="expands b to billions">
-			<TestInput bind:value={abbr3} intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr3}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
 		</Field>
 
 		<Field label="does not expand abbreviations when disabled">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={abbr4}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				disableAbbreviations={true}
@@ -252,7 +365,8 @@
 		<h2 class="text-lg font-semibold text-gray-800">Placeholder</h2>
 
 		<Field label="shows placeholder when empty">
-			<TestInput
+			<CurrencyInput
+				class={INPUT_CLASS}
 				bind:value={placeholder1}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				placeholder="$0.00"
