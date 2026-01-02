@@ -1,15 +1,11 @@
-```svelte
 <script lang="ts">
 	import { CurrencyInput } from '@canutin/svelte-currency-input';
-	let value = $state('50');
+	let value = $state('99.99');
 </script>
 
-<!-- Use arrow keys to step -->
 <CurrencyInput
 	bind:value
 	intlConfig={{ locale: 'en-US', currency: 'USD' }}
-	min={0}
-	max={100}
-	step={10}
+	decimalsLimit={2}
+	decimalScale={2}
 />
-```

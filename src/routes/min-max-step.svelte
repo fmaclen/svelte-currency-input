@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './min-max-step.md?raw';
+	import code from './min-max-step.txt?raw';
 
 	let value = $state('50');
 	let values = $state<CurrencyInputValues>({
@@ -23,7 +23,7 @@
 		step={10}
 		placeholder="$0.00"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

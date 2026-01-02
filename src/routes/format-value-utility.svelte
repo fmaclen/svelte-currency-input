@@ -2,7 +2,7 @@
 	import { formatValue } from '$lib/index';
 	import Example from './example.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './format-value-utility.md?raw';
+	import code from './format-value-utility.txt?raw';
 
 	let valueInput = $state('1234567.89');
 	let prefix = $state('$');
@@ -21,7 +21,7 @@
 	);
 </script>
 
-<Example id="formatvalue" title="formatValue utility" {code}>
+<Example id="formatvalue" title="Format utility" {code}>
 	<div class="grid grid-cols-2 gap-2">
 		<input bind:value={valueInput} placeholder="Value" class={INPUT_CLASS} />
 		<input bind:value={prefix} placeholder="Prefix" class={INPUT_CLASS} />

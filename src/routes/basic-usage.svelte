@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './basic-usage.md?raw';
+	import code from './basic-usage.txt?raw';
 
 	let value = $state('1234.56');
 	let values = $state<CurrencyInputValues>({
@@ -20,7 +20,7 @@
 		intlConfig={{ locale: 'en-US', currency: 'USD' }}
 		placeholder="$0.00"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

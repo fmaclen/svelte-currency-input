@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './decimal-precision.md?raw';
+	import code from './decimal-precision.txt?raw';
 
 	let value = $state('99.99');
 	let values = $state<CurrencyInputValues>({
@@ -22,7 +22,7 @@
 		decimalScale={2}
 		placeholder="$0.00"
 		class={INPUT_CLASS}
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

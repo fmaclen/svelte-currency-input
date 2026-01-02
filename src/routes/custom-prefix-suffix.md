@@ -1,5 +1,0 @@
-```svelte
-<CurrencyInput suffix=" pts" decimalsLimit={0} />
-
-<CurrencyInput prefix="₿ " decimalsLimit={8} />
-```

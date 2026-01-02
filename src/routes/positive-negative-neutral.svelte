@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './positive-negative-neutral.md?raw';
+	import code from './positive-negative-neutral.txt?raw';
 
 	let value = $state('-3.14');
 	let values = $state<CurrencyInputValues>({
@@ -21,13 +21,13 @@
 	};
 </script>
 
-<Example id="styling" title="Positive, negative, and neutral styling" {code}>
+<Example id="styling" title="Dynamic styling" {code}>
 	<CurrencyInput
 		bind:value
 		intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
 		placeholder="£0.00"
 		class="{INPUT_CLASS} {getValueColor(value)}"
-		oninputvalue={(v: CurrencyInputValues) => (values = v)}
+		oninputvalue={(v) => (values = v)}
 	/>
 	<ValueDisplay {values} />
 </Example>

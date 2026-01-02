@@ -2,7 +2,7 @@
 	import { CurrencyInput, formatValue } from '$lib/index';
 	import Example from './example.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './tip-calculator.md?raw';
+	import code from './tip-calculator.txt?raw';
 
 	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
 
@@ -17,7 +17,7 @@
 	<div class="grid grid-cols-2 gap-2">
 		<CurrencyInput
 			value={String(billFloat)}
-			oninputvalue={(v: { float: number | null }) => (billFloat = v.float ?? 0)}
+			oninputvalue={(v) => (billFloat = v.float ?? 0)}
 			{intlConfig}
 			placeholder="$ 0,00"
 			class={INPUT_CLASS}
