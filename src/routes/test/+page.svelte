@@ -24,6 +24,7 @@
 
 	let locale1 = $state('');
 	let locale2 = $state('5679');
+	let locale3 = $state('100');
 
 	let editing1 = $state('123');
 	let editing2 = $state('1234');
@@ -213,6 +214,15 @@
 				class={INPUT_CLASS}
 				bind:value={locale2}
 				intlConfig={{ locale: 'ja-JP', currency: 'JPY' }}
+			/>
+		</Field>
+
+		<Field label="clears multi-char prefix correctly">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={locale3}
+				intlConfig={{ locale: 'es-AR', currency: 'USD' }}
+				placeholder="US$ 0,00"
 			/>
 		</Field>
 	</section>
