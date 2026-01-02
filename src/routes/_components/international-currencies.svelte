@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index.js';
-	import type { CurrencyInputValues } from '$lib/types.js';
+	import { CurrencyInput, formatValue } from '$lib/index';
+	import type { CurrencyInputValues } from '$lib/types';
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
-	import { INPUT_CLASS } from './styles.js';
+	import { INPUT_CLASS } from './styles';
 	import code from './code-samples/international-currencies.md?raw';
 
 	let value = $state('1234.56');

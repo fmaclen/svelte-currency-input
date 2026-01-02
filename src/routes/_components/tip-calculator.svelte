@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index.js';
+	import { CurrencyInput, formatValue } from '$lib/index';
 	import Example from './example.svelte';
-	import { INPUT_CLASS } from './styles.js';
+	import { INPUT_CLASS } from './styles';
 	import code from './code-samples/tip-calculator.md?raw';
 
 	const intlConfig = { locale: 'es-AR', currency: 'ARS' };

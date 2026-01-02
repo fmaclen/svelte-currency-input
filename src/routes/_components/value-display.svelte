@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CurrencyInputValues } from '$lib/types.js';
+	import type { CurrencyInputValues } from '$lib/types';
 
 	interface Props {
 		values: CurrencyInputValues;

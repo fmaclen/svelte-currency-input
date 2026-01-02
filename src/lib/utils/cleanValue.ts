@@ -1,8 +1,8 @@
-import type { CleanValueOptions } from '../types.js';
-import { escapeRegExp } from './escapeRegExp.js';
-import { parseAbbrValue } from './parseAbbrValue.js';
-import { removeInvalidChars } from './removeInvalidChars.js';
-import { removeSeparators } from './removeSeparators.js';
+import type { CleanValueOptions } from '../types';
+import { escapeRegExp } from './escapeRegExp';
+import { parseAbbrValue } from './parseAbbrValue';
+import { removeInvalidChars } from './removeInvalidChars';
+import { removeSeparators } from './removeSeparators';
 
 export const cleanValue = ({
 	value,

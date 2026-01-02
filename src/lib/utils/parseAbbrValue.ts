@@ -1,4 +1,4 @@
-import { escapeRegExp } from './escapeRegExp.js';
+import { escapeRegExp } from './escapeRegExp';
 
 export const abbrValue = (value: number, decimalSeparator = '.', _decimalPlaces = 10): string => {
 	if (value > 999) {

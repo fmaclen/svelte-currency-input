@@ -5,7 +5,7 @@
 		CurrencyInputValues,
 		CleanValueOptions,
 		FormatValueOptions
-	} from './types.js';
+	} from './types';
 	import {
 		isNumber,
 		cleanValue,
@@ -15,7 +15,7 @@
 		padTrimValue,
 		getSuffix,
 		repositionCursor
-	} from './utils/index.js';
+	} from './utils/index';
 
 	type Props = Omit<HTMLInputAttributes, 'value'> & {
 		value?: string;

@@ -1,4 +1,4 @@
-import type { IntlConfig, LocaleConfig } from '../types.js';
+import type { IntlConfig, LocaleConfig } from '../types';
 
 const defaultConfig: LocaleConfig = {
 	currencySymbol: '',

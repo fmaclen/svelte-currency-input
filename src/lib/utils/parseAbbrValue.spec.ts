@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { abbrValue, parseAbbrValue } from './parseAbbrValue.js';
+import { abbrValue, parseAbbrValue } from './parseAbbrValue';
 
 describe('abbrValue', () => {
 	it('should not convert value under 1000', () => {

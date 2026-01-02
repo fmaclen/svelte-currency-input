@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { formatValue } from '$lib/index.js';
+	import { formatValue } from '$lib/index';
 	import Example from './example.svelte';
-	import { INPUT_CLASS } from './styles.js';
+	import { INPUT_CLASS } from './styles';
 	import code from './code-samples/format-value-utility.md?raw';
 
 	let valueInput = $state('1234567.89');

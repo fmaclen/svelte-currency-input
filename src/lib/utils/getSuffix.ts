@@ -1,4 +1,4 @@
-import { escapeRegExp } from './escapeRegExp.js';
+import { escapeRegExp } from './escapeRegExp';
 
 type Options = {
 	decimalSeparator?: string;

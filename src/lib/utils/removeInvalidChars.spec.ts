@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { removeInvalidChars } from './removeInvalidChars.js';
+import { removeInvalidChars } from './removeInvalidChars';
 
 describe('removeInvalidChars', () => {
 	it('should remove invalid characters', () => {
