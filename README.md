@@ -32,6 +32,7 @@ A fully-featured currency input component for Svelte 5 that handles formatting, 
 - **Zero built-in styles** — works with Tailwind, vanilla CSS, or any framework
 - Simple, single `<input>` element (no wrapper)
 - Full **TypeScript** support
+- **Lightweight** — ~3.6KB gzipped with no runtime dependencies
 - API and logic heavily inspired by [@cchanxzy](https://github.com/cchanxzy)'s [react-currency-input-field](https://github.com/cchanxzy/react-currency-input-field)
 
 ## Installation

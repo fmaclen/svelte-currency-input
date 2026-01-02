@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getSuffix } from './getSuffix';
+import { getSuffix } from '$lib/utils/getSuffix';
 
 describe('getSuffix', () => {
 	it('should return undefined for values without suffix', () => {

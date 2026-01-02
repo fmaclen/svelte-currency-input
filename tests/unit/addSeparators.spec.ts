@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { addSeparators } from './addSeparators';
+import { addSeparators } from '$lib/utils/addSeparators';
 
 describe('addSeparators', () => {
 	it('should add default comma separator', () => {

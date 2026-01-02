@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isNumber } from './isNumber';
+import { isNumber } from '$lib/utils/isNumber';
 
 describe('isNumber', () => {
 	it('should return true for strings containing digits', () => {
