@@ -10,7 +10,17 @@
 	import FormatValueUtility from './format-value-utility.svelte';
 	import TipCalculator from './tip-calculator.svelte';
 
+	const packageManagers = [
+		{ name: 'bun', command: 'bun add @canutin/svelte-currency-input' },
+		{ name: 'pnpm', command: 'pnpm add @canutin/svelte-currency-input' },
+		{ name: 'npm', command: 'npm install @canutin/svelte-currency-input' },
+		{ name: 'yarn', command: 'yarn add @canutin/svelte-currency-input' }
+	];
+
+	let selectedPm = $state(0);
+
 	const features = [
+		{ id: 'install', label: 'Installation' },
 		{ id: 'basic', label: 'Basic usage' },
 		{ id: 'styling', label: 'Positive, negative, and neutral styling' },
 		{ id: 'intl', label: 'International currencies' },
@@ -117,6 +127,27 @@
 			</ul>
 		</div>
 	</header>
+
+	<section id="install" class="mt-8">
+		<div class="mb-3 flex items-center justify-between">
+			<h2 class="text-base font-medium text-slate-800">Installation</h2>
+			<div class="flex items-center gap-1">
+				{#each packageManagers as pm, i (pm.name)}
+					<button
+						onclick={() => (selectedPm = i)}
+						class="rounded border px-2 py-1 text-xs font-medium transition-colors {selectedPm === i
+							? 'border-transparent bg-slate-200 text-slate-900'
+							: 'border-slate-300 text-slate-500 hover:text-slate-700'}"
+					>
+						{pm.name}
+					</button>
+				{/each}
+			</div>
+		</div>
+		<pre class="overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 text-xs"><code
+				class="font-mono text-slate-700">{packageManagers[selectedPm].command}</code
+			></pre>
+	</section>
 
 	<div class="mt-8 flex flex-col gap-8">
 		<BasicUsage />
