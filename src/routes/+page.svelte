@@ -66,7 +66,7 @@
 				},
 				{
 					id: 'migration',
-					label: 'Migration guide (v0.x to v1)',
+					label: 'Migration guide (v0 to v1)',
 					href: `https://github.com/fmaclen/svelte-currency-input/blob/main/MIGRATION.md?${UTM}`
 				},
 				{
@@ -83,6 +83,10 @@
 		}
 	];
 </script>
+
+{#snippet hr()}
+	<hr class="my-8 border-slate-200" />
+{/snippet}
 
 <svelte:head>
 	<title>svelte-currency-input - Currency masking for Svelte 5</title>
@@ -171,7 +175,7 @@
 			</nav>
 		</div>
 
-		<hr class="my-8 border-slate-200" />
+		{@render hr()}
 
 		<nav class="grid gap-6 text-sm sm:grid-cols-4">
 			{#each sections as section (section.title)}
@@ -207,7 +211,7 @@
 		</nav>
 	</header>
 
-	<hr class="my-8 border-slate-200" />
+	{@render hr()}
 
 	<!-- Getting started -->
 	<section id="install" class="flex flex-col gap-8">
@@ -235,7 +239,7 @@
 		<BasicUsage />
 	</section>
 
-	<hr class="my-8 border-slate-200" />
+	{@render hr()}
 
 	<!-- Features -->
 	<section class="flex flex-col gap-8">
@@ -246,7 +250,7 @@
 		<CustomPrefixSuffix />
 	</section>
 
-	<hr class="my-8 border-slate-200" />
+	{@render hr()}
 
 	<!-- Examples -->
 	<section class="flex flex-col gap-8">
@@ -255,4 +259,26 @@
 		<ChainedInputs />
 		<FormatValueUtility />
 	</section>
+
+	{@render hr()}
+
+	<footer class="text-center text-sm text-slate-500">
+		Made by <a
+			href="https://github.com/fmaclen?{UTM}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+		>
+			@fmaclen
+		</a>
+		·
+		<a
+			href="https://fernando.is?{UTM}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+		>
+			fernando.is
+		</a>
+	</footer>
 </div>
