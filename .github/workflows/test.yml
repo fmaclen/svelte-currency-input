@@ -1,26 +1,26 @@
-name: Test only
+name: Test
 
 on:
   pull_request:
-    branches: [main, master]
+    branches: [main, master, next]
 
 jobs:
   test:
-    name: Playwright
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: bunx playwright install --with-deps chromium
 
-      - name: Run Playwright tests
-        run: npm test
+      - name: Run tests
+        run: bun run test
         env:
           CI: true

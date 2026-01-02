@@ -1,69 +1,19 @@
 {
 	"name": "@canutin/svelte-currency-input",
-	"version": "0.0.0-development",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"test": "playwright test",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+	"version": "1.0.0-next.8",
+	"engines": {
+		"node": ">=22"
 	},
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
-		}
-	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"devDependencies": {
-		"@playwright/test": "^1.39.0",
-		"@sveltejs/adapter-auto": "^3.2.5",
-		"@sveltejs/adapter-cloudflare": "^4.7.3",
-		"@sveltejs/kit": "^2.7.1",
-		"@sveltejs/package": "^2.2.2",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"@types/node": "^20.8.7",
-		"@typescript-eslint/eslint-plugin": "^6.0.0",
-		"@typescript-eslint/parser": "^6.0.0",
-		"date-fns": "^2.30.0",
-		"eslint": "^8.28.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-svelte": "^2.30.0",
-		"prettier": "^2.8.0",
-		"prettier-plugin-svelte": "^2.10.1",
-		"publint": "^0.2.5",
-		"sass": "^1.69.0",
-		"semantic-release": "^24.1.1",
-		"svelte": "^4.2.19",
-		"svelte-check": "^3.4.3",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
-		"vite": "^5.0.0"
-	},
-	"optionalDependencies": {
-		"@cloudflare/workerd-linux-64": "^1.20240909.0",
-		"@rollup/rollup-linux-x64-gnu": "^4.21.3"
-	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"description": "A form input that converts numbers to currencies as you type in localized formats",
+	"description": "A fully-featured currency input component for Svelte 5 that handles formatting, localization, and validation",
 	"keywords": [
 		"svelte",
+		"svelte5",
 		"currency",
 		"money",
 		"input",
 		"i18n",
-		"positive",
-		"negative"
+		"formatting",
+		"localization"
 	],
 	"repository": {
 		"type": "git",
@@ -74,5 +24,75 @@
 	"bugs": {
 		"url": "https://github.com/fmaclen/svelte-currency-input/issues"
 	},
-	"homepage": "https://svelte-currency-input.fernando.is"
+	"homepage": "https://svelte-currency-input.fernando.is",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && npm run prepack",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "svelte-kit sync && svelte-package && publint",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"quality": "bun run format && bun run eslint . && bun run check",
+		"test:unit": "vitest",
+		"test": "npm run test:unit -- --run && npm run test:e2e",
+		"test:e2e": "playwright test",
+		"token": "./scripts/rotate-npm-token.sh"
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.4.0",
+		"@eslint/js": "^9.39.1",
+		"@playwright/test": "^1.57.0",
+		"@semantic-release/commit-analyzer": "^13.0.1",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^12.0.2",
+		"@semantic-release/npm": "^13.1.3",
+		"@semantic-release/release-notes-generator": "^14.1.0",
+		"@sveltejs/adapter-cloudflare": "^7.2.4",
+		"@sveltejs/kit": "^2.49.1",
+		"@sveltejs/package": "^2.5.7",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@tailwindcss/vite": "^4.1.17",
+		"@testing-library/user-event": "^14.5.2",
+		"@types/node": "^22",
+		"@vitest/browser-playwright": "^4.0.15",
+		"eslint": "^9.39.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.13.1",
+		"globals": "^16.5.0",
+		"playwright": "^1.57.0",
+		"prettier": "^3.7.4",
+		"prettier-plugin-svelte": "^3.4.0",
+		"prettier-plugin-tailwindcss": "^0.7.2",
+		"publint": "^0.3.15",
+		"semantic-release": "^25.0.2",
+		"svelte": "^5.45.6",
+		"svelte-check": "^4.3.4",
+		"tailwindcss": "^4.1.17",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.48.1",
+		"vite": "^7.2.6",
+		"vitest": "^4.0.15",
+		"vitest-browser-svelte": "^2.0.1"
+	}
 }

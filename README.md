@@ -1,172 +1,293 @@
 # svelte-currency-input
 
-A masked form input that converts numbers to localized currency formats as you type
+A fully-featured currency input component for Svelte 5 that handles formatting, localization, and validation as you type.
 
-[<img width="962" alt="image" src="https://user-images.githubusercontent.com/1434675/190873948-c0385747-6fa9-4077-8bd5-717e4d1124a0.png">](https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1)
+![svelte-currency-input examples](static/svelte-currency-input-examples.png)
 
 <p align="center">
-  👩‍💻 Play with it on <a href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.50.1" target="_blank">REPL</a>  &nbsp;—&nbsp; 💵 See it in a <a href="https://github.com/Canutin/desktop/blob/master/sveltekit/src/lib/components/FormCurrency.svelte" target="_blank">real project</a>!
+  👩‍💻 Play with it in the <a href="https://svelte-currency-input.fernando.is" target="_blank">live demo</a>
 </p>
 
 ---
 
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How it works](#how-it-works)
+- [API](#api)
+- [Examples](#examples)
+- [Styling](#styling)
+- [Exported utilities](#exported-utilities)
+- [Svelte 4 / migration guide](#svelte-4)
+- [Contributing](#contributing)
+
 ## Features
 
 - Formats **positive** and **negative** values
-- Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations and masking the input
-- Simple [API](#api)
-- Minimal default styling, easy to [customize](#styling)
+- Leverages [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for **localizing** currency denominations
+- Supports **abbreviations** (k, m, b) for quick input
+- Configurable **decimal precision** with multiple control options
+- **Min/max constraints** with arrow key stepping
+- Custom **prefix** and **suffix** support
+- **Zero built-in styles** — works with Tailwind, vanilla CSS, or any framework
+- Simple, single `<input>` element (no wrapper)
+- Full **TypeScript** support
+- **Lightweight** — ~3.6KB gzipped with no runtime dependencies
+- API and logic heavily inspired by [@cchanxzy](https://github.com/cchanxzy)'s [react-currency-input-field](https://github.com/cchanxzy/react-currency-input-field)
+
+## Installation
+
+```bash
+# bun
+bun add @canutin/svelte-currency-input
+
+# pnpm
+pnpm add @canutin/svelte-currency-input
+
+# npm
+npm install @canutin/svelte-currency-input
+
+# yarn
+yarn add @canutin/svelte-currency-input
+```
 
 ## Usage
 
-```bash
-npm install @canutin/svelte-currency-input --save
-```
-
-```html
+```svelte
 <script lang="ts">
-  import CurrencyInput from '@canutin/svelte-currency-input';
+	import { CurrencyInput } from '@canutin/svelte-currency-input';
+
+	let value = $state('1234.56');
 </script>
 
-<CurrencyInput name="total" value={-420.69} locale="nl-NL" currency="EUR" />
+<CurrencyInput bind:value intlConfig={{ locale: 'en-US', currency: 'USD' }} />
 ```
+
+The input displays `$1,234.56` while `value` contains the raw string `"1234.56"`.
 
 ## How it works
 
-When the form is submitted you get _unformatted_ or _formatted_ values from two `<input />`'s.
-This is more or less what `<CurrencyInput />` looks like under the hood:
+The component renders a single `<input>` element. The `value` prop is a **string** representing the unformatted number:
 
-```html
-<div class="currencyInput">
-  <!-- Unformatted value -->
-  <input
-    class="currencyInput__unformatted"
-    type="hidden"
-    name="total"
-    value="-420.69"
-  />
+- `""` = empty input
+- `"0"` = zero
+- `"1234.56"` = the number 1234.56
 
-  <!-- Formatted value -->
-  <input
-    class="currencyInput__formatted"
-    type="text"
-    name="formatted-total"
-    value="€ -420,69"
-  />
-</div>
+The formatted display (e.g., `$1,234.56`) is handled internally. For form submissions where you need the raw value, you can add a hidden input:
+
+```svelte
+<form>
+	<CurrencyInput bind:value name="display" />
+	<input type="hidden" name="amount" {value} />
+</form>
 ```
 
 ## API
 
-Option            | Type            | Default     | Description |
------------------ | --------------- | ----------- | ----------- |
-value             | `number`        | `undefined` | Initial value. If left `undefined` a formatted value of `0` is visible as a placeholder |
-locale            | `string`        | `en-US`     | Overrides default locale. [Examples](https://gist.github.com/ncreated/9934896) |
-currency          | `string`        | `USD`       | Overrides default currency. [Examples](https://www.xe.com/symbols/) |
-name              | `string`        | `total`     | Applies the name to the [input fields](#how-it-works) for _unformatted_ (e.g `[name=total]`) and _formatted_ (e.g. `[name=formatted-total]`) values |
-id                | `string`        | `undefined` | Sets the `id` attribute on the input |
-required          | `boolean`       | `false`     | Marks the input as required |
-disabled          | `boolean`       | `false`     | Marks the input as disabled |
-placeholder       | `string` `number` `null` | `0`         | A `string` will override the default placeholder. A `number` will override  it by formatting it to the set currency. Setting it to `null` will not show a placeholder   |
-isZeroNullish | `boolean`       | `false`      | If `true` and when the value is `0`, it will override the default placeholder and render the formatted value in the field like any other value. _Note: this option might become the default in future versions_                                   |
-autocomplete      | `string`        | `undefined` | Sets the autocomplete attribute. Accepts any valid HTML [autocomplete attribute values](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values) |
-isNegativeAllowed | `boolean`       | `true`      | If `false`, forces formatting only to positive values and ignores `--positive` and `--negative` styling modifiers                                   |
-fractionDigits    | `number`        | `2`         | Sets `maximumFractionDigits` in [`Intl.NumberFormat()` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#minimumfractiondigits) used for formatting the currency. Supported digits: `0` to `20` |
-inputClasses      | `object`        | [See below](#Styling)         | Selectively overrides any class names passed |
-onValueChange     | `Callback`      | `undefined` | Runs a callback function after the value changes |
+### Props
 
-## Styling
+| Prop                     | Type                                    | Default     | Description                                                                     |
+| ------------------------ | --------------------------------------- | ----------- | ------------------------------------------------------------------------------- |
+| `value`                  | `string`                                | `''`        | Bindable raw value (e.g., `"1234.56"`)                                          |
+| `intlConfig`             | `IntlConfig`                            | `undefined` | Locale and currency configuration                                               |
+| `prefix`                 | `string`                                | From locale | Override the currency prefix                                                    |
+| `suffix`                 | `string`                                | `''`        | Override the currency suffix                                                    |
+| `decimalSeparator`       | `string`                                | From locale | Override the decimal separator                                                  |
+| `groupSeparator`         | `string`                                | From locale | Override the grouping separator                                                 |
+| `disableGroupSeparators` | `boolean`                               | `false`     | Disable thousand separators                                                     |
+| `allowDecimals`          | `boolean`                               | `true`      | Allow decimal values                                                            |
+| `decimalsLimit`          | `number`                                | `2`         | Max decimal digits while typing                                                 |
+| `decimalScale`           | `number`                                | `undefined` | Pad/trim decimals on blur                                                       |
+| `fixedDecimalLength`     | `number`                                | `undefined` | Fixed decimal input (e.g., `2`: typing `123` → `1.23`)                          |
+| `allowNegativeValue`     | `boolean`                               | `true`      | Allow negative values                                                           |
+| `min`                    | `number`                                | `undefined` | Minimum value (enforced on arrow key step)                                      |
+| `max`                    | `number`                                | `undefined` | Maximum value (enforced on arrow key step)                                      |
+| `maxLength`              | `number`                                | `undefined` | Max characters (excluding formatting)                                           |
+| `step`                   | `number`                                | `undefined` | Arrow key increment/decrement                                                   |
+| `disableAbbreviations`   | `boolean`                               | `false`     | Disable k/m/b abbreviations                                                     |
+| `formatValueOnBlur`      | `boolean`                               | `true`      | Apply formatting when input loses focus                                         |
+| `transformRawValue`      | `(value: string) => string`             | `undefined` | Transform the raw value before processing                                       |
+| `oninputvalue`           | `(values: CurrencyInputValues) => void` | `undefined` | Callback on every input change                                                  |
+| `onchangevalue`          | `(values: CurrencyInputValues) => void` | `undefined` | Callback on blur/commit                                                         |
+| `ref`                    | `HTMLInputElement \| null`              | `null`      | Bindable reference to the input element                                         |
+| `class`                  | `string`                                | `undefined` | CSS class(es) for the input                                                     |
+| `...restProps`           | `HTMLInputAttributes`                   | —           | All standard input attributes (id, name, placeholder, disabled, required, etc.) |
 
-There are two ways of customizing the styling of the input:
-1. Passing it your own CSS classes
-2. Overriding the styles using the existing class names
-
-You can **override all of the class names** by passing an object to `inputClasses` that has **one or more** of these properties:
+### Types
 
 ```typescript
-interface InputClasses {
-  wrapper?: string; // <div> that contains the two <input> elements
-  unformatted?: string; // <input type="hidden"> that contains the unformatted value
-  formatted?: string; // <input type="text"> that contains the formatted value
-  formattedPositive?: string; // Class added when the formatted input is positive
-  formattedNegative?: string; // Class added when the formatted input is negative
-  formattedZero?: string; // Class added when the formatted input is zero
+interface IntlConfig {
+	locale: string;
+	currency?: string;
+	// Also accepts other Intl.NumberFormatOptions
+}
+
+interface CurrencyInputValues {
+	float: number | null; // Parsed number or null if empty
+	formatted: string; // Display value: "$1,234.56"
+	value: string; // Raw value: "1234.56"
 }
 ```
 
-Usage (with [Tailwind CSS](https://tailwindcss.com/) as an example):
+## Examples
+
+### International currencies
 
 ```svelte
-<CurrencyInput name="total" value="{420.69}" inputClasses={
-  { 
-    wrapper: "form-control block",
-    formatted: 'py-1.5 text-gray-700',
-    formattedPositive: 'text-green-700',
-    formattedNegative: 'text-red-700'
-  }
-} />
+<CurrencyInput bind:value intlConfig={{ locale: 'de-DE', currency: 'EUR' }} />
+<!-- Displays: 1.234,56 € -->
 ```
 
-Alternatively you can **write your own CSS** by overriding the [default styles](https://github.com/canutin/svelte-currency-input/blob/main/src/lib/CurrencyInput.svelte) which use [BEM naming conventions](https://getbem.com/naming/). To do so apply your styles as shown below:
+### Decimal precision
 
 ```svelte
-<div class="my-currency-input">
-  <CurrencyInput name="total" value="{420.69}" />
-</div>
-
-<style>
-  /* Container */
-  div.my-currency-input :global(div.currencyInput) { /* ... */ }
-
-  /* Formatted input */
-  div.my-currency-input :global(input.currencyInput__formatted) { /* ... */ }
-
-  /* Formatted input when the it's disabled */
-  div.my-currency-input :global(input.currencyInput__formatted:disabled) { /* ... */ }
-
-  /* Formatted input when the value is zero */
-  div.my-currency-input :global(input.currencyInput__formatted--zero) { /* ... */ }
-
-  /* Formatted input when the value is positive */
-  div.my-currency-input :global(input.currencyInput__formatted--positive) { /* ... */ }
-
-  /* Formatted input when the value is negative */
-  div.my-currency-input :global(input.currencyInput__formatted--negative) { /* ... */ }
-</style>
+<!-- Limit to 2 decimals while typing, pad to 2 on blur -->
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	decimalsLimit={2}
+	decimalScale={2}
+/>
 ```
+
+### Min, max, and step
+
+```svelte
+<!-- Use arrow keys to increment/decrement by 10, constrained to 0-100 -->
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	min={0}
+	max={100}
+	step={10}
+/>
+```
+
+### Custom prefix and suffix
+
+```svelte
+<!-- Points system -->
+<CurrencyInput bind:value suffix=" pts" decimalsLimit={0} />
+
+<!-- Bitcoin -->
+<CurrencyInput bind:value prefix="₿ " decimalsLimit={8} />
+```
+
+### Abbreviations
+
+Type `1k`, `2.5m`, or `1b` to quickly enter large numbers:
+
+```svelte
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	placeholder="Try 1k, 2.5m, or 1b"
+/>
+<!-- Typing "2.5m" results in value="2500000" -->
+```
+
+### Callbacks
+
+```svelte
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	oninputvalue={({ float, formatted, value }) => {
+		console.log('On input:', { float, formatted, value });
+	}}
+	onchangevalue={({ float, formatted, value }) => {
+		console.log('On blur:', { float, formatted, value });
+	}}
+/>
+```
+
+### Input element reference
+
+```svelte
+<script>
+	let inputRef = $state(null);
+
+	function focusInput() {
+		inputRef?.focus();
+	}
+</script>
+
+<CurrencyInput bind:ref={inputRef} bind:value />
+<button onclick={focusInput}>Focus</button>
+```
+
+## Styling
+
+The component renders a single `<input>` element with no built-in styles. You can use the `class` prop to style it:
+
+```svelte
+<!-- Tailwind CSS -->
+<CurrencyInput bind:value class="rounded border px-3 py-2 focus:ring-2 focus:ring-blue-500" />
+
+<!-- Custom CSS class -->
+<CurrencyInput bind:value class="my-currency-input" />
+```
+
+For dynamic styling based on value (positive/negative/zero), use the callback:
+
+```svelte
+<script>
+	let value = $state('');
+	let colorClass = $state('');
+
+	function updateStyle({ float }) {
+		if (float === null || float === 0) colorClass = 'text-gray-500';
+		else if (float > 0) colorClass = 'text-green-600';
+		else colorClass = 'text-red-600';
+	}
+</script>
+
+<CurrencyInput bind:value class="border px-3 py-2 {colorClass}" oninputvalue={updateStyle} />
+```
+
+## Exported utilities
+
+The package exports utility functions for use outside the component:
+
+```typescript
+import {
+	formatValue,
+	getLocaleConfig,
+	cleanValue,
+	parseAbbrValue,
+	abbrValue
+} from '@canutin/svelte-currency-input';
+
+// Format a value with locale
+const formatted = formatValue({
+	value: '1234.56',
+	intlConfig: { locale: 'en-US', currency: 'USD' }
+});
+// → "$1,234.56"
+
+// Get locale configuration
+const config = getLocaleConfig({ locale: 'de-DE', currency: 'EUR' });
+// → { decimalSeparator: ',', groupSeparator: '.', prefix: '', suffix: ' €', ... }
+
+// Parse abbreviations
+const expanded = parseAbbrValue('2.5m', 'en-US');
+// → "2500000"
+```
+
+## Svelte 4
+
+For Svelte 4 support, use the [0.x version](https://github.com/fmaclen/svelte-currency-input/tree/v0.13.0):
+
+```bash
+npm install @canutin/svelte-currency-input@0
+```
+
+If you're upgrading from v0.x, see the [migration guide](./MIGRATION.md).
 
 ## Contributing
 
-Here's ways in which you can contribute:
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, testing, and contribution guidelines.
 
-- Found a bug? Open a [new issue](https://github.com/canutin/svelte-currency-input/issues/new)
-- Comment or upvote [existing issues](https://github.com/canutin/svelte-currency-input/issues)
-- Submit a [pull request](https://github.com/canutin/svelte-currency-input/pulls)
+## License
 
-## Developing
-
-This package was generated with [SvelteKit](https://kit.svelte.dev/). Install dependencies with `npm install`, then start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-#### Integration tests
-
-The component is tested using [Playwright](https://playwright.dev/).
-You can find the tests in [`tests/svelte-currency-input.test.ts`](https://github.com/Canutin/svelte-currency-input/blob/main/tests/svelte-currency-input.test.ts)
-
-To run all tests on **Chromium**, **Firefox** and **Webkit**:
-```bash
-npm run test
-```
-
-To run all tests on a specific browser (e.g. **Webkit**):
-```bash
-npx playwright test --project=webkit
-```
-
-Additional debug commands can be found on [Playwright's documentation](https://playwright.dev/docs/test-cli).
+[MIT](./LICENSE)

@@ -1,302 +1,284 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import CurrencyInput from '$lib/CurrencyInput.svelte';
+	import BasicUsage from './basic-usage.svelte';
+	import PositiveNegativeNeutral from './positive-negative-neutral.svelte';
+	import InternationalCurrencies from './international-currencies.svelte';
+	import CustomPrefixSuffix from './custom-prefix-suffix.svelte';
+	import Abbreviations from './abbreviations.svelte';
+	import DecimalPrecision from './decimal-precision.svelte';
+	import MinMaxStep from './min-max-step.svelte';
+	import ChainedInputs from './chained-inputs.svelte';
+	import FormatValueUtility from './format-value-utility.svelte';
+	import ArgentinaRates from './argentina-rates.svelte';
 
-	let output: string;
-	const handleSubmit = (event: Event) => {
-		event.preventDefault();
-		// Get the form data
-		const data = new FormData(event.target as HTMLFormElement);
-		// Pretty-print the data as JSON
-		output = JSON.stringify(Object.fromEntries(data.entries()), null, 2);
-	};
+	const packageManagers = [
+		{ name: 'bun', command: 'bun add @canutin/svelte-currency-input' },
+		{ name: 'pnpm', command: 'pnpm add @canutin/svelte-currency-input' },
+		{ name: 'npm', command: 'npm install @canutin/svelte-currency-input' },
+		{ name: 'yarn', command: 'yarn add @canutin/svelte-currency-input' }
+	];
 
-	let unchangedValue = 999; // Used for onValueChange()
-	let chainedValue = 9999.99; // Used for chained inputs
+	let selectedPm = $state(0);
 
-	const setChainedValue = () => {
-		chainedValue = 420.69;
-	};
+	const UTM = 'utm_source=svelte-currency-input&utm_medium=demo';
+
+	const sections: {
+		title: string;
+		items: { id: string; label: string; href?: string }[];
+	}[] = [
+		{
+			title: 'Getting started',
+			items: [
+				{ id: 'install', label: 'Installation' },
+				{ id: 'basic', label: 'Basic usage' }
+			]
+		},
+		{
+			title: 'Features',
+			items: [
+				{ id: 'intl', label: 'International currencies' },
+				{ id: 'abbreviations', label: 'Abbreviations' },
+				{ id: 'decimals', label: 'Decimal precision' },
+				{ id: 'minmax', label: 'Min, max, and step' },
+				{ id: 'custom', label: 'Custom prefix and suffix' }
+			]
+		},
+		{
+			title: 'Examples',
+			items: [
+				{ id: 'styling', label: 'Dynamic styling' },
+				{ id: 'chained', label: 'Chained inputs' },
+				{ id: 'formatvalue', label: 'Format utility' },
+				{ id: 'one-usd', label: 'One USD, many pesos' }
+			]
+		},
+		{
+			title: 'Resources',
+			items: [
+				{
+					id: 'docs',
+					label: 'Docs',
+					href: `https://github.com/fmaclen/svelte-currency-input?${UTM}#readme`
+				},
+				{
+					id: 'contributing',
+					label: 'Contributing',
+					href: `https://github.com/fmaclen/svelte-currency-input/blob/main/CONTRIBUTING.md?${UTM}`
+				},
+				{
+					id: 'migration',
+					label: 'Migration guide (v0 to v1)',
+					href: `https://github.com/fmaclen/svelte-currency-input/blob/main/MIGRATION.md?${UTM}`
+				},
+				{
+					id: 'npm',
+					label: 'NPM',
+					href: `https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`
+				},
+				{
+					id: 'github',
+					label: 'GitHub',
+					href: `https://github.com/fmaclen/svelte-currency-input?${UTM}`
+				}
+			]
+		}
+	];
 </script>
 
-<form class="demoForm" on:submit={handleSubmit}>
-	<nav class="demoForm__nav">
-		<h1 class="demoForm__h1">svelte-currency-input</h1>
-		<a class="demoForm__a" href="https://github.com/canutin/svelte-currency-input" target="_blank"
-			>GitHub repository</a
+{#snippet hr()}
+	<hr class="my-8 border-slate-200" />
+{/snippet}
+
+<svelte:head>
+	<title>svelte-currency-input - Currency masking for Svelte 5</title>
+	<meta
+		name="description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support. Works with any currency and locale."
+	/>
+	<meta
+		name="keywords"
+		content="svelte, svelte 5, currency input, currency mask, form input, internationalization, i18n, number format"
+	/>
+	<meta name="author" content="Canutin" />
+
+	<meta property="og:title" content="svelte-currency-input" />
+	<meta
+		property="og:description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://svelte-currency-input.fernando.is" />
+
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="svelte-currency-input" />
+	<meta
+		name="twitter:description"
+		content="A Svelte 5 form input component with currency masking, formatting, and internationalization support."
+	/>
+
+	<link rel="canonical" href="https://svelte-currency-input.fernando.is" />
+</svelte:head>
+
+<div class="mx-auto max-w-5xl overflow-hidden px-4 py-8">
+	<header>
+		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+			<div>
+				<h1 class="text-xl font-bold text-slate-900">svelte-currency-input</h1>
+				<p class="text-sm text-balance text-slate-600">
+					A Svelte 5 form input with currency masking and internationalization support
+				</p>
+			</div>
+			<nav class="flex items-center gap-2">
+				<a
+					href={`https://github.com/fmaclen/svelte-currency-input?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/github/stars/fmaclen/svelte-currency-input?style=flat&color=black"
+						alt="GitHub stars"
+						class="h-5"
+					/>
+				</a>
+				<a
+					href={`https://github.com/fmaclen/svelte-currency-input/blob/main/LICENSE?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/l/@canutin/svelte-currency-input?style=flat&color=3178c6"
+						alt="License"
+						class="h-5"
+					/>
+				</a>
+				<a
+					href={`https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/v/@canutin/svelte-currency-input?style=flat&color=cb3837"
+						alt="NPM version"
+						class="h-5"
+					/>
+				</a>
+				<a
+					href={`https://www.npmjs.com/package/@canutin/svelte-currency-input?${UTM}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<img
+						src="https://img.shields.io/npm/dm/@canutin/svelte-currency-input?style=flat&color=cb3837"
+						alt="NPM downloads"
+						class="h-5"
+					/>
+				</a>
+			</nav>
+		</div>
+
+		{@render hr()}
+
+		<nav class="grid gap-6 text-sm sm:grid-cols-4">
+			{#each sections as section (section.title)}
+				<div>
+					<h2 class="mb-2 text-xs font-medium text-slate-400">{section.title}</h2>
+					<ul class="flex flex-col gap-1.5">
+						{#each section.items as item (item.id)}
+							<li>
+								{#if item.href}
+									<!-- eslint-disable svelte/no-navigation-without-resolve -- external link -->
+									<a
+										href={item.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+									>
+										{item.label}
+									</a>
+									<!-- eslint-enable svelte/no-navigation-without-resolve -->
+								{:else}
+									<a
+										href="#{item.id}"
+										class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+									>
+										{item.label}
+									</a>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
+		</nav>
+	</header>
+
+	{@render hr()}
+
+	<!-- Getting started -->
+	<section id="install" class="flex flex-col gap-8">
+		<div>
+			<div class="mb-3 flex items-center justify-between">
+				<h2 class="text-base font-medium text-slate-800">Installation</h2>
+				<div class="flex items-center gap-1">
+					{#each packageManagers as pm, i (pm.name)}
+						<button
+							onclick={() => (selectedPm = i)}
+							class="rounded border px-2 py-1 text-xs font-medium transition-colors {selectedPm ===
+							i
+								? 'border-transparent bg-slate-200 text-slate-900'
+								: 'border-slate-300 text-slate-500 hover:text-slate-700'}"
+						>
+							{pm.name}
+						</button>
+					{/each}
+				</div>
+			</div>
+			<pre class="overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 text-xs"><code
+					class="font-mono text-slate-700">{packageManagers[selectedPm].command}</code
+				></pre>
+		</div>
+		<BasicUsage />
+	</section>
+
+	{@render hr()}
+
+	<!-- Features -->
+	<section class="flex flex-col gap-8">
+		<InternationalCurrencies />
+		<Abbreviations />
+		<DecimalPrecision />
+		<MinMaxStep />
+		<CustomPrefixSuffix />
+	</section>
+
+	{@render hr()}
+
+	<!-- Examples -->
+	<section class="flex flex-col gap-8">
+		<PositiveNegativeNeutral />
+		<ChainedInputs />
+		<FormatValueUtility />
+		<ArgentinaRates />
+	</section>
+
+	{@render hr()}
+
+	<footer class="text-center text-sm text-slate-500">
+		Made by <a
+			href="https://github.com/fmaclen?{UTM}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
 		>
+			@fmaclen
+		</a>
+		·
 		<a
-			class="demoForm__a"
-			href="https://github.com/canutin/svelte-currency-input/issues"
-			target="_blank">Known issues</a
+			href="https://fernando.is?{UTM}"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
 		>
-		<a
-			class="demoForm__a"
-			href="https://github.com/canutin/svelte-currency-input#contributing"
-			target="_blank">Contribute</a
-		>
-		<a
-			class="demoForm__a"
-			href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
-			target="_blank">NPM</a
-		>
-		<a
-			class="demoForm__a"
-			href="https://svelte.dev/repl/d8f7d22e5b384555b430f62b157ac503?version=3.59.2"
-			target="_blank">REPL</a
-		>
-	</nav>
-
-	<div class="demoForm__container">
-		<fieldset class="demoForm__fieldset">
-			<legend class="demoForm__legend">Stand-alone inputs</legend>
-			<CurrencyInput name="default" value={-42069.69} id="four-twenty-six-nine" />
-			<CurrencyInput name="colon" locale="es-CR" currency="CRC" />
-			<CurrencyInput
-				name="pound"
-				value={1234.56}
-				isNegativeAllowed={false}
-				placeholder={null}
-				locale="en-GB"
-				currency="GBP"
-			/>
-			<CurrencyInput
-				name="bitcoin"
-				value={0.87654321}
-				locale="th-TH"
-				currency="THB"
-				fractionDigits={8}
-			/>
-
-			<CurrencyInput name="yen" value={5678.9} locale="en-JP" currency="JPY" />
-			<CurrencyInput name="shekel" value={97532.95} disabled={true} locale="il-IL" currency="ILS" />
-			<CurrencyInput name="euro" value={-42069.69} locale="nl-NL" currency="EUR" />
-			<CurrencyInput
-				name="won"
-				placeholder={1234.56}
-				isNegativeAllowed={false}
-				locale="ko-KO"
-				currency="KRW"
-				inputClasses={{
-					wrapper: 'currencyInput custom-wrapper-class',
-					unformatted: 'custom-unformatted-class'
-				}}
-			/>
-			<CurrencyInput
-				name="pesos"
-				value={unchangedValue}
-				isNegativeAllowed={false}
-				placeholder={null}
-				autocomplete="off"
-				locale="es-AR"
-				currency="ARS"
-				onValueChange={(value) => {
-					// Prevent alerting on initial load
-					if (unchangedValue !== value) {
-						unchangedValue = value; // Update the unchanged value
-						if (browser) window.alert(`The value for ARS has changed to: ${value}`); // Alert the user
-					}
-				}}
-			/>
-			<CurrencyInput name="rupees" value={678} locale="hi-IN" currency="INR" fractionDigits={3} />
-			<CurrencyInput
-				name="soles"
-				value={0}
-				isZeroNullish={true}
-				placeholder={null}
-				locale="es-PE"
-				currency="PEN"
-			/>
-			<CurrencyInput
-				name="dinars"
-				value={0}
-				placeholder={'How many Dinars?'}
-				locale="en-US"
-				currency="RSD"
-				fractionDigits={0}
-			/>
-		</fieldset>
-
-		<fieldset class="demoForm__fieldset">
-			<legend class="demoForm__legend">Chained inputs</legend>
-			<CurrencyInput
-				name="chained-east-caribbean-dollar"
-				bind:value={chainedValue}
-				locale="aig"
-				currency="XCD"
-				fractionDigits={4}
-			/>
-			<CurrencyInput name="chained-euros" bind:value={chainedValue} locale="nl-NL" currency="EUR" />
-			<CurrencyInput
-				name="chained-dollars"
-				bind:value={chainedValue}
-				locale="en-US"
-				currency="USD"
-				fractionDigits={0}
-			/>
-			<button
-				id="set-chained-value"
-				type="button"
-				class="demoForm__button"
-				on:click={setChainedValue}
-			>
-				Set chained value to <strong>420.69</strong>
-			</button>
-		</fieldset>
-	</div>
-
-	<nav class="demoForm__output">
-		<button id="submit-form" type="submit" class="demoForm__button">Submit form</button>
-
-		<pre class="demoForm__pre {!output && 'demoForm__pre--placeholder'}">{output
-				? output
-				: 'Submit form to see a JSON output of the values'}</pre>
-	</nav>
-</form>
-
-<style>
-	/* Overriding the styles of the <CurrencyInput /> component */
-	form.demoForm :global(input.currencyInput__formatted) {
-		width: 100%;
-		font-family: monospace;
-		font-size: 13px;
-	}
-
-	/* Styles for demo presentation (you can ignore these) */
-	:global(body) {
-		--gap: 64px;
-
-		font-family: sans-serif;
-		box-sizing: border-box;
-		min-height: 100vh;
-		margin: 0;
-		background-color: #eaeaea;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		place-items: center;
-		padding: var(--gap);
-
-		@media (max-width: 768px) {
-			--gap: 48px;
-		}
-
-		@media (max-width: 512px) {
-			--gap: 32px;
-		}
-	}
-
-	form.demoForm {
-		display: flex;
-		flex-direction: column;
-		row-gap: var(--gap);
-	}
-
-	div.demoForm__container {
-		display: flex;
-		flex-direction: column;
-		gap: 32px;
-	}
-
-	fieldset.demoForm__fieldset {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		align-items: center;
-		justify-content: center;
-		gap: calc(var(--gap) / 2);
-		height: max-content;
-		border: 1px solid #ccc;
-		padding: 16px;
-
-		@media (max-width: 768px) {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		@media (max-width: 512px) {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	legend.demoForm__legend {
-		font-size: 13px;
-		color: #666;
-	}
-
-	h1.demoForm__h1 {
-		color: #333;
-		font-size: 20px;
-		letter-spacing: -0.025em;
-		line-height: 1em;
-		margin-block: unset;
-		margin-right: auto;
-		padding-right: 16px;
-	}
-
-	nav.demoForm__nav {
-		font-size: 13px;
-		display: flex;
-		gap: 16px;
-		justify-content: center;
-
-		@media (max-width: 512px) {
-			flex-direction: column;
-			gap: 24px;
-		}
-	}
-
-	a.demoForm__a {
-		color: #333;
-		text-decoration: none;
-		border-bottom-width: 1px;
-		border-bottom-color: #ccc;
-		border-bottom-style: solid;
-	}
-
-	a.demoForm__a:visited {
-		color: #666;
-	}
-
-	a.demoForm__a:hover {
-		color: #000;
-		border-bottom-color: transparent;
-	}
-
-	nav.demoForm__output {
-		display: grid;
-		grid-template-columns: max-content auto;
-		gap: calc(var(--gap) / 2);
-
-		@media (max-width: 512px) {
-			grid-template-columns: unset;
-		}
-	}
-
-	pre.demoForm__pre {
-		background-color: #f4f4f4;
-		padding: 10px;
-		margin: 0;
-		color: #666;
-		box-sizing: border-box;
-		max-width: 100%;
-		overflow-y: auto;
-	}
-
-	pre.demoForm__pre--placeholder {
-		font-family: sans-serif;
-		font-size: 13px;
-	}
-
-	button.demoForm__button {
-		border: none;
-		background-color: #333;
-		color: #fff;
-		padding: 10px;
-		font-size: 13px;
-		cursor: pointer;
-		height: max-content;
-	}
-
-	button.demoForm__button:hover {
-		background-color: #000;
-	}
-</style>
+			fernando.is
+		</a>
+	</footer>
+</div>

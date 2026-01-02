@@ -1,0 +1,28 @@
+<script lang="ts">
+	import { CurrencyInput } from '@canutin/svelte-currency-input';
+
+	const presets = [
+		{ label: 'de-DE (EUR)', intlConfig: { locale: 'de-DE', currency: 'EUR' } },
+		{ label: 'ja-JP (JPY)', intlConfig: { locale: 'ja-JP', currency: 'JPY' } },
+		{ label: 'en-IN (INR)', intlConfig: { locale: 'en-IN', currency: 'INR' } },
+		{ label: 'es-PE (PEN)', intlConfig: { locale: 'es-PE', currency: 'PEN' } },
+		{ label: 'es-CR (CRC)', intlConfig: { locale: 'es-CR', currency: 'CRC' } },
+		{ label: 'th-TH (THB)', intlConfig: { locale: 'th-TH', currency: 'THB' } },
+		{ label: 'he-IL (ILS)', intlConfig: { locale: 'he-IL', currency: 'ILS' } }
+	];
+
+	let selectedIndex = $state(0);
+	let intlConfig = $derived(presets[selectedIndex].intlConfig);
+	let value = $state('1234.56');
+</script>
+
+<select bind:value={selectedIndex}>
+	{#each presets as preset, i}
+		<option value={i}>{preset.label}</option>
+	{/each}
+</select>
+
+<CurrencyInput
+	bind:value
+	{intlConfig}
+/>

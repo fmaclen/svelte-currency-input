@@ -4,7 +4,6 @@ about: Create a report to help us improve the library
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## Description
@@ -28,7 +27,7 @@ What actually happens?
 List down the props you used with the component, for example:
 
 ```svelte
-<CurrencyInput name={id} bind:value={value} locale="en-US" currency="USD" placeholder={null}/> 
+<CurrencyInput name={id} bind:value locale="en-US" currency="USD" placeholder={null} />
 ```
 
 ## Reproduction Steps
