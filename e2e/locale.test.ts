@@ -13,7 +13,7 @@ test('formats Euro with German locale', async ({ page }) => {
 
 test('formats Yen with Japanese locale', async ({ page }) => {
 	const input = page.getByLabel('formats Yen with Japanese locale');
-	await expect(input).toHaveValue('');
+	await expect(input).toHaveValue('￥5,679');
 	await input.fill('1234');
 	await expect(input).toHaveValue('￥1,234');
 });
