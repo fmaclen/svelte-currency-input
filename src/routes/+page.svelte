@@ -46,7 +46,7 @@
 			title: 'Examples',
 			items: [
 				{ id: 'styling', label: 'Dynamic styling' },
-				{ id: 'tip', label: 'Tip calculator' },
+				{ id: 'one-usd', label: 'One USD, many pesos' },
 				{ id: 'chained', label: 'Chained inputs' },
 				{ id: 'formatvalue', label: 'Format utility' }
 			]

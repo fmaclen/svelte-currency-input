@@ -1,21 +1,41 @@
 <script lang="ts">
 	import { CurrencyInput, formatValue } from '@canutin/svelte-currency-input';
 
-	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
-	let billFloat = $state(250.75);
-	let tipPercent = $state(18);
+	const arsConfig = { locale: 'es-AR', currency: 'ARS' };
+	const usdConfig = { locale: 'es-AR', currency: 'USD' };
 
-	let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
-	let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
+	const dollarRates = [
+		{ name: 'Oficial', rate: 1495 },
+		{ name: 'Blue', rate: 1530 },
+		{ name: 'MEP', rate: 1503.6 },
+		{ name: 'CCL', rate: 1534.9 },
+		{ name: 'Tarjeta', rate: 1943.5 },
+		{ name: 'Cripto', rate: 1549.72 }
+	];
+
+	let usdAmount = $state(100);
+
+	function formatUSD(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: usdConfig });
+	}
+
+	function formatARS(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: arsConfig });
+	}
 </script>
 
 <CurrencyInput
-	value={String(billFloat)}
-	oninputvalue={(v) => (billFloat = v.float ?? 0)}
-	{intlConfig}
+	value={String(usdAmount)}
+	oninputvalue={(v) => (usdAmount = v.float ?? 0)}
+	intlConfig={usdConfig}
 />
 
-<input type="range" bind:value={tipPercent} min="0" max="30" />
-
-Tip: {formatValue({ value: tipAmount, intlConfig })}
-Total: {formatValue({ value: totalAmount, intlConfig })}
+<table>
+	{#each dollarRates as { name, rate } (name)}
+		<tr>
+			<td>{name}</td>
+			<td>{formatUSD(rate)}</td>
+			<td>{formatARS(usdAmount * rate)}</td>
+		</tr>
+	{/each}
+</table>

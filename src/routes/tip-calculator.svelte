@@ -4,39 +4,48 @@
 	import { INPUT_CLASS } from './styles';
 	import code from './tip-calculator.txt?raw';
 
-	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
+	const arsConfig = { locale: 'es-AR', currency: 'ARS' };
+	const usdConfig = { locale: 'es-AR', currency: 'USD' };
 
-	let billFloat = $state(250.75);
-	let tipPercent = $state(18);
+	const dollarRates = [
+		{ name: 'Oficial', rate: 1495 },
+		{ name: 'Blue', rate: 1530 },
+		{ name: 'MEP', rate: 1503.6 },
+		{ name: 'CCL', rate: 1534.9 },
+		{ name: 'Tarjeta', rate: 1943.5 },
+		{ name: 'Cripto', rate: 1549.72 }
+	];
 
-	let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
-	let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
+	let usdAmount = $state(1);
+
+	function formatUSD(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: usdConfig });
+	}
+
+	function formatARS(value: number): string {
+		return formatValue({ value: value.toFixed(2), intlConfig: arsConfig, suffix: ' ARS' });
+	}
 </script>
 
-<Example id="tip" title="Tip calculator" {code}>
-	<div class="grid grid-cols-2 gap-2">
+<Example id="one-usd" title="One USD, many pesos" {code}>
+	<div class="flex flex-col gap-3">
 		<CurrencyInput
-			value={String(billFloat)}
-			oninputvalue={(v) => (billFloat = v.float ?? 0)}
-			{intlConfig}
-			placeholder="$ 0,00"
+			value={String(usdAmount)}
+			oninputvalue={(v) => (usdAmount = v.float ?? 0)}
+			intlConfig={usdConfig}
+			placeholder="US$ 0,00"
 			class={INPUT_CLASS}
 		/>
-		<div class="flex items-center gap-2">
-			<input type="range" bind:value={tipPercent} min="0" max="30" class="flex-1" />
-			<span class="w-10 text-right font-mono text-xs text-slate-600">{tipPercent}%</span>
-		</div>
-		<div class="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs">
-			<span class="text-slate-400">Tip</span>
-			<span class="ml-2 font-mono">
-				{formatValue({ value: tipAmount, intlConfig })}
-			</span>
-		</div>
-		<div class="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs">
-			<span class="text-slate-400">Total</span>
-			<span class="ml-2 font-mono">
-				{formatValue({ value: totalAmount, intlConfig })}
-			</span>
-		</div>
+		<table class="w-full text-xs">
+			<tbody>
+				{#each dollarRates as { name, rate } (name)}
+					<tr class="border-b border-slate-100 last:border-b-0">
+						<td class="py-2 font-medium text-slate-600">{name}</td>
+						<td class="py-2 font-mono text-slate-400">{formatUSD(rate)}</td>
+						<td class="py-2 font-mono font-medium text-slate-800">{formatARS(usdAmount * rate)}</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
 	</div>
 </Example>
