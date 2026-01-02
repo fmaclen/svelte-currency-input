@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index';
+	import { CurrencyInput, formatValue } from '$lib/index.js';
 	import Example from './example.svelte';
+	import { INPUT_CLASS } from './styles.js';
+	import code from './code-samples/tip-calculator.md?raw';
 
-	import { INPUT_CLASS } from './styles';
 	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
 
 	let billFloat = $state(250.75);
@@ -12,34 +13,11 @@
 	let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
 </script>
 
-<Example
-	id="tip"
-	title="Tip calculator"
-	code={`<script lang="ts">
-  import { CurrencyInput, formatValue } from '@canutin/svelte-currency-input';
-
-  const intlConfig = { locale: 'es-AR', currency: 'ARS' };
-  let billFloat = $state(250.75);
-  let tipPercent = $state(18);
-
-  let tipAmount = $derived(((billFloat * tipPercent) / 100).toFixed(2));
-  let totalAmount = $derived((billFloat + Number(tipAmount)).toFixed(2));
-</script>
-
-<CurrencyInput
-  value={String(billFloat)}
-  oninputvalue={(v) => (billFloat = v.float ?? 0)}
-  {intlConfig}
-/>
-<input type="range" bind:value={tipPercent} min="0" max="30" />
-
-<p>Tip: {formatValue({ value: tipAmount, intlConfig })}</p>
-<p>Total: {formatValue({ value: totalAmount, intlConfig })}</p>`}
->
+<Example id="tip" title="Tip calculator" {code}>
 	<div class="grid grid-cols-2 gap-2">
 		<CurrencyInput
 			value={String(billFloat)}
-			oninputvalue={(v) => (billFloat = v.float ?? 0)}
+			oninputvalue={(v: { float: number | null }) => (billFloat = v.float ?? 0)}
 			{intlConfig}
 			placeholder="$ 0,00"
 			class={INPUT_CLASS}

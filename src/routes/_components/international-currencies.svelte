@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index';
-	import type { CurrencyInputValues } from '$lib/types';
+	import { CurrencyInput, formatValue } from '$lib/index.js';
+	import type { CurrencyInputValues } from '$lib/types.js';
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
+	import { INPUT_CLASS } from './styles.js';
+	import code from './code-samples/international-currencies.md?raw';
 
-	import { INPUT_CLASS } from './styles';
 	let value = $state('1234.56');
 
 	let eurValues = $derived<CurrencyInputValues>({
@@ -26,21 +27,7 @@
 	});
 </script>
 
-<Example
-	id="intl"
-	title="International currencies"
-	code={`<CurrencyInput
-  intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
-/>
-
-<CurrencyInput
-  intlConfig={{ locale: 'en-IN', currency: 'INR' }}
-/>
-
-<CurrencyInput
-  intlConfig={{ locale: 'es-PE', currency: 'PEN' }}
-/>`}
->
+<Example id="intl" title="International currencies" {code}>
 	<CurrencyInput
 		bind:value
 		intlConfig={{ locale: 'de-DE', currency: 'EUR' }}

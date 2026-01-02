@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index';
-	import type { CurrencyInputValues } from '$lib/types';
+	import { CurrencyInput, formatValue } from '$lib/index.js';
+	import type { CurrencyInputValues } from '$lib/types.js';
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
+	import { INPUT_CLASS } from './styles.js';
+	import code from './code-samples/chained-inputs.md?raw';
 
-	import { INPUT_CLASS } from './styles';
 	let value = $state('1000');
 
 	let usdValues = $derived<CurrencyInputValues>({
@@ -26,28 +27,7 @@
 	});
 </script>
 
-<Example
-	id="chained"
-	title="Chained inputs"
-	code={`<script lang="ts">
-  import { CurrencyInput } from '@canutin/svelte-currency-input';
-  let value = $state('1000');
-</script>
-
-<CurrencyInput
-  bind:value
-  intlConfig={{ locale: 'en-US', currency: 'USD' }}
-/>
-<CurrencyInput
-  bind:value
-  intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
-/>
-<CurrencyInput
-  bind:value
-  intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
-  disabled
-/>`}
->
+<Example id="chained" title="Chained inputs" {code}>
 	<CurrencyInput
 		bind:value
 		intlConfig={{ locale: 'en-US', currency: 'USD' }}

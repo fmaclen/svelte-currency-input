@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { CurrencyInput } from '$lib/index';
+	import { CurrencyInput } from '$lib/index.js';
 	import Field from './field.svelte';
-	import { INPUT_CLASS } from '../styles';
+	import { INPUT_CLASS } from '../_components/styles.js';
 
 	let basic1 = $state('');
 	let basic2 = $state('');

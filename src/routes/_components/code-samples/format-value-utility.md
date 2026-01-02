@@ -1,0 +1,21 @@
+```svelte
+<script lang="ts">
+	import { formatValue } from '@canutin/svelte-currency-input';
+
+	let value = $state('1234567.89');
+	let prefix = $state('$');
+	let groupSeparator = $state(',');
+	let decimalSeparator = $state('.');
+
+	let formattedResult = $derived(
+		formatValue({
+			value,
+			prefix,
+			groupSeparator,
+			decimalSeparator
+		})
+	);
+</script>
+
+<p>{formattedResult}</p>
+```

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { formatValue } from '$lib/index';
+	import { formatValue } from '$lib/index.js';
 	import Example from './example.svelte';
+	import { INPUT_CLASS } from './styles.js';
+	import code from './code-samples/format-value-utility.md?raw';
 
-	import { INPUT_CLASS } from './styles';
 	let valueInput = $state('1234567.89');
 	let prefix = $state('$');
 	let groupSeparator = $state(',');
@@ -20,29 +21,7 @@
 	);
 </script>
 
-<Example
-	id="formatvalue"
-	title="formatValue utility"
-	code={`<script lang="ts">
-  import { formatValue } from '@canutin/svelte-currency-input';
-
-  let value = $state('1234567.89');
-  let prefix = $state('$');
-  let groupSeparator = $state(',');
-  let decimalSeparator = $state('.');
-
-  let formattedResult = $derived(
-    formatValue({
-      value,
-      prefix,
-      groupSeparator,
-      decimalSeparator
-    })
-  );
-</script>
-
-<p>{formattedResult}</p>`}
->
+<Example id="formatvalue" title="formatValue utility" {code}>
 	<div class="grid grid-cols-2 gap-2">
 		<input bind:value={valueInput} placeholder="Value" class={INPUT_CLASS} />
 		<input bind:value={prefix} placeholder="Prefix" class={INPUT_CLASS} />
