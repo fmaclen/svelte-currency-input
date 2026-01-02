@@ -17,13 +17,3 @@ test('formats Yen with Japanese locale', async ({ page }) => {
 	await input.fill('1234');
 	await expect(input).toHaveValue('￥1,234');
 });
-
-test('clears multi-char prefix correctly', async ({ page }) => {
-	const input = page.getByLabel('clears multi-char prefix correctly');
-	await expect(input).toHaveValue('US$\u00A0100');
-	await input.focus();
-	await page.keyboard.press('ControlOrMeta+a');
-	await page.keyboard.press('Backspace');
-	await expect(input).toHaveValue('');
-	await expect(input).toHaveAttribute('placeholder', 'US$ 0,00');
-});
