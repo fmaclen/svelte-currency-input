@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index.js';
+	import { CurrencyInput, formatValue } from '$lib/index';
 	import Example from './example.svelte';
 
-	const INPUT_CLASS =
-		'w-full rounded border border-slate-300 px-2 py-2 font-mono text-xs focus:border-slate-400 focus:outline-none placeholder:text-slate-400';
-
+	import { INPUT_CLASS } from './styles';
 	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
 
 	let billFloat = $state(250.75);

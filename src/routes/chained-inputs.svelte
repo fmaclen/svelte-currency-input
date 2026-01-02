@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { CurrencyInput, formatValue } from '$lib/index.js';
-	import type { CurrencyInputValues } from '$lib/types.js';
+	import { CurrencyInput, formatValue } from '$lib/index';
+	import type { CurrencyInputValues } from '$lib/types';
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 
-	const INPUT_CLASS =
-		'w-full rounded border border-slate-300 px-2 py-2 font-mono text-xs focus:border-slate-400 focus:outline-none placeholder:text-slate-400';
-
+	import { INPUT_CLASS } from './styles';
 	let value = $state('1000');
 
 	let usdValues = $derived<CurrencyInputValues>({
