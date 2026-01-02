@@ -46,9 +46,9 @@
 			title: 'Examples',
 			items: [
 				{ id: 'styling', label: 'Dynamic styling' },
-				{ id: 'one-usd', label: 'One USD, many pesos' },
 				{ id: 'chained', label: 'Chained inputs' },
-				{ id: 'formatvalue', label: 'Format utility' }
+				{ id: 'formatvalue', label: 'Format utility' },
+				{ id: 'one-usd', label: 'One USD, many pesos' }
 			]
 		},
 		{
@@ -255,9 +255,9 @@
 	<!-- Examples -->
 	<section class="flex flex-col gap-8">
 		<PositiveNegativeNeutral />
-		<TipCalculator />
 		<ChainedInputs />
 		<FormatValueUtility />
+		<TipCalculator />
 	</section>
 
 	{@render hr()}
