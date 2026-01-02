@@ -21,7 +21,7 @@
 	);
 </script>
 
-<Example id="formatvalue" title="formatValue utility" {code}>
+<Example id="formatvalue" title="Format utility" {code}>
 	<div class="grid grid-cols-2 gap-2">
 		<input bind:value={valueInput} placeholder="Value" class={INPUT_CLASS} />
 		<input bind:value={prefix} placeholder="Prefix" class={INPUT_CLASS} />

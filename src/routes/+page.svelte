@@ -19,18 +19,33 @@
 
 	let selectedPm = $state(0);
 
-	const features = [
-		{ id: 'install', label: 'Installation' },
-		{ id: 'basic', label: 'Basic usage' },
-		{ id: 'styling', label: 'Positive, negative, and neutral styling' },
-		{ id: 'intl', label: 'International currencies' },
-		{ id: 'custom', label: 'Custom prefix and suffix' },
-		{ id: 'abbreviations', label: 'Abbreviations' },
-		{ id: 'decimals', label: 'Decimal precision' },
-		{ id: 'minmax', label: 'Min, max, and step' },
-		{ id: 'chained', label: 'Chained inputs' },
-		{ id: 'formatvalue', label: 'formatValue utility' },
-		{ id: 'tip', label: 'Tip calculator' }
+	const sections = [
+		{
+			title: 'Getting started',
+			items: [
+				{ id: 'install', label: 'Installation' },
+				{ id: 'basic', label: 'Basic usage' }
+			]
+		},
+		{
+			title: 'Features',
+			items: [
+				{ id: 'intl', label: 'International currencies' },
+				{ id: 'abbreviations', label: 'Abbreviations' },
+				{ id: 'decimals', label: 'Decimal precision' },
+				{ id: 'minmax', label: 'Min, max, and step' },
+				{ id: 'custom', label: 'Custom prefix and suffix' }
+			]
+		},
+		{
+			title: 'Examples',
+			items: [
+				{ id: 'styling', label: 'Dynamic styling' },
+				{ id: 'tip', label: 'Tip calculator' },
+				{ id: 'chained', label: 'Chained inputs' },
+				{ id: 'formatvalue', label: 'Format utility' }
+			]
+		}
 	];
 </script>
 
@@ -82,13 +97,6 @@
 					Docs
 				</a>
 				<a
-					href="https://www.npmjs.com/package/@canutin/svelte-currency-input"
-					target="_blank"
-					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
-				>
-					NPM
-				</a>
-				<a
 					href="https://github.com/fmaclen/svelte-currency-input"
 					target="_blank"
 					class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
@@ -113,18 +121,25 @@
 		</div>
 
 		<div class="border-y border-slate-200 bg-white py-4">
-			<ul class="grid gap-1.5 text-sm sm:grid-cols-2">
-				{#each features as feature (feature.id)}
-					<li>
-						<a
-							href="#{feature.id}"
-							class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
-						>
-							{feature.label}
-						</a>
-					</li>
+			<div class="grid gap-6 text-sm sm:grid-cols-3">
+				{#each sections as section (section.title)}
+					<div>
+						<h2 class="mb-2 text-xs font-medium text-slate-400">{section.title}</h2>
+						<ul class="flex flex-col gap-1.5">
+							{#each section.items as item (item.id)}
+								<li>
+									<a
+										href="#{item.id}"
+										class="border-b border-slate-300 text-slate-600 transition-colors hover:border-slate-500 hover:text-slate-900"
+									>
+										{item.label}
+									</a>
+								</li>
+							{/each}
+						</ul>
+					</div>
 				{/each}
-			</ul>
+			</div>
 		</div>
 	</header>
 
@@ -151,14 +166,14 @@
 
 	<div class="mt-8 flex flex-col gap-8">
 		<BasicUsage />
-		<PositiveNegativeNeutral />
 		<InternationalCurrencies />
-		<CustomPrefixSuffix />
 		<Abbreviations />
 		<DecimalPrecision />
 		<MinMaxStep />
+		<CustomPrefixSuffix />
+		<PositiveNegativeNeutral />
+		<TipCalculator />
 		<ChainedInputs />
 		<FormatValueUtility />
-		<TipCalculator />
 	</div>
 </div>

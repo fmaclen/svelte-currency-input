@@ -21,7 +21,7 @@
 	};
 </script>
 
-<Example id="styling" title="Positive, negative, and neutral styling" {code}>
+<Example id="styling" title="Dynamic styling" {code}>
 	<CurrencyInput
 		bind:value
 		intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
