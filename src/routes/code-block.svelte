@@ -36,7 +36,6 @@
 		{/if}
 	</button>
 	<pre
-		class="max-w-full flex-1 overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 pr-10 text-xs"><code
-			class="font-mono text-slate-700">{code.trim()}</code
-		></pre>
+		class="max-w-full flex-1 overflow-x-auto rounded border border-slate-200 bg-slate-50 p-4 pr-10 text-xs"
+		style="tab-size: 2;"><code class="font-mono text-slate-700">{code.trim()}</code></pre>
 </div>

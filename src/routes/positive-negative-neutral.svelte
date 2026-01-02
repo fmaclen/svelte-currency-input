@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './positive-negative-neutral.md?raw';
+	import code from './positive-negative-neutral.txt?raw';
 
 	let value = $state('-3.14');
 	let values = $state<CurrencyInputValues>({

@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './international-currencies.md?raw';
+	import code from './international-currencies.txt?raw';
 
 	let value = $state('1234.56');
 

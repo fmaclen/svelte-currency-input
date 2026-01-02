@@ -4,5 +4,7 @@
 </script>
 
 <!-- Type 1k, 2.5m, or 1b -->
-
-<CurrencyInput bind:value intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+/>

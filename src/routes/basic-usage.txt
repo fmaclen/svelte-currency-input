@@ -3,4 +3,7 @@
 	let value = $state('1234.56');
 </script>
 
-<CurrencyInput bind:value intlConfig={{ locale: 'en-US', currency: 'USD' }} />
+<CurrencyInput
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+/>

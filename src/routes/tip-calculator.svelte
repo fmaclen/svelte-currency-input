@@ -2,7 +2,7 @@
 	import { CurrencyInput, formatValue } from '$lib/index';
 	import Example from './example.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './tip-calculator.md?raw';
+	import code from './tip-calculator.txt?raw';
 
 	const intlConfig = { locale: 'es-AR', currency: 'ARS' };
 

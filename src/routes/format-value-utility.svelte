@@ -2,7 +2,7 @@
 	import { formatValue } from '$lib/index';
 	import Example from './example.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './format-value-utility.md?raw';
+	import code from './format-value-utility.txt?raw';
 
 	let valueInput = $state('1234567.89');
 	let prefix = $state('$');

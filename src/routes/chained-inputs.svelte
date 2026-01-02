@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './chained-inputs.md?raw';
+	import code from './chained-inputs.txt?raw';
 
 	let value = $state('1000');
 

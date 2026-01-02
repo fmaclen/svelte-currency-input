@@ -11,7 +11,7 @@
 </script>
 
 <CurrencyInput
-bind:value
-intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
-class={getValueColor(value)}
+	bind:value
+	intlConfig={{ locale: 'en-GB', currency: 'GBP' }}
+	class={getValueColor(value)}
 />

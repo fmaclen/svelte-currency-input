@@ -4,8 +4,8 @@
 </script>
 
 <CurrencyInput
-bind:value
-intlConfig={{ locale: 'en-US', currency: 'USD' }}
-decimalsLimit={2}
-decimalScale={2}
+	bind:value
+	intlConfig={{ locale: 'en-US', currency: 'USD' }}
+	decimalsLimit={2}
+	decimalScale={2}
 />
