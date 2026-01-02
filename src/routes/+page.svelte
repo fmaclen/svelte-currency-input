@@ -1,14 +1,14 @@
 <script lang="ts">
-	import BasicUsage from './components/basic-usage.svelte';
-	import PositiveNegativeNeutral from './components/positive-negative-neutral.svelte';
-	import InternationalCurrencies from './components/international-currencies.svelte';
-	import CustomPrefixSuffix from './components/custom-prefix-suffix.svelte';
-	import Abbreviations from './components/abbreviations.svelte';
-	import DecimalPrecision from './components/decimal-precision.svelte';
-	import MinMaxStep from './components/min-max-step.svelte';
-	import ChainedInputs from './components/chained-inputs.svelte';
-	import FormatValueUtility from './components/format-value-utility.svelte';
-	import TipCalculator from './components/tip-calculator.svelte';
+	import BasicUsage from './basic-usage.svelte';
+	import PositiveNegativeNeutral from './positive-negative-neutral.svelte';
+	import InternationalCurrencies from './international-currencies.svelte';
+	import CustomPrefixSuffix from './custom-prefix-suffix.svelte';
+	import Abbreviations from './abbreviations.svelte';
+	import DecimalPrecision from './decimal-precision.svelte';
+	import MinMaxStep from './min-max-step.svelte';
+	import ChainedInputs from './chained-inputs.svelte';
+	import FormatValueUtility from './format-value-utility.svelte';
+	import TipCalculator from './tip-calculator.svelte';
 
 	const features = [
 		{ id: 'basic', label: 'Basic usage' },
