@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './code-samples/min-max-step.md?raw';
+	import code from './min-max-step.md?raw';
 
 	let value = $state('50');
 	let values = $state<CurrencyInputValues>({

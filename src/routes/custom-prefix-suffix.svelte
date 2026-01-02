@@ -4,7 +4,7 @@
 	import Example from './example.svelte';
 	import ValueDisplay from './value-display.svelte';
 	import { INPUT_CLASS } from './styles';
-	import code from './code-samples/custom-prefix-suffix.md?raw';
+	import code from './custom-prefix-suffix.md?raw';
 
 	let customValue = $state('1500');
 	let customValues = $state<CurrencyInputValues>({
