@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { padTrimValue } from './padTrimValue';
+import { padTrimValue } from '$lib/utils/padTrimValue';
 
 describe('padTrimValue', () => {
 	it('should return value if no decimalScale', () => {

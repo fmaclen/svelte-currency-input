@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { escapeRegExp } from './escapeRegExp';
+import { escapeRegExp } from '$lib/utils/escapeRegExp';
 
 describe('escapeRegExp', () => {
 	it('should escape special regex characters', () => {

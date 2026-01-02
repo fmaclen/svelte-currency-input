@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { removeSeparators } from './removeSeparators';
+import { removeSeparators } from '$lib/utils/removeSeparators';
 
 describe('removeSeparators', () => {
 	it('should remove default comma separator', () => {

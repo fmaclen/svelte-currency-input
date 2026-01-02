@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cleanValue } from './cleanValue';
+import { cleanValue } from '$lib/utils/cleanValue';
 
 describe('cleanValue', () => {
 	it('should remove group separator in string', () => {
