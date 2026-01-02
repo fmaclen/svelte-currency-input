@@ -23,7 +23,7 @@
 	let negative4 = $state('');
 
 	let locale1 = $state('');
-	let locale2 = $state('');
+	let locale2 = $state('5679');
 
 	let editing1 = $state('123');
 	let editing2 = $state('1234');

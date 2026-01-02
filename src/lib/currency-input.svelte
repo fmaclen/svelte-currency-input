@@ -122,7 +122,7 @@
 	let lastKeyStroke = $state<string | null>(null);
 
 	$effect(() => {
-		if (stateValue === '-' || stateValue === decimalSeparator) {
+		if (stateValue === '-' || (decimalSeparator && stateValue === decimalSeparator)) {
 			return;
 		}
 		if (value !== undefined && value !== null && value !== '') {
