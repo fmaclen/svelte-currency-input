@@ -1,5 +1,5 @@
 // Component
-export { default as CurrencyInput } from './CurrencyInput.svelte';
+export { default as CurrencyInput } from './currency-input.svelte';
 
 // Types
 export type {
