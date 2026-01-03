@@ -25,6 +25,7 @@ export type FormatValueOptions = {
 	decimalScale?: number;
 	prefix?: string;
 	suffix?: string;
+	roundValue?: boolean;
 };
 
 export type CleanValueOptions = {

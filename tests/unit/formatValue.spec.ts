@@ -204,6 +204,72 @@ describe('formatValue', () => {
 		).toBe('$30');
 	});
 
+	describe('roundValue option', () => {
+		const intlConfig = { locale: 'en-US', currency: 'USD' };
+
+		it('should truncate by default (roundValue: false)', () => {
+			expect(
+				formatValue({
+					value: '87.5',
+					intlConfig,
+					decimalScale: 0
+				})
+			).toBe('$87');
+
+			expect(
+				formatValue({
+					value: '1.999',
+					intlConfig,
+					decimalScale: 2
+				})
+			).toBe('$1.99');
+		});
+
+		it('should round when roundValue is true', () => {
+			expect(
+				formatValue({
+					value: '87.5',
+					intlConfig,
+					decimalScale: 0,
+					roundValue: true
+				})
+			).toBe('$88');
+
+			expect(
+				formatValue({
+					value: '1.999',
+					intlConfig,
+					decimalScale: 2,
+					roundValue: true
+				})
+			).toBe('$2.00');
+		});
+
+		it('should handle floating-point precision issues when roundValue is true', () => {
+			const sum = 500.75 + 300.5 - 200.25 - 150.33; // = 450.66999999999996
+
+			expect(
+				formatValue({
+					value: String(sum),
+					intlConfig,
+					decimalScale: 2,
+					roundValue: true
+				})
+			).toBe('$450.67');
+		});
+
+		it('should round 1.255 to 1.26 with decimalScale=2 when roundValue is true', () => {
+			expect(
+				formatValue({
+					value: '1.255',
+					intlConfig,
+					decimalScale: 2,
+					roundValue: true
+				})
+			).toBe('$1.26');
+		});
+	});
+
 	it('should prefix decimal values correctly with zero', () => {
 		expect(
 			formatValue({
