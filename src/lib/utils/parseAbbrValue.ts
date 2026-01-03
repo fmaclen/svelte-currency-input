@@ -25,8 +25,18 @@ export const parseAbbrValue = (value: string, decimalSeparator = '.'): number | 
 	if (match) {
 		const [, digits, , abbr] = match;
 		const multiplier = abbrMap[abbr.toLowerCase()];
+		const result = Number(digits.replace(decimalSeparator, '.')) * multiplier;
 
-		return Number(digits.replace(decimalSeparator, '.')) * multiplier;
+		// Round based on input precision to avoid floating-point errors
+		// e.g. 4.1 * 1000000 = 4099999.9999999995 should become 4100000
+		// but 1.12345678 * 1000 = 1123.45678 should preserve all decimals
+		const decimalPart = digits.split(decimalSeparator)[1] || '';
+		const inputDecimals = decimalPart.length;
+		const multiplierZeros = Math.log10(multiplier);
+		const resultDecimals = Math.max(0, inputDecimals - multiplierZeros);
+		const precision = Math.pow(10, resultDecimals);
+
+		return Math.round(result * precision) / precision;
 	}
 
 	return undefined;

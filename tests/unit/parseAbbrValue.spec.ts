@@ -78,4 +78,9 @@ describe('parseAbbrValue', () => {
 		expect(parseAbbrValue('1,2k', ',')).toBe(1200);
 		expect(parseAbbrValue('2,3m', ',')).toBe(2300000);
 	});
+
+	it('should handle high precision decimals (e.g. Bitcoin with 8 decimal places)', () => {
+		expect(parseAbbrValue('1.12345678k')).toBe(1123.45678);
+		expect(parseAbbrValue('0.00000001k')).toBe(0.00001);
+	});
 });
