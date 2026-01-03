@@ -18,6 +18,7 @@ A fully-featured currency input component for Svelte 5 that handles formatting, 
 - [Examples](#examples)
 - [Styling](#styling)
 - [Exported utilities](#exported-utilities)
+  - [formatValue options](#formatvalue-options)
 - [Svelte 4 / migration guide](#svelte-4)
 - [Contributing](#contributing)
 
@@ -272,6 +273,51 @@ const config = getLocaleConfig({ locale: 'de-DE', currency: 'EUR' });
 // Parse abbreviations
 const expanded = parseAbbrValue('2.5m', 'en-US');
 // → "2500000"
+```
+
+### formatValue options
+
+| Option                   | Type         | Default     | Description                                   |
+| ------------------------ | ------------ | ----------- | --------------------------------------------- |
+| `value`                  | `string`     | —           | The value to format                           |
+| `intlConfig`             | `IntlConfig` | `undefined` | Locale and currency configuration             |
+| `decimalScale`           | `number`     | `undefined` | Number of decimal places                      |
+| `decimalSeparator`       | `string`     | From locale | Override the decimal separator                |
+| `groupSeparator`         | `string`     | From locale | Override the grouping separator               |
+| `disableGroupSeparators` | `boolean`    | `false`     | Disable thousand separators                   |
+| `prefix`                 | `string`     | From locale | Override the currency prefix                  |
+| `suffix`                 | `string`     | `''`        | Override the currency suffix                  |
+| `roundValue`             | `boolean`    | `false`     | Round to `decimalScale` instead of truncating |
+
+By default, `formatValue` truncates decimals to `decimalScale`. Set `roundValue: true` to round instead, which is useful when formatting computed values with floating-point precision artifacts:
+
+```typescript
+// Default: truncates
+formatValue({
+	value: '87.5',
+	intlConfig: { locale: 'en-US', currency: 'USD' },
+	decimalScale: 0
+});
+// → "$87"
+
+// With roundValue: rounds
+formatValue({
+	value: '87.5',
+	intlConfig: { locale: 'en-US', currency: 'USD' },
+	decimalScale: 0,
+	roundValue: true
+});
+// → "$88"
+
+// Useful for computed values with floating-point issues
+const sum = 500.75 + 300.5 - 200.25 - 150.33; // = 450.66999999999996
+formatValue({
+	value: String(sum),
+	intlConfig: { locale: 'en-US', currency: 'USD' },
+	decimalScale: 2,
+	roundValue: true
+});
+// → "$450.67" (without roundValue, would be "$450.66")
 ```
 
 ## Svelte 4

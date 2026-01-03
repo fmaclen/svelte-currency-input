@@ -9,7 +9,8 @@ export const formatValue = (options: FormatValueOptions): string => {
 		intlConfig,
 		decimalScale,
 		prefix = '',
-		suffix = ''
+		suffix = '',
+		roundValue = false
 	} = options;
 
 	if (_value === '' || _value === undefined) {
@@ -38,7 +39,7 @@ export const formatValue = (options: FormatValueOptions): string => {
 	const defaultNumberFormatOptions = {
 		...formatOptions,
 		minimumFractionDigits: decimalScale || 0,
-		maximumFractionDigits: 20
+		maximumFractionDigits: roundValue && decimalScale !== undefined ? decimalScale : 20
 	};
 
 	const numberFormatter = intlConfig
@@ -110,10 +111,16 @@ const replaceParts = (
 		groupSeparator,
 		decimalSeparator,
 		decimalScale,
-		disableGroupSeparators = false
+		disableGroupSeparators = false,
+		roundValue = false
 	}: Pick<
 		FormatValueOptions,
-		'prefix' | 'groupSeparator' | 'decimalSeparator' | 'decimalScale' | 'disableGroupSeparators'
+		| 'prefix'
+		| 'groupSeparator'
+		| 'decimalSeparator'
+		| 'decimalScale'
+		| 'disableGroupSeparators'
+		| 'roundValue'
 	>
 ): string => {
 	return parts
@@ -150,6 +157,9 @@ const replaceParts = (
 				}
 
 				if (type === 'fraction') {
+					if (roundValue) {
+						return [...prev, value];
+					}
 					return [...prev, decimalScale !== undefined ? value.slice(0, decimalScale) : value];
 				}
 
