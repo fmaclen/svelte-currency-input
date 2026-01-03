@@ -14,8 +14,8 @@ test('expands k to thousands', async ({ page }) => {
 test('expands m to millions', async ({ page }) => {
 	const input = page.getByLabel('expands m to millions');
 	await expect(input).toHaveValue('');
-	await input.fill('2.5m');
-	await expect(input).toHaveValue('$2,500,000');
+	await input.fill('4.1m');
+	await expect(input).toHaveValue('$4,100,000');
 });
 
 test('expands b to billions', async ({ page }) => {
