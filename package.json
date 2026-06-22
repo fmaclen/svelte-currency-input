@@ -38,8 +38,7 @@
 		"quality": "bun run format && bun run eslint . && bun run check",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test",
-		"token": "./scripts/rotate-npm-token.sh"
+		"test:e2e": "playwright test"
 	},
 	"files": [
 		"dist"
