@@ -16,6 +16,8 @@
 	let decimal6 = $state('');
 	let decimal7 = $state('');
 	let decimal8 = $state('');
+	let decimal9 = $state('');
+	let decimal10 = $state('');
 
 	let negative1 = $state('');
 	let negative2 = $state('');
@@ -155,6 +157,26 @@
 				class={INPUT_CLASS}
 				bind:value={decimal8}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				decimalScale={2}
+			/>
+		</Field>
+
+		<Field label="pads short decimal on blur with fixed decimal length">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal9}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				fixedDecimalLength={2}
+				decimalScale={2}
+			/>
+		</Field>
+
+		<Field label="keeps the sign when fixed decimal length moves the point">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={decimal10}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				fixedDecimalLength={2}
 				decimalScale={2}
 			/>
 		</Field>
