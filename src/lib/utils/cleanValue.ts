@@ -5,7 +5,7 @@ import { removeInvalidChars } from './removeInvalidChars';
 import { removeSeparators } from './removeSeparators';
 
 export const cleanValue = ({
-	value,
+	value: rawInput,
 	groupSeparator = ',',
 	decimalSeparator = '.',
 	allowDecimals = true,
@@ -15,6 +15,8 @@ export const cleanValue = ({
 	prefix = '',
 	transformRawValue = (rawValue) => rawValue
 }: CleanValueOptions): string => {
+	// Intl uses U+2212 for the minus sign in some locales
+	const value = rawInput.replace(/\u2212/g, '-');
 	const transformedValue = transformRawValue(value);
 
 	if (transformedValue === '-') {

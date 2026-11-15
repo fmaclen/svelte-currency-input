@@ -7,6 +7,7 @@
 	let basic2 = $state('');
 	let basic3 = $state('');
 	let basic4 = $state('');
+	let basic5 = $state('');
 
 	let decimal1 = $state('');
 	let decimal2 = $state('');
@@ -24,6 +25,7 @@
 
 	let locale1 = $state('');
 	let locale2 = $state('5679');
+	let locale3 = $state('');
 
 	let editing1 = $state('123');
 	let editing2 = $state('1234');
@@ -87,6 +89,14 @@
 			/>
 		</Field>
 		<output class="text-sm text-gray-500">{basic4}</output>
+
+		<Field label="formats long integers exactly">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={basic5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
 	</section>
 
 	<section class="space-y-3">
@@ -213,6 +223,14 @@
 				class={INPUT_CLASS}
 				bind:value={locale2}
 				intlConfig={{ locale: 'ja-JP', currency: 'JPY' }}
+			/>
+		</Field>
+
+		<Field label="keeps negative sign in Finnish locale">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={locale3}
+				intlConfig={{ locale: 'fi-FI', currency: 'EUR' }}
 			/>
 		</Field>
 	</section>

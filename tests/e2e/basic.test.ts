@@ -42,3 +42,9 @@ test('shows placeholder when empty', async ({ page }) => {
 	await input.fill('100');
 	await expect(input).toHaveValue('$100');
 });
+
+test('formats long integers exactly', async ({ page }) => {
+	const input = page.getByLabel('formats long integers exactly');
+	await input.pressSequentially('12345678901234567890');
+	await expect(input).toHaveValue('$12,345,678,901,234,567,890');
+});
