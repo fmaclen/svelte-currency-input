@@ -49,7 +49,9 @@ export const formatValue = (options: FormatValueOptions): string => {
 			})
 		: new Intl.NumberFormat(undefined, defaultNumberFormatOptions);
 
-	const parts = numberFormatter.formatToParts(Number(value));
+	// Intl.NumberFormat formats decimal strings exactly (Chrome 106, Firefox 116, Safari 15.4);
+	// older engines convert the string to a number
+	const parts = numberFormatter.formatToParts(value as unknown as number);
 
 	let formatted = replaceParts(parts, options);
 

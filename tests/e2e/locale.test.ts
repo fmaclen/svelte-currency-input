@@ -17,3 +17,11 @@ test('formats Yen with Japanese locale', async ({ page }) => {
 	await input.fill('1234');
 	await expect(input).toHaveValue('￥1,234');
 });
+
+test('keeps negative sign in Finnish locale', async ({ page }) => {
+	const input = page.getByLabel('keeps negative sign in Finnish locale');
+	await input.pressSequentially('-1234');
+	await expect(input).toHaveValue('\u22121\u00A0234\u00A0€');
+	await input.blur();
+	await expect(input).toHaveValue('\u22121\u00A0234\u00A0€');
+});
