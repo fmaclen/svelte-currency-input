@@ -3,7 +3,6 @@ export const fixedDecimalValue = (
 	decimalSeparator: string,
 	fixedDecimalLength?: number
 ): string => {
-	// Keep the sign in one place so a later branch cannot drop it.
 	if (value.startsWith('-')) {
 		return `-${fixedDecimalValue(value.slice(1), decimalSeparator, fixedDecimalLength)}`;
 	}
@@ -16,11 +15,12 @@ export const fixedDecimalValue = (
 		if (value.includes(decimalSeparator)) {
 			const [int, decimals] = value.split(decimalSeparator);
 
-			// A short decimal is padded later. Only a longer one is cut here.
 			if (decimals.length > fixedDecimalLength) {
 				return `${int}${decimalSeparator}${decimals.slice(0, fixedDecimalLength)}`;
 			}
 
+			// Return a short decimal as is: the blur handler pads it. Falling through to
+			// the regex below would move the point and turn 123.4 into 1.23.
 			return value;
 		}
 
