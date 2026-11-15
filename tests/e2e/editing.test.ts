@@ -60,3 +60,20 @@ test('can delete the decimal separator', async ({ page }) => {
 	await input.press('Backspace');
 	await expect(input).toHaveValue('$1,234');
 });
+
+test('keeps a comma decimal separator when group separators are disabled', async ({ page }) => {
+	const input = page.getByLabel(
+		'keeps a comma decimal separator when group separators are disabled'
+	);
+	await expect(input).toHaveValue('');
+	await input.pressSequentially('1,5');
+	await expect(input).toHaveValue('1,5');
+	await input.press('ArrowLeft');
+	await input.press('Backspace');
+	await expect(input).toHaveValue('15');
+	await input.fill('1,5');
+	await input.press('Home');
+	await input.press('ArrowRight');
+	await input.press('Delete');
+	await expect(input).toHaveValue('15');
+});

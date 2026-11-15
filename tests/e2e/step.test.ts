@@ -39,3 +39,31 @@ test('handles decimal step values', async ({ page }) => {
 	await input.press('ArrowUp');
 	await expect(input).toHaveValue('$1.00');
 });
+
+test('steps a decimal value by a whole-number step without float errors', async ({ page }) => {
+	const input = page.getByLabel(
+		'steps a decimal value by a whole-number step without float errors'
+	);
+	await expect(input).toHaveValue('$8.2');
+	await input.click();
+	await input.press('ArrowDown');
+	await expect(input).toHaveValue('$7.2');
+	await input.press('ArrowUp');
+	await expect(input).toHaveValue('$8.2');
+});
+
+test('rounds a decimal step to the step decimals', async ({ page }) => {
+	const input = page.getByLabel('rounds a decimal step to the step decimals');
+	await expect(input).toHaveValue('$1.25');
+	await input.click();
+	await input.press('ArrowUp');
+	await expect(input).toHaveValue('$1.4');
+});
+
+test('keeps the digits of a stepped value without float errors', async ({ page }) => {
+	const input = page.getByLabel('keeps the digits of a stepped value without float errors');
+	await expect(input).toHaveValue('$34.7');
+	await input.click();
+	await input.press('ArrowDown');
+	await expect(input).toHaveValue('$22.70');
+});

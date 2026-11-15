@@ -25,3 +25,10 @@ test('keeps negative sign in Finnish locale', async ({ page }) => {
 	await input.blur();
 	await expect(input).toHaveValue('\u22121\u00A0234\u00A0€');
 });
+
+test('keeps the leading zero when typing a decimal in German locale', async ({ page }) => {
+	const input = page.getByLabel('keeps the leading zero when typing a decimal in German locale');
+	await expect(input).toHaveValue('');
+	await input.pressSequentially(',05');
+	await expect(input).toHaveValue('0,05\u00A0€');
+});

@@ -26,10 +26,15 @@
 	let negative2 = $state('');
 	let negative3 = $state('');
 	let negative4 = $state('');
+	let negative5 = $state('');
+	let negative6 = $state('');
+	let negative7 = $state('');
+	let negative8 = $state('');
 
 	let locale1 = $state('');
 	let locale2 = $state('5679');
 	let locale3 = $state('');
+	let locale4 = $state('');
 
 	let editing1 = $state('123');
 	let editing2 = $state('1234');
@@ -37,6 +42,7 @@
 	let editing4 = $state('1234');
 	let editing5 = $state('1234');
 	let editing6 = $state('12.34');
+	let editing7 = $state('');
 
 	let minmax1 = $state('50');
 	let minmax2 = $state('50');
@@ -44,11 +50,17 @@
 	let step1 = $state('');
 	let step2 = $state('10');
 	let step3 = $state('');
+	let step4 = $state('8.2');
+	let step5 = $state('1.25');
+	let step6 = $state('34.7');
 
 	let abbr1 = $state('');
 	let abbr2 = $state('');
 	let abbr3 = $state('');
 	let abbr4 = $state('');
+	let abbr5 = $state('');
+	let abbr6 = $state('');
+	let abbr7 = $state('');
 
 	let placeholder1 = $state('');
 </script>
@@ -237,6 +249,39 @@
 				allowNegativeValue={false}
 			/>
 		</Field>
+
+		<Field label="drops a lone minus sign when negatives are disabled">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				allowNegativeValue={false}
+			/>
+		</Field>
+
+		<Field label="keeps a minus sign and decimal separator while typing">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative6}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
+
+		<Field label="keeps a minus sign and comma while typing in German locale">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative7}
+				intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
+			/>
+		</Field>
+
+		<Field label="keeps the leading zero when typing a negative decimal">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={negative8}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
 	</section>
 
 	<section class="space-y-3">
@@ -263,6 +308,14 @@
 				class={INPUT_CLASS}
 				bind:value={locale3}
 				intlConfig={{ locale: 'fi-FI', currency: 'EUR' }}
+			/>
+		</Field>
+
+		<Field label="keeps the leading zero when typing a decimal in German locale">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={locale4}
+				intlConfig={{ locale: 'de-DE', currency: 'EUR' }}
 			/>
 		</Field>
 	</section>
@@ -315,6 +368,15 @@
 				class={INPUT_CLASS}
 				bind:value={editing6}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
+
+		<Field label="keeps a comma decimal separator when group separators are disabled">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={editing7}
+				decimalSeparator=","
+				disableGroupSeparators={true}
 			/>
 		</Field>
 	</section>
@@ -372,6 +434,33 @@
 				step={0.25}
 			/>
 		</Field>
+
+		<Field label="steps a decimal value by a whole-number step without float errors">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step4}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={1}
+			/>
+		</Field>
+
+		<Field label="rounds a decimal step to the step decimals">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={0.1}
+			/>
+		</Field>
+
+		<Field label="keeps the digits of a stepped value without float errors">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={step6}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+				step={12}
+			/>
+		</Field>
 	</section>
 
 	<section class="space-y-3">
@@ -407,6 +496,30 @@
 				bind:value={abbr4}
 				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 				disableAbbreviations={true}
+			/>
+		</Field>
+
+		<Field label="expands abbreviations that start with the decimal separator">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr5}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
+
+		<Field label="does not expand a decimal separator and abbreviation only">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr6}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
+			/>
+		</Field>
+
+		<Field label="applies the decimals limit to an expanded abbreviation">
+			<CurrencyInput
+				class={INPUT_CLASS}
+				bind:value={abbr7}
+				intlConfig={{ locale: 'en-US', currency: 'USD' }}
 			/>
 		</Field>
 	</section>
