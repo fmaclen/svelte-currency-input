@@ -31,3 +31,30 @@ test('does not expand abbreviations when disabled', async ({ page }) => {
 	await input.fill('5k');
 	await expect(input).toHaveValue('$5');
 });
+
+test('expands abbreviations that start with the decimal separator', async ({ page }) => {
+	const input = page.getByLabel('expands abbreviations that start with the decimal separator');
+	await expect(input).toHaveValue('');
+	await input.fill('.5k');
+	await expect(input).toHaveValue('$500');
+	await input.fill('.05k');
+	await expect(input).toHaveValue('$50');
+	await input.fill('.25m');
+	await expect(input).toHaveValue('$250,000');
+	await input.fill('-.5k');
+	await expect(input).toHaveValue('-$500');
+});
+
+test('does not expand a decimal separator and abbreviation only', async ({ page }) => {
+	const input = page.getByLabel('does not expand a decimal separator and abbreviation only');
+	await expect(input).toHaveValue('');
+	await input.fill('.k');
+	await expect(input).toHaveValue('');
+});
+
+test('applies the decimals limit to an expanded abbreviation', async ({ page }) => {
+	const input = page.getByLabel('applies the decimals limit to an expanded abbreviation');
+	await expect(input).toHaveValue('');
+	await input.fill('1.2345678k');
+	await expect(input).toHaveValue('$1,234.56');
+});

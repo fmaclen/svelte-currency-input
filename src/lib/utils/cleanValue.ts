@@ -1,6 +1,6 @@
 import type { CleanValueOptions } from '../types';
 import { escapeRegExp } from './escapeRegExp';
-import { parseAbbrValue } from './parseAbbrValue';
+import { expandAbbrValue } from './parseAbbrValue';
 import { removeInvalidChars } from './removeInvalidChars';
 import { removeSeparators } from './removeSeparators';
 
@@ -20,14 +20,16 @@ export const cleanValue = ({
 	const transformedValue = transformRawValue(value);
 
 	if (transformedValue === '-') {
-		return transformedValue;
+		return allowNegativeValue ? transformedValue : '';
 	}
 
 	const abbreviations = disableAbbreviations ? [] : ['k', 'm', 'b'];
-	const reg = new RegExp(`((^|\\D)-\\d)|(-${escapeRegExp(prefix)})`);
+	const negativeDecimal = decimalSeparator ? `|(^-${escapeRegExp(decimalSeparator)})` : '';
+	const reg = new RegExp(`((^|\\D)-\\d)|(-${escapeRegExp(prefix)})${negativeDecimal}`);
 	const isNegative = reg.test(transformedValue);
 
-	const [prefixWithValue, preValue] = RegExp(`(\\d+)-?${escapeRegExp(prefix)}`).exec(value) || [];
+	const [prefixWithValue, preValue] =
+		RegExp(`(\\d+)-?${escapeRegExp(prefix)}`).exec(transformedValue) || [];
 	const withoutPrefix = prefix
 		? prefixWithValue
 			? transformedValue.replace(prefixWithValue, '').concat(preValue)
@@ -41,6 +43,7 @@ export const cleanValue = ({
 	]);
 
 	let valueOnly = withoutInvalidChars;
+	let isAbbreviation = false;
 
 	if (!disableAbbreviations) {
 		if (
@@ -50,18 +53,21 @@ export const cleanValue = ({
 		) {
 			return '';
 		}
-		const parsed = parseAbbrValue(withoutInvalidChars, decimalSeparator);
-		if (parsed) {
-			valueOnly = String(parsed);
+		const parsed = expandAbbrValue(withoutInvalidChars, decimalSeparator);
+		if (parsed !== undefined) {
+			valueOnly = parsed;
+			isAbbreviation = true;
 		}
 	}
 
 	const includeNegative = isNegative && allowNegativeValue ? '-' : '';
 
 	if (decimalSeparator && valueOnly.includes(decimalSeparator)) {
-		const [int, decimals] = withoutInvalidChars.split(decimalSeparator);
+		const [int, decimals] = valueOnly.split(decimalSeparator);
 		const trimmedDecimals = decimalsLimit && decimals ? decimals.slice(0, decimalsLimit) : decimals;
-		const includeDecimals = allowDecimals ? `${decimalSeparator}${trimmedDecimals}` : '';
+		// Expanded abbreviations always report "." decimals, eg. 1,2345k is 1234.5 with a "," separator
+		const outputSeparator = isAbbreviation ? '.' : decimalSeparator;
+		const includeDecimals = allowDecimals ? `${outputSeparator}${trimmedDecimals}` : '';
 
 		return `${includeNegative}${int}${includeDecimals}`;
 	}

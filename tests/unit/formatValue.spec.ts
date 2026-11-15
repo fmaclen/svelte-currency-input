@@ -344,6 +344,19 @@ describe('formatValue', () => {
 		).toBe('$0.02');
 	});
 
+	it('should prefix a negative decimal value with zero', () => {
+		const intlConfig = { locale: 'en-US', currency: 'USD' };
+		expect(formatValue({ value: '-.0', decimalSeparator: '.', intlConfig })).toBe('-$0.0');
+		expect(formatValue({ value: '-.05', decimalSeparator: '.', intlConfig })).toBe('-$0.05');
+	});
+
+	it('should prefix a decimal value with zero for a comma decimal separator', () => {
+		const intlConfig = { locale: 'de-DE', currency: 'EUR' };
+		const options = { decimalSeparator: ',', groupSeparator: '.', intlConfig };
+		expect(formatValue({ ...options, value: ',0' })).toBe('0,0\u00A0€');
+		expect(formatValue({ ...options, value: '-,0' })).toBe('-0,0\u00A0€');
+	});
+
 	describe('negative values', () => {
 		it('should handle negative values', () => {
 			expect(

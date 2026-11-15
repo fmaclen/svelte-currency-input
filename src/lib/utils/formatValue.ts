@@ -30,8 +30,9 @@ export const formatValue = (options: FormatValueOptions): string => {
 			? replaceDecimalSeparator(_value, decimalSeparator, isNegative)
 			: _value;
 
-	if (decimalSeparator && decimalSeparator !== '-' && value.startsWith(decimalSeparator)) {
-		value = '0' + value;
+	// replaceDecimalSeparator has already turned the decimal separator into "."
+	if (decimalSeparator && decimalSeparator !== '-') {
+		value = value.replace(/^(-?)\./, '$10.');
 	}
 
 	const { locale, currency, ...formatOptions } = intlConfig || {};

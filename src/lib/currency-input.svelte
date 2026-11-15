@@ -18,28 +18,28 @@
 	} from './utils/index';
 
 	type Props = Omit<HTMLInputAttributes, 'value'> & {
-		value?: string;
-		intlConfig?: IntlConfig;
-		prefix?: string;
-		suffix?: string;
-		decimalSeparator?: string;
-		groupSeparator?: string;
-		allowDecimals?: boolean;
-		decimalsLimit?: number;
-		decimalScale?: number;
-		fixedDecimalLength?: number;
-		allowNegativeValue?: boolean;
-		min?: number;
-		max?: number;
-		maxLength?: number;
-		step?: number;
-		disableGroupSeparators?: boolean;
-		disableAbbreviations?: boolean;
-		formatValueOnBlur?: boolean;
-		transformRawValue?: (rawValue: string) => string;
-		oninputvalue?: (values: CurrencyInputValues) => void;
-		onchangevalue?: (values: CurrencyInputValues) => void;
-		ref?: HTMLInputElement | null;
+		value?: string | undefined;
+		intlConfig?: IntlConfig | undefined;
+		prefix?: string | undefined;
+		suffix?: string | undefined;
+		decimalSeparator?: string | undefined;
+		groupSeparator?: string | undefined;
+		allowDecimals?: boolean | undefined;
+		decimalsLimit?: number | undefined;
+		decimalScale?: number | undefined;
+		fixedDecimalLength?: number | undefined;
+		allowNegativeValue?: boolean | undefined;
+		min?: number | undefined;
+		max?: number | undefined;
+		maxLength?: number | undefined;
+		step?: number | undefined;
+		disableGroupSeparators?: boolean | undefined;
+		disableAbbreviations?: boolean | undefined;
+		formatValueOnBlur?: boolean | undefined;
+		transformRawValue?: ((rawValue: string) => string) | undefined;
+		oninputvalue?: ((values: CurrencyInputValues) => void) | undefined;
+		onchangevalue?: ((values: CurrencyInputValues) => void) | undefined;
+		ref?: HTMLInputElement | null | undefined;
 	};
 
 	let {
@@ -83,6 +83,7 @@
 	let groupSeparator = $derived(_groupSeparator || localeConfig.groupSeparator || '');
 	let prefix = $derived(userPrefix ?? localeConfig.prefix);
 	let suffix = $derived(userSuffix ?? '');
+	let negativeDecimal = $derived(`-${decimalSeparator}`);
 
 	$effect(() => {
 		if (
@@ -106,7 +107,9 @@
 
 	let cleanValueOptions = $derived<Partial<CleanValueOptions>>({
 		decimalSeparator,
-		groupSeparator,
+		// With group separators disabled, the locale's group separator can equal the decimal separator
+		groupSeparator:
+			disableGroupSeparators && groupSeparator === decimalSeparator ? '' : groupSeparator,
 		allowDecimals,
 		decimalsLimit: decimalsLimit ?? fixedDecimalLength ?? 2,
 		allowNegativeValue,
@@ -153,7 +156,8 @@
 			value: inputValue,
 			lastKeyStroke,
 			stateValue,
-			groupSeparator
+			// Not groupSeparator: it can equal the decimal separator, see cleanValueOptions
+			groupSeparator: cleanValueOptions.groupSeparator
 		});
 
 		const stringValue = cleanValue({ value: modifiedValue, ...cleanValueOptions });
@@ -167,10 +171,15 @@
 			return;
 		}
 
-		if (stringValue === '' || stringValue === '-' || stringValue === decimalSeparator) {
+		if (
+			stringValue === '' ||
+			stringValue === '-' ||
+			stringValue === decimalSeparator ||
+			stringValue === negativeDecimal
+		) {
 			value = '';
 			stateValue = stringValue;
-			cursor = 1;
+			cursor = stringValue === negativeDecimal ? negativeDecimal.length : 1;
 
 			if (ref) {
 				ref.value = stringValue;
@@ -230,7 +239,12 @@
 
 		const valueOnly = cleanValue({ value: inputValue, ...cleanValueOptions });
 
-		if (valueOnly === '-' || valueOnly === decimalSeparator || !valueOnly) {
+		if (
+			valueOnly === '-' ||
+			valueOnly === decimalSeparator ||
+			valueOnly === negativeDecimal ||
+			!valueOnly
+		) {
 			stateValue = '';
 			value = '';
 			dirty = false;
@@ -299,15 +313,32 @@
 				return;
 			}
 
-			const fixedLength = String(step).includes('.')
-				? Number(String(step).split('.')[1].length)
-				: undefined;
+			const stepString = String(step);
+			const valueString = String(currentValue);
+			const stepDecimals = stepString.includes('.') ? stepString.split('.')[1].length : 0;
 
+			const toStepValue = (decimals: number): string =>
+				String(decimals ? newValue.toFixed(decimals) : newValue).replace('.', decimalSeparator);
+
+			const stepValue = toStepValue(stepDecimals);
+
+			// Float errors, eg. 8.2 - 1 = 7.199999999999999, are dropped by rounding to the value decimals
+			const valueDecimals =
+				decimalSeparator && Number.isInteger(step) && /^-?\d+\.\d+$/.test(valueString)
+					? valueString.split('.')[1].length
+					: 0;
+			const roundedValue = valueDecimals ? toStepValue(valueDecimals) : stepValue;
+
+			const toNumber = (value: string): number => {
+				const cleaned = cleanValue({ ...cleanValueOptions, value, transformRawValue: undefined });
+				return parseFloat(cleaned.replace(decimalSeparator, '.'));
+			};
+
+			// Rounding a result that was already right would drop digits, eg. 34.7 - 12 must stay 22.70
 			processChange(
-				String(fixedLength ? newValue.toFixed(fixedLength) : newValue).replace(
-					'.',
-					decimalSeparator
-				)
+				roundedValue === stepValue || toNumber(roundedValue) === toNumber(stepValue)
+					? stepValue
+					: roundedValue
 			);
 		}
 	}

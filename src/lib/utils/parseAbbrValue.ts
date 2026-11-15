@@ -14,30 +14,33 @@ export const abbrValue = (value: number, decimalSeparator = '.', _decimalPlaces 
 	return String(value);
 };
 
-type AbbrMap = { [key: string]: number };
+type AbbrExponents = { [key: string]: number };
 
-const abbrMap: AbbrMap = { k: 1000, m: 1000000, b: 1000000000 };
+const abbrExponents: AbbrExponents = { k: 3, m: 6, b: 9 };
 
-export const parseAbbrValue = (value: string, decimalSeparator = '.'): number | undefined => {
-	const reg = new RegExp(`(\\d+(${escapeRegExp(decimalSeparator)}\\d*)?)([kmb])$`, 'i');
+// Moves the decimal separator instead of multiplying, which gives 4.1m = 4099999.9999999995
+export const expandAbbrValue = (value: string, decimalSeparator = '.'): string | undefined => {
+	const reg = new RegExp(`(-?)(\\d*)(?:${escapeRegExp(decimalSeparator)}(\\d*))?([kmb])$`, 'i');
 	const match = value.match(reg);
 
-	if (match) {
-		const [, digits, , abbr] = match;
-		const multiplier = abbrMap[abbr.toLowerCase()];
-		const result = Number(digits.replace(decimalSeparator, '.')) * multiplier;
-
-		// Round based on input precision to avoid floating-point errors
-		// e.g. 4.1 * 1000000 = 4099999.9999999995 should become 4100000
-		// but 1.12345678 * 1000 = 1123.45678 should preserve all decimals
-		const decimalPart = digits.split(decimalSeparator)[1] || '';
-		const inputDecimals = decimalPart.length;
-		const multiplierZeros = Math.log10(multiplier);
-		const resultDecimals = Math.max(0, inputDecimals - multiplierZeros);
-		const precision = Math.pow(10, resultDecimals);
-
-		return Math.round(result * precision) / precision;
+	// Both digit groups are optional so .5k matches, which also lets .k and a bare k through
+	if (!match || (!match[2] && !match[3])) {
+		return undefined;
 	}
 
-	return undefined;
+	const [, sign, int, decimals = '', abbr] = match;
+	const exponent = abbrExponents[abbr.toLowerCase()];
+	const paddedDecimals = decimals.padEnd(exponent, '0');
+	const expandedInt = `${int}${paddedDecimals.slice(0, exponent)}`.replace(/^0+(?=\d)/, '');
+	const remainingDecimals = paddedDecimals.slice(exponent).replace(/0+$/, '');
+
+	return remainingDecimals
+		? `${sign}${expandedInt}${decimalSeparator}${remainingDecimals}`
+		: `${sign}${expandedInt}`;
+};
+
+export const parseAbbrValue = (value: string, decimalSeparator = '.'): number | undefined => {
+	const expanded = expandAbbrValue(value, decimalSeparator);
+
+	return expanded === undefined ? undefined : Number(expanded.replace(decimalSeparator, '.'));
 };
