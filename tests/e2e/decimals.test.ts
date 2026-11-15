@@ -67,3 +67,19 @@ test('pads single decimal to scale on blur', async ({ page }) => {
 	await input.blur();
 	await expect(input).toHaveValue('$100.50');
 });
+
+test('pads short decimal on blur with fixed decimal length', async ({ page }) => {
+	const input = page.getByLabel('pads short decimal on blur with fixed decimal length');
+	await expect(input).toHaveValue('');
+	await input.fill('123.4');
+	await input.blur();
+	await expect(input).toHaveValue('$123.40');
+});
+
+test('keeps the sign when fixed decimal length moves the point', async ({ page }) => {
+	const input = page.getByLabel('keeps the sign when fixed decimal length moves the point');
+	await expect(input).toHaveValue('');
+	await input.fill('-123');
+	await input.blur();
+	await expect(input).toHaveValue('-$1.23');
+});

@@ -16,6 +16,8 @@ describe('fixedDecimalValue', () => {
 		expect(fixedDecimalValue('123', '.', 2)).toBe('1.23');
 		expect(fixedDecimalValue('1234', '.', 2)).toBe('12.34');
 		expect(fixedDecimalValue('12345', '.', 2)).toBe('123.45');
+		expect(fixedDecimalValue('-123', '.', 2)).toBe('-1.23');
+		expect(fixedDecimalValue('-12', '.', 2)).toBe('-1.2');
 	});
 
 	it('should handle fixedDecimalLength of 0', () => {
@@ -40,5 +42,14 @@ describe('fixedDecimalValue', () => {
 
 	it('should handle short values', () => {
 		expect(fixedDecimalValue('12', '.', 2)).toBe('1.2');
+	});
+
+	it('should keep a short decimal and the sign', () => {
+		expect(fixedDecimalValue('123.4', '.', 2)).toBe('123.4');
+		expect(fixedDecimalValue('-123.4', '.', 2)).toBe('-123.4');
+		expect(fixedDecimalValue('-1.2345', '.', 2)).toBe('-1.23');
+		expect(fixedDecimalValue('-1.23', '.', 2)).toBe('-1.23');
+		expect(fixedDecimalValue('-1.2', '.', 0)).toBe('-12');
+		expect(fixedDecimalValue('-5', '.', 2)).toBe('-5');
 	});
 });
