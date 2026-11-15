@@ -83,3 +83,23 @@ test('keeps the sign when fixed decimal length moves the point', async ({ page }
 	await input.blur();
 	await expect(input).toHaveValue('-$1.23');
 });
+
+test('keeps trailing zero decimals when prefix contains the decimal separator', async ({
+	page
+}) => {
+	const input = page.getByLabel(
+		'keeps trailing zero decimals when prefix contains the decimal separator'
+	);
+	await expect(input).toHaveValue('');
+	await input.pressSequentially('1.0');
+	await expect(input).toHaveValue('kr.1.0');
+});
+
+test('keeps decimals while typing when prefix contains the decimal separator', async ({ page }) => {
+	const input = page.getByLabel(
+		'keeps decimals while typing when prefix contains the decimal separator'
+	);
+	await expect(input).toHaveValue('');
+	await input.pressSequentially('1000.05');
+	await expect(input).toHaveValue('kr.1,000.05');
+});

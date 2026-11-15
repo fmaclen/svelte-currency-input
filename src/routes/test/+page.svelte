@@ -19,6 +19,8 @@
 	let decimal8 = $state('');
 	let decimal9 = $state('');
 	let decimal10 = $state('');
+	let decimal11 = $state('');
+	let decimal12 = $state('');
 
 	let negative1 = $state('');
 	let negative2 = $state('');
@@ -189,6 +191,14 @@
 				fixedDecimalLength={2}
 				decimalScale={2}
 			/>
+		</Field>
+
+		<Field label="keeps trailing zero decimals when prefix contains the decimal separator">
+			<CurrencyInput class={INPUT_CLASS} bind:value={decimal11} prefix="kr." />
+		</Field>
+
+		<Field label="keeps decimals while typing when prefix contains the decimal separator">
+			<CurrencyInput class={INPUT_CLASS} bind:value={decimal12} prefix="kr." />
 		</Field>
 	</section>
 

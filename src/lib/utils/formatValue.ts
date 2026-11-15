@@ -62,7 +62,10 @@ export const formatValue = (options: FormatValueOptions): string => {
 	const [, decimals] = value.match(RegExp('\\d+\\.(\\d+)')) || [];
 
 	if (decimalScale === undefined && decimals && decimalSeparator) {
-		if (formatted.includes(decimalSeparator)) {
+		// Remove only the first match: it is always the prefix (at most a minus sign
+		// precedes it), and later matches may be part of the number itself
+		const formattedWithoutPrefix = prefix ? formatted.replace(prefix, '') : formatted;
+		if (formattedWithoutPrefix.includes(decimalSeparator)) {
 			formatted = formatted.replace(
 				RegExp(`(\\d+)(${escapeRegExp(decimalSeparator)})(\\d+)`, 'g'),
 				`$1$2${decimals}`
